@@ -1,0 +1,424 @@
+@import '../common.scss';
+
+
+// Shoelace text colgroup
+$shoelace-text-color: #FFF;
+$shoelace-dark-border-color: #36363B;
+
+// Shoelace Primary dark.
+$shoelace-dark-primary-color: #27bafd;
+$shoelace-dark-primary-color-border: #27bafd;
+$shoelace-dark-primary-color-accent: #119ee2;
+
+// Shoelace Success dark.
+$shoelace-dark-success-color: #16a34a;
+$shoelace-dark-success-color-border: #3adf76;
+$shoelace-dark-success-color-accent: #22c55e;
+
+// Shoelace neutral colors dark.
+$shoelace-dark-neutral-color: #52525b;
+$shoelace-dark-neutral-color-border: #8e8e9a;
+$shoelace-dark-neutral-color-accent: #71717a;
+
+// Shoelace warning colors dark.
+$shoelace-dark-warning-color: #d97706;
+$shoelace-dark-warning-color-border: #ffbd11;
+$shoelace-dark-warning-color-accent: #f59e0b;
+
+// Shoelace danger colors dark.
+$shoelace-dark-danger-color: #dc2626;
+$shoelace-dark-danger-color-border: #fe5c5c;
+$shoelace-dark-danger-color-accent: #ef437f;
+
+.template-shoelace.is-dark-mode {
+	figure.alerts-dlx-alert.alerts-dlx-shoelace[role="alert"] {
+		background: #242428;
+		color: #FFF;
+	}
+	&.is-style-primary {
+		h2.alerts-dlx-title {
+			color: $shoelace-text-color;
+		}
+		.alerts-dlx-content p {
+			color: $shoelace-text-color;
+		}
+		button.button-reset.alerts-dlx-button,
+		a.alerts-dlx-button,
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			color: $white;
+			border: 1px solid transparent;
+
+			background: $shoelace-dark-primary-color;
+		}
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			background: $shoelace-dark-primary-color-accent;
+		}
+
+		svg,
+		svg path svg g {
+			color: $shoelace-dark-primary-color;
+			fill: $shoelace-dark-primary-color;
+		}
+
+		&.is-appearance-left-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 1px;
+				border-top-color: $shoelace-dark-border-color;
+				border-left-width: 0.25em;
+				border-left-color: $shoelace-dark-primary-color;
+			}
+			svg {
+				background: $shoelace-dark-primary-color;
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-top-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 3px;
+				border-top-color: $shoelace-dark-primary-color;
+				border-left-width: 0;
+			}
+			svg {
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-solid {
+			figure {
+				background: $shoelace-dark-primary-color;
+				color: $white;
+			}
+			svg {
+				color: $shoelace-dark-primary-color-accent;
+				fill: $shoelace-dark-primary-color-accent;
+			}
+			h2, p {
+				color: $white;
+			}
+			figcaption .alerts-dlx-button {
+				background: $shoelace-dark-primary-color-accent;
+				color: $white;
+			}
+			figcaption .alerts-dlx-button:hover {
+				background: darken( $shoelace-dark-primary-color-accent, 5% );
+				color: $white;
+			}
+		}
+	}
+	&.is-style-success {
+		h2.alerts-dlx-title {
+			color: $shoelace-text-color;
+		}
+		.alerts-dlx-content p {
+			color: $shoelace-text-color;
+		}
+		button.button-reset.alerts-dlx-button,
+		a.alerts-dlx-button,
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			color: $white;
+			border: 1px solid transparent;
+
+			background: $shoelace-dark-success-color;
+		}
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			background: $shoelace-dark-success-color-accent;
+		}
+
+		svg,
+		svg path svg g {
+			color: $shoelace-dark-success-color;
+			fill: $shoelace-dark-success-color;
+		}
+
+		&.is-appearance-left-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 1px;
+				border-top-color: $shoelace-dark-border-color;
+				border-left-width: 0.25em;
+				border-left-color: $shoelace-dark-success-color;
+			}
+			svg {
+				background: $shoelace-dark-success-color;
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-top-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 3px;
+				border-top-color: $shoelace-dark-success-color;
+				border-left-width: 0;
+			}
+			svg {
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-solid {
+			figure {
+				background: $shoelace-dark-success-color;
+				color: $white;
+			}
+			svg {
+				color: $shoelace-dark-success-color-accent;
+				fill: $shoelace-dark-success-color-accent;
+			}
+			h2, p {
+				color: $white;
+			}
+			figcaption .alerts-dlx-button {
+				background: $shoelace-dark-success-color-accent;
+				color: $white;
+			}
+			figcaption .alerts-dlx-button:hover {
+				background: darken( $shoelace-dark-success-color-accent, 5% );
+				color: $white;
+			}
+		}
+	}
+	&.is-style-neutral {
+		h2.alerts-dlx-title {
+			color: $shoelace-text-color;
+		}
+		.alerts-dlx-content p {
+			color: $shoelace-text-color;
+		}
+		button.button-reset.alerts-dlx-button,
+		a.alerts-dlx-button,
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			color: $white;
+			border: 1px solid transparent;
+
+			background: $shoelace-dark-neutral-color;
+		}
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			background: $shoelace-dark-neutral-color-accent;
+		}
+
+		svg,
+		svg path svg g {
+			color: $shoelace-dark-neutral-color;
+			fill: $shoelace-dark-neutral-color;
+		}
+
+		&.is-appearance-left-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 1px;
+				border-top-color: $shoelace-dark-border-color;
+				border-left-width: 0.25em;
+				border-left-color: $shoelace-dark-neutral-color;
+			}
+			svg {
+				background: $shoelace-dark-neutral-color;
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-top-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 3px;
+				border-top-color: $shoelace-dark-neutral-color;
+				border-left-width: 0;
+			}
+			svg {
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-solid {
+			figure {
+				background: $shoelace-dark-neutral-color;
+				color: $white;
+			}
+			svg {
+				color: $shoelace-dark-neutral-color-accent;
+				fill: $shoelace-dark-neutral-color-accent;
+			}
+			h2, p {
+				color: $white;
+			}
+			figcaption .alerts-dlx-button {
+				background: $shoelace-dark-neutral-color-accent;
+				color: $white;
+			}
+			figcaption .alerts-dlx-button:hover {
+				background: darken( $shoelace-dark-neutral-color-accent, 5% );
+				color: $white;
+			}
+		}
+	}
+	&.is-style-warning {
+		h2.alerts-dlx-title {
+			color: $shoelace-text-color;
+		}
+		.alerts-dlx-content p {
+			color: $shoelace-text-color;
+		}
+		button.button-reset.alerts-dlx-button,
+		a.alerts-dlx-button,
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			color: $white;
+			border: 1px solid transparent;
+
+			background: $shoelace-dark-warning-color;
+		}
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			background: $shoelace-dark-warning-color-accent;
+		}
+
+		svg,
+		svg path svg g {
+			color: $shoelace-dark-warning-color;
+			fill: $shoelace-dark-warning-color;
+		}
+
+		&.is-appearance-left-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 1px;
+				border-top-color: $shoelace-dark-border-color;
+				border-left-width: 0.25em;
+				border-left-color: $shoelace-dark-warning-color;
+			}
+			svg {
+				background: $shoelace-dark-warning-color;
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-top-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 3px;
+				border-top-color: $shoelace-dark-warning-color;
+				border-left-width: 0;
+			}
+			svg {
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-solid {
+			figure {
+				background: $shoelace-dark-warning-color;
+				color: $white;
+			}
+			svg {
+				color: $shoelace-dark-warning-color-accent;
+				fill: $shoelace-dark-warning-color-accent;
+			}
+			h2, p {
+				color: $white;
+			}
+			figcaption .alerts-dlx-button {
+				background: $shoelace-dark-warning-color-accent;
+				color: $white;
+			}
+			figcaption .alerts-dlx-button:hover {
+				background: darken( $shoelace-dark-warning-color-accent, 5% );
+				color: $white;
+			}
+		}
+	}
+	&.is-style-danger {
+		h2.alerts-dlx-title {
+			color: $shoelace-text-color;
+		}
+		.alerts-dlx-content p {
+			color: $shoelace-text-color;
+		}
+		button.button-reset.alerts-dlx-button,
+		a.alerts-dlx-button,
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			color: $white;
+			border: 1px solid transparent;
+
+			background: $shoelace-dark-danger-color;
+		}
+		a.alerts-dlx-button:hover,
+		button.button-reset.alerts-dlx-button:hover {
+			background: $shoelace-dark-danger-color-accent;
+		}
+
+		svg,
+		svg path svg g {
+			color: $shoelace-dark-danger-color;
+			fill: $shoelace-dark-danger-color;
+		}
+
+		&.is-appearance-left-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 1px;
+				border-top-color: $shoelace-dark-border-color;
+				border-left-width: 0.25em;
+				border-left-color: $shoelace-dark-danger-color;
+			}
+			svg {
+				background: $shoelace-dark-danger-color;
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-top-accent {
+			figure {
+				position: relative;
+				border: 1px solid $shoelace-dark-border-color;
+				border-top-width: 3px;
+				border-top-color: $shoelace-dark-danger-color;
+				border-left-width: 0;
+			}
+			svg {
+				color: $white;
+				fill: $white;
+			}
+		}
+		&.is-appearance-solid {
+			figure {
+				background: $shoelace-dark-danger-color;
+				color: $white;
+			}
+			svg {
+				color: $shoelace-dark-danger-color-accent;
+				fill: $shoelace-dark-danger-color-accent;
+			}
+			h2, p {
+				color: $white;
+			}
+			figcaption .alerts-dlx-button {
+				background: $shoelace-dark-danger-color-accent;
+				color: $white;
+			}
+			figcaption .alerts-dlx-button:hover {
+				background: darken( $shoelace-dark-danger-color-accent, 5% );
+				color: $white;
+			}
+		}
+	}
+}
+

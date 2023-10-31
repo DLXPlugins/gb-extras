@@ -1,0 +1,21 @@
+{
+    "name": "dlxplugins/alerts-dlx",
+    "description": "An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Ronald Huereca",
+            "email": "ronald@dlxplugins.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "vendor-dir": "lib"
+    },
+      "autoload": {
+        "psr-4": {
+            "DLXPlugins\\AlertsDLX\\": "php/"
+        }
+    }
+}

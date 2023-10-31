@@ -1,0 +1,684 @@
+@import '../common.scss';
+
+// Chakra colors.
+$chakra-dark-success-color: #edf2f7;
+$chakra-dark-success-color-accent: #75e09b;
+$chakra-dark-success-color-alt: #8ae3a9;
+$chakra-dark-success-color-bold: #9ae6b4;
+$chakra-dark-success-color-light: #243233;
+$chakra-dark-info-color: #edf2f7;
+$chakra-dark-info-color-accent: #469fd7;
+$chakra-dark-info-color-alt: #71c2f5;
+$chakra-dark-info-color-bold: #90cdf4;
+$chakra-dark-info-color-light: #222E3C;
+$chakra-dark-warning-color: #edf2f7;
+$chakra-dark-warning-color-accent: #f0c16e;
+$chakra-dark-warning-color-alt: #f6c97b;
+$chakra-dark-warning-color-bold: #fbd38d;
+$chakra-dark-warning-color-light: #2F2E2D;
+$chakra-dark-error-color: #edf2f7;
+$chakra-dark-error-color-accent: #f46d6d;
+$chakra-dark-error-color-alt: #f68e8e;
+$chakra-dark-error-color-bold: #feb2b2;
+$chakra-dark-error-color-light: #302A33;
+
+.template-chakra.is-dark-mode {
+	.alerts-dlx-chakra {
+		display: grid;
+		grid-template-columns: 1fr;
+		font-size: var(--alerts-dlx-chakra-base-size, 16px);
+		padding: 0.75em 1.25em;
+		border-radius: 0px;
+		margin: 0 auto;
+
+		&.alerts-dlx-has-icon {
+			grid-template-columns: 3.8em 1fr;
+			padding-left: 0;
+		}
+
+		figcaption h2.alerts-dlx-title {
+			font-size: 1.2em;
+			font-weight: 500;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 0;
+			margin-bottom: 0.35em;
+		}
+		.alerts-dlx-content p {
+			font-size: 1.2em;
+			font-weight: 400;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 0;
+			&:not(:first-child) {
+				margin-top: 0.5em;
+			}
+		}
+
+		button.button-reset,
+		a.alerts-dlx-button,
+		button.button-reset.components-button {
+			font-size: 1.2em;
+		}
+
+		.alerts-dlx-icon-preview svg {
+			width: 1.4em;
+			height: 1.4em;
+		}
+
+		.alerts-dlx-icon {
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+		}
+	}
+
+	&.icon-vertical-align-centered {
+		.alerts-dlx-icon {
+			align-items: center;
+		}
+	}
+
+	&.is-appearance-centered {
+		.alerts-dlx-chakra {
+			display: block;
+		}
+		.alerts-dlx-icon-preview svg {
+			width: 1.6em;
+			height: 1.6em;
+		}
+
+		figcaption {
+			text-align: center;
+		}
+
+		.alerts-dlx-button-wrapper {
+			position: relative;
+			flex-wrap: wrap;
+			button:first-child {
+				width: 100%;
+				justify-content: center;
+			}
+			button:not(:first-child) {
+				position: absolute;
+				right: -35px;
+			}
+		}
+	}
+
+	&.is-style-success {
+		&.is-appearance-subtle,
+		&.is-appearance-centered {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-success-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-success-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-success-color-light;
+				color: $chakra-dark-success-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-success-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-success-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-success-color-bold;
+					fill: $chakra-dark-success-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-left-accent {
+			.alerts-dlx-chakra {
+				border-left: 4px solid $chakra-dark-success-color-bold;
+			}
+
+			h2.alerts-dlx-title {
+				color: $chakra-dark-success-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-success-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-success-color-light;
+				color: $chakra-dark-success-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-success-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-success-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-success-color-bold;
+					fill: $chakra-dark-success-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-top-accent {
+			.alerts-dlx-chakra {
+				border-top: 4px solid $chakra-dark-success-color-bold;
+			}
+
+			h2.alerts-dlx-title {
+				color: $chakra-dark-success-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-success-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-success-color-light;
+				color: $chakra-dark-success-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-success-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-success-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-success-color-bold;
+					fill: $chakra-dark-success-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-solid {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-success-color-light;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-success-color-light;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-success-color-alt;
+				color: $chakra-dark-success-color-light;
+				border: 2px solid $chakra-dark-success-color-light;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 2px solid $chakra-dark-success-color-alt;
+					background-color: $chakra-dark-success-color-light;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $white;
+					color: $chakra-dark-success-color-light;
+					border: 2px solid $chakra-dark-success-color-light;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-success-color-light;
+					fill: $chakra-dark-success-color-light;
+				}
+			}
+		}
+	}
+
+	&.is-style-info {
+		&.is-appearance-subtle,
+		&.is-appearance-centered {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-info-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-info-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-info-color-light;
+				color: $chakra-dark-info-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-info-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-info-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-info-color-bold;
+					fill: $chakra-dark-info-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-left-accent {
+			.alerts-dlx-chakra {
+				border-left: 4px solid $chakra-dark-info-color-bold;
+			}
+
+			h2.alerts-dlx-title {
+				color: $chakra-dark-info-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-info-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-info-color-light;
+				color: $chakra-dark-info-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-info-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-info-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-info-color-bold;
+					fill: $chakra-dark-info-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-top-accent {
+			.alerts-dlx-chakra {
+				border-top: 4px solid $chakra-dark-info-color-bold;
+			}
+
+			h2.alerts-dlx-title {
+				color: $chakra-dark-info-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-info-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-info-color-light;
+				color: $chakra-dark-info-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-info-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-info-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-info-color-bold;
+					fill: $chakra-dark-info-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-solid {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-info-color-light;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-info-color-light;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-info-color-alt;
+				color: $chakra-dark-info-color-light;
+				border: 2px solid $chakra-dark-info-color-alt;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 2px solid $chakra-dark-info-color-alt;
+					background-color: $chakra-dark-info-color-light;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $white;
+					color: $chakra-dark-info-color-light;
+					border: 2px solid transparent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-info-color-light;
+					fill: $chakra-dark-info-color-light;
+				}
+			}
+		}
+	}
+
+	&.is-style-warning {
+		&.is-appearance-subtle,
+		&.is-appearance-centered {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-warning-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-warning-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-warning-color-light;
+				color: $chakra-dark-warning-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-warning-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-warning-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-warning-color-bold;
+					fill: $chakra-dark-warning-color-bold;
+				}
+			}
+		}
+		&.is-appearance-left-accent {
+			.alerts-dlx-chakra {
+				border-left: 4px solid $chakra-dark-warning-color-bold;
+			}
+
+			h2.alerts-dlx-title {
+				color: $chakra-dark-warning-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-warning-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-warning-color-light;
+				color: $chakra-dark-warning-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-warning-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-warning-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-warning-color-bold;
+					fill: $chakra-dark-warning-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-top-accent {
+			.alerts-dlx-chakra {
+				border-top: 4px solid $chakra-dark-warning-color-bold;
+			}
+
+			h2.alerts-dlx-title {
+				color: $chakra-dark-warning-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-warning-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-warning-color-light;
+				color: $chakra-dark-warning-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-warning-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-warning-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-warning-color-bold;
+					fill: $chakra-dark-warning-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-solid {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-warning-color-light;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-warning-color-light;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-warning-color-alt;
+				color: $chakra-dark-warning-color-light;
+				border: 2px solid $chakra-dark-warning-color-alt;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 2px solid $chakra-dark-warning-color-alt;
+					background-color: $chakra-dark-warning-color-light;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $white;
+					color: $chakra-dark-warning-color-light;
+					border: 2px solid $chakra-dark-warning-color-light;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-warning-color-light;
+					fill: $chakra-dark-warning-color-light;
+				}
+			}
+		}
+	}
+
+	&.is-style-error {
+		&.is-appearance-subtle,
+		&.is-appearance-centered {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-error-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-error-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-error-color-light;
+				color: $chakra-dark-error-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-error-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-error-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-error-color-bold;
+					fill: $chakra-dark-error-color-bold;
+				}
+			}
+		}
+		&.is-appearance-left-accent {
+			.alerts-dlx-chakra {
+				border-left: 4px solid $chakra-dark-error-color-bold;
+			}
+			h2.alerts-dlx-title {
+				color: $chakra-dark-error-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-error-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-error-color-light;
+				color: $chakra-dark-error-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-error-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-error-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-error-color-bold;
+					fill: $chakra-dark-error-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-top-accent {
+			.alerts-dlx-chakra {
+				border-top: 4px solid $chakra-dark-error-color-bold;
+			}
+			h2.alerts-dlx-title {
+				color: $chakra-dark-error-color;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-error-color;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-error-color-light;
+				color: $chakra-dark-error-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $chakra-dark-error-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $chakra-dark-error-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-error-color-bold;
+					fill: $chakra-dark-error-color-bold;
+				}
+			}
+		}
+
+		&.is-appearance-solid {
+			h2.alerts-dlx-title {
+				color: $chakra-dark-error-color-light;
+			}
+			.alerts-dlx-content p {
+				color: $chakra-dark-error-color-light;
+			}
+			.alerts-dlx-chakra {
+				background-color: $chakra-dark-error-color-alt;
+				color: $chakra-dark-error-color-light;
+				border: 2px solid $chakra-dark-error-color-alt;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 2px solid $chakra-dark-error-color-alt;
+					background-color: $chakra-dark-error-color-light;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $white;
+					color: $chakra-dark-error-color-light;
+					border: 2px solid $chakra-dark-error-color-light;
+				}
+
+				svg,
+				svg path svg g {
+					color: $chakra-dark-error-color-light;
+					fill: $chakra-dark-error-color-light;
+				}
+			}
+		}
+	}
+}

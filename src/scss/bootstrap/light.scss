@@ -1,0 +1,468 @@
+@import '../common.scss';
+
+// Bootstrap Primary colors.
+$bootstrap-primary-color: #084298;
+$bootstrap-primary-color-border: #b6d4fe;
+$bootstrap-primary-color-accent: #26559c;
+$bootstrap-primary-color-alt: #084298;
+$bootstrap-primary-color-bold: #084298;
+$bootstrap-primary-color-light: #cfe2ff;
+
+// Bootstrap secondary.
+$bootstrap-secondary-color: #41464b;
+$bootstrap-secondary-color-border: #d3d6d8;
+$bootstrap-secondary-color-accent: #5c6874;
+$bootstrap-secondary-color-alt: #41464b;
+$bootstrap-secondary-color-bold: #41464b;
+$bootstrap-secondary-color-light: #e2e3e5;
+
+// Bootstrap Success.
+$bootstrap-success-color: #0f5132;
+$bootstrap-success-color-border: #badbcc;
+$bootstrap-success-color-accent: #167247;
+$bootstrap-success-color-alt: #0f5132;
+$bootstrap-success-color-bold: #0f5132;
+$bootstrap-success-color-light: #d1e7dd;
+
+// Bootstrap Danger.
+$bootstrap-danger-color: #842029;
+$bootstrap-danger-color-border: #f5c2c7;
+$bootstrap-danger-color-accent: #832e35;
+$bootstrap-danger-color-alt: #842029;
+$bootstrap-danger-color-bold: #842029;
+$bootstrap-danger-color-light: #f8d7da;
+
+// Bootstrap Warning
+$bootstrap-warning-color: #664d03;
+$bootstrap-warning-color-border: #ffecb5;
+$bootstrap-warning-color-accent: #7f6002;
+$bootstrap-warning-color-alt: #664d03;
+$bootstrap-warning-color-bold: #664d03;
+$bootstrap-warning-color-light: #fff3cd;
+
+// Bootstrap Info
+$bootstrap-info-color: #055160;
+$bootstrap-info-color-border: #b6effb;
+$bootstrap-info-color-accent: #076c81;
+$bootstrap-info-color-alt: #055160;
+$bootstrap-info-color-bold: #055160;
+$bootstrap-info-color-light: #cff4fc;
+
+// Bootstrap Light
+$bootstrap-light-color: #636464;
+$bootstrap-light-color-border: #fdfdfe;
+$bootstrap-light-color-accent: #7b7c7c;
+$bootstrap-light-color-alt: #636464;
+$bootstrap-light-color-bold: #636464;
+$bootstrap-light-color-light: #fefefe;
+
+// Bootstrap Dark
+$bootstrap-dark-color: #141619;
+$bootstrap-dark-color-border: #bcbebf;
+$bootstrap-dark-color-accent: #292d33;
+$bootstrap-dark-color-alt: #141619;
+$bootstrap-dark-color-bold: #141619;
+$bootstrap-dark-color-light: #d3d3d4;
+
+.template-bootstrap {
+	/* MaterialUI Success */
+	.alerts-dlx-bootstrap {
+		display: grid;
+		grid-template-columns: 1fr;
+		font-size: var(--alerts-dlx-bootstrap-base-size, 16px);
+		padding: 0.75em 1.25em;
+		border-radius: 0.25em;
+		margin: 0 auto;
+		border: 1px solid transparent;
+
+		&.alerts-dlx-has-icon {
+			grid-template-columns: 3.8em 1fr;
+			padding-left: 0;
+		}
+
+		figcaption h2.alerts-dlx-title {
+			font-size: 1.2em;
+			font-weight: 900;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 0;
+			margin-bottom: 0.35em;
+		}
+		.alerts-dlx-content p {
+			font-size: 1.2em;
+			font-weight: 400;
+			line-height: 1.5em;
+			margin: 0;
+			padding: 0;
+			&:not(:first-child) {
+				margin-top: 0.5em;
+			}
+		}
+
+		button.button-reset,
+		a.alerts-dlx-button,
+		button.button-reset.components-button {
+			font-size: 1.2em;
+		}
+
+		.alerts-dlx-icon-preview svg {
+			width: 1.6em;
+			height: 1.6em;
+		}
+		.alerts-dlx-icon-frontend .alerts-dlx-icon-preview {
+			font-size: 1.2em;
+			line-height: 2.2em;
+		}
+
+		.alerts-dlx-icon {
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+		}
+	}
+
+	&.icon-vertical-align-centered {
+		.alerts-dlx-icon {
+			align-items: center;
+		}
+	}
+
+	&.is-appearance-centered {
+		.alerts-dlx-bootstrap {
+			display: block;
+		}
+		.alerts-dlx-icon-preview svg {
+			width: 1.6em;
+			height: 1.6em;
+		}
+
+		figcaption {
+			text-align: center;
+		}
+
+		.alerts-dlx-button-wrapper {
+			position: relative;
+			flex-wrap: wrap;
+			button:first-child {
+				width: 100%;
+				justify-content: center;
+			}
+			button:not(:first-child) {
+				position: absolute;
+				right: -35px;
+			}
+		}
+	}
+
+	&.is-style-primary {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-primary-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-primary-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-primary-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-primary-color-light;
+				color: $bootstrap-primary-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-primary-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-primary-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-primary-color-bold;
+					fill: $bootstrap-primary-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-secondary {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-secondary-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-secondary-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-secondary-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-secondary-color-light;
+				color: $bootstrap-secondary-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-secondary-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-secondary-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-secondary-color-bold;
+					fill: $bootstrap-secondary-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-success {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-success-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-success-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-success-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-success-color-light;
+				color: $bootstrap-success-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-success-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-success-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-success-color-bold;
+					fill: $bootstrap-success-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-danger {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-danger-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-danger-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-danger-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-danger-color-light;
+				color: $bootstrap-danger-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-danger-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-danger-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-danger-color-bold;
+					fill: $bootstrap-danger-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-warning {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-warning-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-warning-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-warning-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-warning-color-light;
+				color: $bootstrap-warning-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-warning-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-warning-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-warning-color-bold;
+					fill: $bootstrap-warning-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-info {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-info-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-info-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-info-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-info-color-light;
+				color: $bootstrap-info-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-info-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-info-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-info-color-bold;
+					fill: $bootstrap-info-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-light {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-light-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-light-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-light-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-light-color-light;
+				color: $bootstrap-light-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-light-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-light-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-light-color-bold;
+					fill: $bootstrap-light-color-bold;
+				}
+			}
+		}
+	}
+
+	&.is-style-dark {
+		&.is-appearance-default,
+		&.is-appearance-centered {
+			.alerts-dlx-bootstrap {
+				border-color: $bootstrap-dark-color-border;
+			}
+			h2.alerts-dlx-title {
+				color: $bootstrap-dark-color;
+			}
+			.alerts-dlx-content p {
+				color: $bootstrap-dark-color;
+			}
+			.alerts-dlx-bootstrap {
+				background-color: $bootstrap-dark-color-light;
+				color: $bootstrap-dark-color;
+
+				button.button-reset.alerts-dlx-button,
+				a.alerts-dlx-button,
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					color: $white;
+					border: 1px solid transparent;
+
+					background-color: $bootstrap-dark-color-alt;
+				}
+				a.alerts-dlx-button:hover,
+				button.button-reset.alerts-dlx-button:hover {
+					background-color: $bootstrap-dark-color-accent;
+				}
+
+				svg,
+				svg path svg g {
+					color: $bootstrap-dark-color-bold;
+					fill: $bootstrap-dark-color-bold;
+				}
+			}
+		}
+	}
+}
