@@ -1,6 +1,6 @@
 {
-    "name": "dlxplugins/alerts-dlx",
-    "description": "An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.",
+    "name": "dlxplugins/gb-hacks",
+    "description": "GenerateBlocks enhancements.",
     "type": "project",
     "license": "GPL",
     "authors": [
@@ -15,7 +15,7 @@
     },
       "autoload": {
         "psr-4": {
-            "DLXPlugins\\AlertsDLX\\": "php/"
+            "DLXPlugins\\GBHacks\\": "php/"
         }
     }
 }
