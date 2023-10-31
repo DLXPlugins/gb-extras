@@ -1,15 +1,6 @@
-# Welcome to AlertsDLX
+# Welcome to GB Hacks
 
-AlertsDLX is a alert and notification WordPress block inspired by Bootstrap, Material UI, and Chakra UI.
+GB Hacks is a companion plugin for <a href="https://generateblocks.com/?ref=527">GenerateBlocks</a> and <a href="https://generateblocks.com/pro/?ref=527">GenerateBlocks Pro</a>.
 
-![alerts-dlx-editor-adjust-font-size](https://user-images.githubusercontent.com/636521/189466082-bb14478e-b526-4f57-aeb1-9ce76c8decaf.jpg)
+![gb-hacks-social](https://github.com/DLXPlugins/gb-hacks/assets/636521/988b45cc-959a-4e74-a865-425429b347f3)
 
-https://www.youtube.com/watch?v=7dKpw5uBi5o
-
-## Quick Links
-
-You can find a downloadable copy from the <a href="https://wordpress.org/plugins/alerts-dlx/">WordPress Plugin Directory</a>.
-
-* <a href="https://dlxplugins.com/plugins/alertsdlx/">AlertsDLX Home</a>
-* <a href="https://docs.dlxplugins.com/v/alertsdlx/">AlertsDLX Documentation</a>
-* <a href="https://dlxplugins.com/support/">AlertsDLX Support</a>
