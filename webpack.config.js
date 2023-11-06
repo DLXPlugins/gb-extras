@@ -15,6 +15,9 @@ module.exports = ( env ) => {
 		},
 		{
 			entry: {
+				'gb-hacks-admin': './src/js/react/views/main/index.js',
+				'gb-hacks-admin-license': './src/js/react/views/license/index.js',
+				'gb-hacks-admin-css': './src/scss/admin.scss',
 			},
 			resolve: {
 				alias: {

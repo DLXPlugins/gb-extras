@@ -5,7 +5,9 @@
 		"wpApiSettings": true,
 		"window": true,
 		"document": true,
-		"alertsDlxBlock": "readonly"
+		"dlxGBHacksLicense": "readonly",
+		"dlxGBHacksAdmin": "readonly"
+
 	},
 	"env": {
 		"browser": true,

@@ -20,6 +20,7 @@ namespace DLXPlugins\GBHacks;
 
 define( 'GB_HACKS_VERSION', '1.0.0' );
 define( 'GB_HACKS_FILE', __FILE__ );
+define( 'GB_HACKS_PRODUCT_ID', 36631 );
 
 // Support for site-level autoloading.
 if ( file_exists( __DIR__ . '/lib/autoload.php' ) ) {
@@ -65,6 +66,9 @@ class GBHacks {
 		);
 
 		Blocks::run();
+		
+		$admin = new Admin();
+		$admin->run();
 
 		/**
 		 * When GBHacks can be extended.

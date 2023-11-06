@@ -21,7 +21,31 @@ class Blocks {
 		$self = new self();
 		add_action( 'init', array( $self, 'init' ) );
 		add_action( 'rest_api_init', array( $self, 'init_rest_api' ) );
+		add_filter( 'block_type_metadata', array( $self, 'add_block_metadata' ), 10, 1 );
 		return $self;
+	}
+
+	/**
+	 * Set Paragraph defaults.
+	 *
+	 * @param array $metadata {
+	 *    An array of arguments.
+	 *
+	 *    @type string $name       Block name.
+	 *    @type array  $attributes Block attributes.
+	 * }
+	 */
+	public function add_block_metadata( $metadata ) {
+		// Check the block type.
+		if ( 'generateblocks/headline' !== $metadata['name'] ) {
+			return $metadata;
+		}
+
+		// Add accordion view (collapsed view).
+		$metadata['attributes']['element']['default'] = 'p';
+
+		// Return the metadata.
+		return $metadata;
 	}
 
 	/**
