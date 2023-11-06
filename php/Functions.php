@@ -2,10 +2,10 @@
 /**
  * Helper functions for the plugin.
  *
- * @package AlertsDLX
+ * @package GBHacks
  */
 
-namespace DLXPlugins\AlertsDLX;
+namespace DLXPlugins\GBHacks;
 
 /**
  * Class Functions
@@ -82,6 +82,31 @@ class Functions {
 	}
 
 	/**
+	 * Get the plugin's supported file extensions.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array The supported file extensions.
+	 */
+	public static function get_supported_file_extensions() {
+		$file_extensions = array(
+			'jpeg',
+			'jpg',
+			'gif',
+			'png',
+			'webp',
+		);
+		/**
+		 * Filter the valid file extensions for the photo block.
+		 *
+		 * @param array $file_extensions The valid mime types.
+		 */
+		$file_extensions = apply_filters( 'wppic_block_file_extensions', $file_extensions );
+
+		return $file_extensions;
+	}
+
+	/**
 	 * Checks to see if an asset is activated or not.
 	 *
 	 * @since 1.0.0
@@ -118,7 +143,7 @@ class Functions {
 	 * @return string plugin slug.
 	 */
 	public static function get_plugin_slug() {
-		return dirname( plugin_basename( ALERTS_DLX_FILE ) );
+		return dirname( plugin_basename( GB_HACKS_FILE ) );
 	}
 
 	/**
@@ -127,7 +152,7 @@ class Functions {
 	 * @return string base file for the plugin.
 	 */
 	public static function get_plugin_file() {
-		return plugin_basename( ALERTS_DLX_FILE );
+		return plugin_basename( GB_HACKS_FILE );
 	}
 
 	/**
@@ -136,157 +161,7 @@ class Functions {
 	 * @return float version for the plugin.
 	 */
 	public static function get_plugin_version() {
-		return ALERTS_DLX_VERSION;
-	}
-
-	/**
-	 * Get the plugin author name.
-	 */
-	public static function get_plugin_author() {
-		/**
-		 * Filer the output of the plugin Author.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin Author name.
-		 */
-		$plugin_author = apply_filters( 'alerts_dlx_plugin_author', 'MediaRon LLC' );
-		return $plugin_author;
-	}
-
-	/**
-	 * Return the Plugin author URI.
-	 */
-	public static function get_plugin_author_uri() {
-		/**
-		 * Filer the output of the plugin Author URI.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin Author URI.
-		 */
-		$plugin_author = apply_filters( 'alerts_dlx_plugin_author_uri', 'https://mediaron.com' );
-		return $plugin_author;
-	}
-
-	/**
-	 * Return the plugin name for the plugin.
-	 *
-	 * @return string Plugin name.
-	 */
-	public static function get_plugin_name() {
-		/**
-		 * Filer the output of the plugin name.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin name.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_name', __( 'AlertsDLX', 'alerts-dlx' ) );
-	}
-
-	/**
-	 * Return the plugin description for the plugin.
-	 *
-	 * @return string plugin description.
-	 */
-	public static function get_plugin_description() {
-		/**
-		 * Filer the output of the plugin name.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin description.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_description', __( 'An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.', 'alerts-dlx' ) );
-	}
-
-	/**
-	 * Retrieve the plugin URI.
-	 */
-	public static function get_plugin_uri() {
-		/**
-		 * Filer the output of the plugin URI.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin URI.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_uri', 'https://dlxplugins.com/plugins/alertsdlx' );
-	}
-
-	/**
-	 * Retrieve the plugin support URI.
-	 */
-	public static function get_plugin_support_uri() {
-		/**
-		 * Filer the output of the plugin support URI.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin Support URI.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_support_uri', 'https://dlxplugins.com/support/' );
-	}
-
-	/**
-	 * Retrieve the plugin documentation URI.
-	 */
-	public static function get_plugin_docs_uri() {
-		/**
-		 * Filer the output of the plugin docs URI.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin Docs URI.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://alertsdlx.dlxplugins.com/' );
-	}
-
-	/**
-	 * Retrieve the plugin documentation URI.
-	 */
-	public static function get_plugin_ratings_uri() {
-		/**
-		 * Filer the output of the plugin ratings URI.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin ratings URI.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://dlxplugins.com/support/' );
-	}
-
-	/**
-	 * Retrieve the plugin title.
-	 */
-	public static function get_plugin_title() {
-		/**
-		 * Filer the output of the plugin title.
-		 *
-		 * Potentially change branding of the plugin.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param string Plugin Menu Name.
-		 */
-		return apply_filters( 'alerts_dlx_plugin_menu_title', self::get_plugin_name() );
+		return GB_HACKS_VERSION;
 	}
 
 	/**
@@ -384,7 +259,7 @@ class Functions {
 	 * @return string The new path.
 	 */
 	public static function get_plugin_dir( $path = '' ) {
-		$dir = rtrim( plugin_dir_path( ALERTS_DLX_FILE ), '/' );
+		$dir = rtrim( plugin_dir_path( GB_HACKS_FILE ), '/' );
 		if ( ! empty( $path ) && is_string( $path ) ) {
 			$dir .= '/' . ltrim( $path, '/' );
 		}
@@ -399,7 +274,7 @@ class Functions {
 	 * @return string URL to to the file.
 	 */
 	public static function get_plugin_url( $path = '' ) {
-		$dir = rtrim( plugin_dir_url( ALERTS_DLX_FILE ), '/' );
+		$dir = rtrim( plugin_dir_url( GB_HACKS_FILE ), '/' );
 		if ( ! empty( $path ) && is_string( $path ) ) {
 			$dir .= '/' . ltrim( $path, '/' );
 		}

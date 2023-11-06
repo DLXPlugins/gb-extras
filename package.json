@@ -45,6 +45,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "grunt": "^1.6.1",
     "grunt-contrib-compress": "^2.0.0",
+    "lodash.uniqueid": "^4.0.1",
     "mini-css-extract-plugin": "^2.6.1",
     "prettier": "^2.7.1",
     "prettier-eslint": "^15.0.1",
