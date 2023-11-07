@@ -23,6 +23,7 @@ class Blocks {
 		add_action( 'rest_api_init', array( $self, 'init_rest_api' ) );
 		add_filter( 'block_type_metadata', array( $self, 'add_block_metadata' ), 10, 1 );
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_adobe_fonts' ), 10, 1 );
+		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_blocksy_adobe_fonts' ), 10, 1 );
 		return $self;
 	}
 
@@ -33,6 +34,62 @@ class Blocks {
 	 * @param array $fonts List of fonts.
 	 */
 	public function add_adobe_fonts( $fonts ) {
+		$options = Options::get_options();
+		if ( ! (bool) $options['enableAdobeFonts'] ) {
+			return $fonts;
+		}
+
+		// Get the adobe fonts.
+		$fonts_group = array();
+		if ( defined( 'CUSTOM_TYPEKIT_FONTS_FILE' ) ) {
+			$adobe_fonts = get_option( 'custom-typekit-fonts', array() );
+			if ( isset( $adobe_fonts['custom-typekit-font-details'] ) ) {
+				foreach ( $adobe_fonts['custom-typekit-font-details'] as $font_name => $font_details ) {
+					$fonts_group[] = array(
+						'value' => $font_name,
+						'label' => $font_name,
+					);
+				}
+			}
+		}
+		if ( ! empty( $fonts_group ) ) {
+			$fonts[] = array(
+				'label'   => __( 'Adobe Fonts', 'gb-hacks' ),
+				'options' => $fonts_group,
+			);
+		}
+		return $fonts;
+	}
+
+	/**
+	 * Add Adobe Fonts to the list of fonts.
+	 *
+	 * @param array $fonts List of fonts.
+	 */
+	public function add_blocksy_adobe_fonts( $fonts ) {
+		$options = Options::get_options();
+		if ( ! (bool) $options['enableAdobeFonts'] ) {
+			return $fonts;
+		}
+
+		// Get blocksy adoobe fonts.
+		$options       = get_option( 'blocksy_ext_adobe_typekit_settings', array() );
+		$font_families = $options['fonts'] ?? array();
+
+		// Add fonts to list.
+		if ( ! empty( $font_families ) ) {
+			$fonts_group = array();
+			foreach ( $font_families as $font_family ) {
+				$fonts_group[] = array(
+					'value' => $font_family['name'],
+					'label' => $font_family['name'],
+				);
+			}
+			$fonts[] = array(
+				'label'   => __( 'Adobe Fonts', 'gb-hacks' ),
+				'options' => $fonts_group,
+			);
+		}
 		return $fonts;
 	}
 
