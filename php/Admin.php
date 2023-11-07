@@ -128,7 +128,7 @@ class Admin {
 		$setting_links = array(
 			'settings' => sprintf( '<a href="%s">%s</a>', esc_url( Functions::get_settings_url() ), esc_html__( 'Settings', 'dlx-gb-hacks' ) ),
 			'docs'     => sprintf( '<a href="%s">%s</a>', esc_url( 'https://docs.dlxplugins.com/' ), esc_html__( 'Docs', 'dlx-gb-hacks' ) ),
-			'site'     => sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/pmpro-turnstile/' ), esc_html__( 'Plugin Home', 'dlx-gb-hacks' ) ),
+			'site'     => sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/gb-hacks/' ), esc_html__( 'Plugin Home', 'dlx-gb-hacks' ) ),
 		);
 		if ( ! is_array( $settings ) ) {
 			return $setting_links;
@@ -288,6 +288,21 @@ class Admin {
 		if ( ! isset( $form_data['allowedGoogleFonts'] ) ) {
 			$form_data['allowedGoogleFonts'] = array();
 		}
+
+		$form_enabled_post_types = $form_data['enabledPostTypes'] ?? array();
+		$enabled_post_types      = array();
+		
+		// Loop through enabled post types to save them in the right format.
+		foreach ( $form_enabled_post_types as $post_type => $enabled ) {
+			$post_type = trim( sanitize_text_field( $post_type ) );
+			if ( is_numeric( $post_type ) ) {
+				continue;
+			}
+			$enabled_post_types[ $post_type ] = filter_var( $enabled, FILTER_VALIDATE_BOOLEAN );
+		}
+
+		// Assign back.
+		$form_data['enabledPostTypes'] = $enabled_post_types;
 
 		// Get array values.
 		$form_data = Functions::sanitize_array_recursive( $form_data );
@@ -465,14 +480,6 @@ class Admin {
 					'revokeNonce' => wp_create_nonce( 'dlx-gb-hacks-admin-license-revoke' ),
 				)
 			);
-		} elseif ( 'help' === $current_tab ) {
-			wp_enqueue_script(
-				'dlx-gb-hacks-admin-help',
-				Functions::get_plugin_url( 'dist/dlx-pmpro-cloudflare-turnstile-admin-help.js' ),
-				array(),
-				Functions::get_plugin_version(),
-				true
-			);
 		}
 
 		// Enqueue admin styles.
@@ -518,7 +525,6 @@ class Admin {
 					<nav class="nav-tab-wrapper">
 						<a  class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url() ); ?>"><?php esc_html_e( 'Settings', 'dlx-gb-hacks' ); ?></a>
 						<a  class="<?php echo esc_attr( implode( ' ', $license_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'license' ) ); ?>"><?php esc_html_e( 'License', 'dlx-gb-hacks' ); ?></a>
-						<a  class="<?php echo esc_attr( implode( ' ', $help_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'help' ) ); ?>"><?php esc_html_e( 'Help', 'dlx-gb-hacks' ); ?></a>
 					</nav>
 				</div>
 				<div class="dlx-gb-hacks-body__content">
@@ -530,10 +536,6 @@ class Admin {
 					} elseif ( 'license' === $current_tab ) {
 						?>
 							<div id="dlx-gb-hacks-license"></div>
-						<?php
-					} elseif ( 'help' === $current_tab ) {
-						?>
-							<div id="dlx-gb-hacks-help"></div>
 						<?php
 					}
 					?>

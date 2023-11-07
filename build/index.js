@@ -5763,13 +5763,21 @@ var previousBlocks = [];
   (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addAction)('generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function (props) {
     if (props.attributes.uniqueId === '') {
       props.attributes.element = defaultHeadlineElement;
+
+      // Max iterations.
+      var maxIterations = 50;
+      var currentIteration = 0;
       var intervalId = setInterval(function () {
-        if (props.headlineRef !== 'undefined') {
+        if (currentIteration > maxIterations) {
+          clearInterval(intervalId);
+        }
+        if ('undefined' !== typeof props.headlineRef && props.headlineRef.current !== null) {
           var headline = props.headlineRef.current;
           headline.querySelector('.block-editor-rich-text__editable').focus();
           clearInterval(intervalId);
         }
-      }, 100);
+        currentIteration++;
+      }, 200);
     }
   });
 })(window.wp);

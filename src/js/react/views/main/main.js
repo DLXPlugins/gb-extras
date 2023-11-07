@@ -114,6 +114,7 @@ const Interface = ( props ) => {
 			/>
 		);
 	};
+	console.log( getValues( `enabledPostTypes` ) );
 	return (
 		<>
 			<div className="dlx-gb-hacks-admin-content-heading">
@@ -223,6 +224,7 @@ const Interface = ( props ) => {
 											Object.values( dlxGBHacksAdmin.postTypes ).map( ( postType ) => {
 												const postTypeSlug = postType.name;
 												const enabledPostTypes = getValues( 'enabledPostTypes' );
+												const checked = enabledPostTypes && enabledPostTypes[ postTypeSlug ] ? true : false;
 												return (
 													<Controller
 														key={ postTypeSlug }
@@ -232,8 +234,9 @@ const Interface = ( props ) => {
 															<CheckboxControl
 																label={ postType.label }
 																className="dlx-admin__checkbox-control"
-																checked={ enabledPostTypes.includes( postTypeSlug ) }
+																checked={ getValues( `enabledPostTypes[${ postTypeSlug }]` ) ?? false }
 																onChange={ ( boolValue ) => {
+																	setValue( `enabledPostTypes[${ postTypeSlug }]`, boolValue );
 																	onChange( boolValue );
 																} }
 															/>

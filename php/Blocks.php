@@ -24,7 +24,41 @@ class Blocks {
 		add_filter( 'block_type_metadata', array( $self, 'add_block_metadata' ), 10, 1 );
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_adobe_fonts' ), 10, 1 );
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_blocksy_adobe_fonts' ), 10, 1 );
+		add_filter( 'generateblocks_do_content', array( $self, 'add_post_type_content' ), 10, 2 );
 		return $self;
+	}
+
+	/**
+	 * Add post type content.
+	 *
+	 * @param string $content Post content.
+	 */
+	public function add_post_type_content( $content ) {
+		global $post;
+		// Get the ID.
+		$post_id = $post->ID ?? 0;
+		// Bail if no ID.
+		if ( ! $post_id ) {
+			return $content;
+		}
+		$options            = Options::get_options();
+		$enabled_post_types = $options['enabledPostTypes'] ?? array();
+		$current_post_type  = get_post_type( $post_id );
+
+		// If post or page, bail.
+		if ( in_array( $current_post_type, array( 'post', 'page' ), true ) ) {
+			return $content;
+		}
+
+		if ( in_array( $current_post_type, $enabled_post_types, true ) ) {
+			$block_element = get_post( $post_id );
+			if ( $block_element ) {
+				if ( 'publish' === $block_element->post_status && empty( $block_element->post_password ) ) {
+					$content .= $block_element->post_content;
+				}
+			}
+		}
+		return $content;
 	}
 
 

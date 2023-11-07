@@ -61,13 +61,21 @@ let previousBlocks = [];
 		if ( props.attributes.uniqueId === '' ) {
 			props.attributes.element = defaultHeadlineElement;
 
+			// Max iterations.
+			const maxIterations = 50;
+			let currentIteration = 0;
+
 			const intervalId = setInterval( function() {
-				if ( props.headlineRef !== 'undefined' ) {
+				if ( currentIteration > maxIterations ) {
+					clearInterval( intervalId );
+				}
+				if ( 'undefined' !== typeof props.headlineRef && props.headlineRef.current !== null ) {
 					const headline = props.headlineRef.current;
 					headline.querySelector( '.block-editor-rich-text__editable' ).focus();
 					clearInterval( intervalId );
 				}
-			}, 100 );
+				currentIteration++;
+			}, 200 );
 		}
 	} );
 }( window.wp ) );
