@@ -107,27 +107,42 @@ const PatternImporter = ( props ) => {
 		const imagesProcessed = [];
 		let imagePromises = [];
 		let localPatternText = patternText;
+		let imageCount = 0;
 
 		// Let's loop through images and process.
 		if ( imagesToProcess.length ) {
 			imagePromises = imagesToProcess.map( ( image ) => {
-				const response = processImage( image, '' );
-				response.then( ( restResponse ) => {
-					imagesProcessed.push( image );
-					const { data, success } = restResponse.data;
-					if ( success ) {
+				try {
+					const response = processImage( image, '' );
+					response.then( ( restResponse ) => {
+						imagesProcessed.push( image );
+						const { data, success } = restResponse.data;
+						if ( success ) {
+							imageCount++;
+							setImageProcessingCount( imageCount );
+
+							// Get the image URL and replace in pattern.
+							const newImageUrl = data.attachmentUrl;
+
+							// Replace old URL with new URL.
+							localPatternText = localPatternText.replace( image, newImageUrl );
+							setPatternText( localPatternText );
+						} else {
+							// Fail silently.
+							imageCount++;
+							setImageProcessingCount( imageCount );
+						}
+					} ).catch( ( error ) => {
+						// Fail silently.
 						imageCount++;
 						setImageProcessingCount( imageCount );
-
-						// Get the image URL and replace in pattern.
-						const newImageUrl = data.attachmentUrl;
-
-						// Replace old URL with new URL.
-						localPatternText = localPatternText.replace( image, newImageUrl );
-						setPatternText( localPatternText );
-					}
-				} );
-				return response;
+					} );
+					return response;
+				} catch ( error ) {
+					// Fail silently.
+					imageCount++;
+					setImageProcessingCount( imageCount );
+				}
 			} );
 		}
 
@@ -153,9 +168,29 @@ const PatternImporter = ( props ) => {
 				// Insert block in place of this one.
 				//replaceInnerBlocks( clientId, patternBlocks );
 			} catch ( error ) {
-				console.log( error );
-			}	
+			}
+		} ).catch( ( error ) => {
+			const gbUniqueIdMatches = [ ...localPatternText.matchAll( uniqueIdRegex ) ];
 
+			// If there are matches, we need to process them.
+			if ( gbUniqueIdMatches.length ) {
+				// Loop through matches, generate unique ID, and replace.
+				gbUniqueIdMatches.forEach( ( match ) => {
+					const newUniqueId = generateUniqueId();
+					uniqueIds.push( newUniqueId );
+					patternText.replace( match[ 1 ], `"uniqueId":"${ newUniqueId }"` );
+				} );
+			}
+			// Convert pattern to blocks.
+			try {
+				const patternBlocks = parse( localPatternText );
+
+				replaceBlock( clientId, patternBlocks );
+
+				// Insert block in place of this one.
+				//replaceInnerBlocks( clientId, patternBlocks );
+			} catch ( error ) {
+			}
 		} );
 	};
 

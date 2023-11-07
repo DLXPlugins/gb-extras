@@ -114,7 +114,6 @@ const Interface = ( props ) => {
 			/>
 		);
 	};
-	console.log( getValues( `enabledPostTypes` ) );
 	return (
 		<>
 			<div className="dlx-gb-hacks-admin-content-heading">

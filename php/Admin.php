@@ -440,7 +440,7 @@ class Admin {
 			// Get all show in menu post types.
 			$post_types = get_post_types(
 				array(
-					'show_in_menu' => true,
+					'show_ui' => true,
 				),
 				'objects'
 			);
