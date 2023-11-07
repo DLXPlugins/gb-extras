@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 			  files: [
 				{src: ['gb-hacks.php'], dest: '/', filter: 'isFile'}, // includes files in path
 				{src: ['readme.txt'], dest: '/', filter: 'isFile'},
+				{src: ['assets/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['php/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['lib/**'], dest: '/'}, // includes files in path and its subdirs
 				{src: ['dist/**'], dest: '/'}, // includes files in path and its subdirs
