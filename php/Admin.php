@@ -410,6 +410,7 @@ class Admin {
 			return;
 		}
 
+		$options = Options::get_options();
 		$current_tab = Functions::get_admin_tab();
 		if ( null === $current_tab || 'settings' === $current_tab ) {
 			// Enqueue main scripts.

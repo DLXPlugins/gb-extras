@@ -22,7 +22,18 @@ class Blocks {
 		add_action( 'init', array( $self, 'init' ) );
 		add_action( 'rest_api_init', array( $self, 'init_rest_api' ) );
 		add_filter( 'block_type_metadata', array( $self, 'add_block_metadata' ), 10, 1 );
+		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_adobe_fonts' ), 10, 1 );
 		return $self;
+	}
+
+
+	/**
+	 * Add Adobe Fonts to the list of fonts.
+	 *
+	 * @param array $fonts List of fonts.
+	 */
+	public function add_adobe_fonts( $fonts ) {
+		return $fonts;
 	}
 
 	/**
@@ -180,6 +191,7 @@ class Blocks {
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
+		$options = Options::get_options();
 
 		wp_register_script(
 			'gb-hacks-pattern-inserter-block',
@@ -193,8 +205,11 @@ class Blocks {
 			'gb-hacks-pattern-inserter-block',
 			'gbHacksPatternInserter',
 			array(
-				'restUrl'   => rest_url( 'dlxplugins/gb-hacks/v1' ),
-				'restNonce' => wp_create_nonce( 'wp_rest' ),
+				'restUrl'                     => rest_url( 'dlxplugins/gb-hacks/v1' ),
+				'restNonce'                   => wp_create_nonce( 'wp_rest' ),
+				'allowedGoogleFonts'          => $options['allowedGoogleFonts'] ?? array(),
+				'defaultHeadlineBlockEnabled' => (bool) $options['enableDefaultHeadlineBlock'] ?? false,
+				'defaultHeadlineBlockElement' => $options['headlineBlockElement'] ?? '',
 			)
 		);
 	}

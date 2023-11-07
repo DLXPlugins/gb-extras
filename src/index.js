@@ -1,72 +1,73 @@
 import { setDefaultBlockName } from '@wordpress/blocks';
-import { addFilter, addAction } from '@wordpress/hooks';
+import { addAction } from '@wordpress/hooks';
 import './js/blocks/pattern-importer/index.js';
 
-// Run on load.
-document.addEventListener( 'DOMContentLoaded', function() {
-	
-	addFilter( 'generateblocks.editor.blockContext', 'generateblocks/editor/blockContext/default', function( blockContext, props ) {
-		return blockContext;
-	} );
-} );
+let previousBlocks = [];
 
 // Run on load.
 ( function( wp ) {
-	wp.data.subscribe(() => {
-		const { getBlockCount } = wp.data.select('core/block-editor');
-	
-		setDefaultBlockName('generateblocks/headline');
-	} );
+	// Check to see if the default block is a headline. If not, return.
+	const defaultHeadlineBlockEnabled = gbHacksPatternInserter.defaultHeadlineBlockEnabled;
+	if ( ! defaultHeadlineBlockEnabled ) {
+		return;
+	}
 
-	document.addEventListener( 'DOMContentLoaded', () => {
-		const observer = new MutationObserver( ( mutations ) => {
-			for ( const mutation of mutations ) {
-				if ( ! mutation.addedNodes ) {
-					continue;
-				}
-		
-				for ( const node of mutation.addedNodes ) {
-					// Assuming 'advanced-select-container' is the class of the container for AdvancedSelect
-					console.log( node.classList );
-					if ( node.classList && node.classList.contains( 'generate-advanced-select__menu-portal' ) ) {
-						
-						// Modify internal blocks so only selected fonts show.
-						const selectOptions = node.querySelectorAll( '.generate-advanced-select__menu-portal .generate-advanced-select__option' );
+	// Get the default element name.
+	const defaultHeadlineElement = gbHacksPatternInserter.defaultHeadlineBlockElement;
 
-						// Remove from dom.
-						selectOptions.forEach( ( option ) => {
-							option.remove();
-						} );
-						
+	wp.data.subscribe( () => {
+		// Try to find if the paragraph needs to be converted to a headline.
+		const currentBlocks = wp.data.select( 'core/block-editor' ).getBlocks();
+		const currentBlock = wp.data.select( 'core/block-editor' ).getSelectedBlock();
 
-						observer.disconnect(); // If you only need to run this once
-					}
-				}
+		// Set the default block. Needs to run every render otherwise is forgotten.
+		setDefaultBlockName( 'generateblocks/headline' );
+
+		// If no block is selected, no need to go further.
+		if ( null === currentBlock || 'undefined' === typeof currentBlock ) {
+			previousBlocks = currentBlocks;
+			return;
+		}
+
+		// Check that selected block's client ID is not in previous blocks.
+		if ( previousBlocks.includes( currentBlock.clientId ) ) {
+			previousBlocks = currentBlocks;
+			return;
+		}
+		previousBlocks = currentBlocks;
+
+		// Get the block's index.
+		const blockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( currentBlock.clientId );
+
+		// If previous block is a headline, then the next block should be a headline too.
+		if ( blockIndex > 0 ) {
+			const previousBlock = wp.data.select( 'core/block-editor' ).getBlocks()[ blockIndex - 1 ];
+			if ( previousBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+				wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
+					wp.blocks.createBlock( 'generateblocks/headline', {
+						uniqueId: '',
+						content: currentBlock.attributes.content,
+						element: defaultHeadlineElement,
+					} ),
+				] );
 			}
-		} );
-		
-		observer.observe( document.body, {
-			childList: true,
-			subtree: true,
-		} );
+		}
 	} );
 
 	/**
 	 * Change default headline element to paragraph.
 	 */
-	addAction( 'generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function( props, headlineRef ) {
+	addAction( 'generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function( props ) {
 		if ( props.attributes.uniqueId === '' ) {
-			props.setAttributes( {
-				element: 'p',
-			} );
+			props.attributes.element = defaultHeadlineElement;
+
+			const intervalId = setInterval( function() {
+				if ( props.headlineRef !== 'undefined' ) {
+					const headline = props.headlineRef.current;
+					headline.querySelector( '.block-editor-rich-text__editable' ).focus();
+					clearInterval( intervalId );
+				}
+			}, 100 );
 		}
-		props.onSplit = ( value, isOriginal ) => {
-			console.log( 'blah' );
-			const block = wp.blocks.createBlock( 'generateblocks/headline', {
-				...props.attributes,
-				content: value,
-			} );
-			return block;
-		};
 	} );
 }( window.wp ) );

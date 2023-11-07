@@ -6,7 +6,8 @@
 		"window": true,
 		"document": true,
 		"dlxGBHacksLicense": "readonly",
-		"dlxGBHacksAdmin": "readonly"
+		"dlxGBHacksAdmin": "readonly",
+		"gbHacksPatternInserter": "readonly"
 
 	},
 	"env": {

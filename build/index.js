@@ -5705,95 +5705,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 
 
-
-// Run on load.
-document.addEventListener('DOMContentLoaded', function () {
-  (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('generateblocks.editor.blockContext', 'generateblocks/editor/blockContext/default', function (blockContext, props) {
-    return blockContext;
-  });
-});
+var previousBlocks = [];
 
 // Run on load.
 (function (wp) {
-  wp.data.subscribe(function () {
-    var _wp$data$select = wp.data.select('core/block-editor'),
-      getBlockCount = _wp$data$select.getBlockCount;
-    (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.setDefaultBlockName)('generateblocks/headline');
-  });
-  document.addEventListener('DOMContentLoaded', function () {
-    var observer = new MutationObserver(function (mutations) {
-      var _iterator = _createForOfIteratorHelper(mutations),
-        _step;
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var mutation = _step.value;
-          if (!mutation.addedNodes) {
-            continue;
-          }
-          var _iterator2 = _createForOfIteratorHelper(mutation.addedNodes),
-            _step2;
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var node = _step2.value;
-              // Assuming 'advanced-select-container' is the class of the container for AdvancedSelect
-              console.log(node.classList);
-              if (node.classList && node.classList.contains('generate-advanced-select__menu-portal')) {
-                // Modify internal blocks so only selected fonts show.
-                var selectOptions = node.querySelectorAll('.generate-advanced-select__menu-portal .generate-advanced-select__option');
+  // Check to see if the default block is a headline. If not, return.
+  var defaultHeadlineBlockEnabled = gbHacksPatternInserter.defaultHeadlineBlockEnabled;
+  if (!defaultHeadlineBlockEnabled) {
+    return;
+  }
 
-                // Remove from dom.
-                selectOptions.forEach(function (option) {
-                  option.remove();
-                });
-                observer.disconnect(); // If you only need to run this once
-              }
-            }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
-          }
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
+  // Get the default element name.
+  var defaultHeadlineElement = gbHacksPatternInserter.defaultHeadlineBlockElement;
+  wp.data.subscribe(function () {
+    // Try to find if the paragraph needs to be converted to a headline.
+    var currentBlocks = wp.data.select('core/block-editor').getBlocks();
+    var currentBlock = wp.data.select('core/block-editor').getSelectedBlock();
+
+    // Set the default block. Needs to run every render otherwise is forgotten.
+    (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.setDefaultBlockName)('generateblocks/headline');
+
+    // If no block is selected, no need to go further.
+    if (null === currentBlock || 'undefined' === typeof currentBlock) {
+      previousBlocks = currentBlocks;
+      return;
+    }
+
+    // Check that selected block's client ID is not in previous blocks.
+    if (previousBlocks.includes(currentBlock.clientId)) {
+      previousBlocks = currentBlocks;
+      return;
+    }
+    previousBlocks = currentBlocks;
+
+    // Get the block's index.
+    var blockIndex = wp.data.select('core/block-editor').getBlockIndex(currentBlock.clientId);
+
+    // If previous block is a headline, then the next block should be a headline too.
+    if (blockIndex > 0) {
+      var previousBlock = wp.data.select('core/block-editor').getBlocks()[blockIndex - 1];
+      if (previousBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '') {
+        wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
+          uniqueId: '',
+          content: currentBlock.attributes.content,
+          element: defaultHeadlineElement
+        })]);
       }
-    });
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+    }
   });
 
   /**
    * Change default headline element to paragraph.
    */
-  (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addAction)('generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function (props, headlineRef) {
+  (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addAction)('generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function (props) {
     if (props.attributes.uniqueId === '') {
-      props.setAttributes({
-        element: 'p'
-      });
+      props.attributes.element = defaultHeadlineElement;
+      var intervalId = setInterval(function () {
+        if (props.headlineRef !== 'undefined') {
+          var headline = props.headlineRef.current;
+          headline.querySelector('.block-editor-rich-text__editable').focus();
+          clearInterval(intervalId);
+        }
+      }, 100);
     }
-    props.onSplit = function (value, isOriginal) {
-      console.log('blah');
-      var block = wp.blocks.createBlock('generateblocks/headline', _objectSpread(_objectSpread({}, props.attributes), {}, {
-        content: value
-      }));
-      return block;
-    };
   });
 })(window.wp);
 }();
