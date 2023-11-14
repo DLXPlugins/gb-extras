@@ -23,6 +23,7 @@ import {
 	CardHeader,
 	CardFooter,
 	CardBody,
+	Spinner,
 } from '@wordpress/components';
 
 import { parse } from '@wordpress/blocks';
@@ -107,7 +108,6 @@ const PatternImporter = ( props ) => {
 		const imagesProcessed = [];
 		let imagePromises = [];
 		let localPatternText = patternText;
-		let imageCount = 0;
 
 		// Let's loop through images and process.
 		if ( imagesToProcess.length ) {
@@ -223,6 +223,7 @@ const PatternImporter = ( props ) => {
 						placeholder={ __( 'Paste your pattern here', 'alerts-dlx' ) }
 						value={ patternText }
 						onChange={ ( value ) => setPatternText( value ) }
+						disabled={ importing }
 					/>
 				</CardBody>
 				<CardFooter>
@@ -235,6 +236,7 @@ const PatternImporter = ( props ) => {
 					</Button>
 					{ importing && (
 						<span className="gb-pattern-importer-image">
+							<Spinner />
 							{
 								`Processing ${ imageCount } of ${ patternImages.length } images.`
 							}
