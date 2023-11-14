@@ -35,11 +35,13 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/photoswipe": "^4.1.2",
     "@types/react": "^18.0.14",
+    "@wordpress/commands": "^0.16.0",
     "@wordpress/element": "^4.9.0",
     "@wordpress/eslint-plugin": "^12.8.0",
     "@wordpress/i18n": "^4.11.0",
-    "@wordpress/scripts": "^23.3.0",
-    "axios": "^0.27.2",
+    "@wordpress/icons": "^9.36.0",
+    "@wordpress/scripts": "^26.16.0",
+    "axios": "^1.6.1",
     "babel-plugin-macros": "^3.1.0",
     "classnames": "^2.3.1",
     "css-loader": "^6.7.1",
@@ -73,7 +75,6 @@
   "dependencies": {
     "@wordpress/a11y": "^3.11.0",
     "@wordpress/components": "^19.13.0",
-    "@wordpress/icons": "^9.5.0",
     "grunt-cli": "^1.4.3",
     "html-to-react": "^1.4.8"
   }

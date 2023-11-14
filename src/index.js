@@ -1,6 +1,7 @@
 import { setDefaultBlockName } from '@wordpress/blocks';
 import { addAction } from '@wordpress/hooks';
 import './js/blocks/pattern-importer/index.js';
+import './js/blocks/commands/index.js';
 
 let previousBlocks = [];
 
