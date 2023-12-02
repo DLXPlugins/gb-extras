@@ -163,6 +163,15 @@ class Blocks {
 				'permission_callback' => array( $this, 'rest_image_sideload_permissions' ),
 			)
 		);
+		register_rest_route(
+			'dlxplugins/gb-hacks/v1',
+			'/get_asset_icon_groups',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'rest_get_gb_groups' ),
+				'permission_callback' => array( $this, 'rest_image_sideload_permissions' ),
+			)
+		);
 	}
 
 	/**
@@ -251,6 +260,33 @@ class Blocks {
 				'message' => __( 'Invalid image URL.', 'gb-hacks' ),
 			),
 			400
+		);
+	}
+
+	/**
+	 * Process a list of images for a plugin.
+	 *
+	 * @param WP_Rest $request REST request.
+	 */
+	public function rest_get_gb_groups( $request ) {
+
+		// Get existing SVGs.
+		$existing_svg_assets = get_option( 'generateblocks_svg_icons', array() );
+
+		// Loop through and get `group`.
+		$groups = array();
+		foreach ( $existing_svg_assets as $svg_asset ) {
+			$groups[] = $svg_asset['group'];
+		}
+
+		// If the group is empty, then on JS side, prompt for a group name.
+		$groups = array_unique( $groups );
+
+		// Send success.
+		\wp_send_json_success(
+			array(
+				'groups' => $groups,
+			)
 		);
 	}
 

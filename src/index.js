@@ -1,5 +1,9 @@
-import { setDefaultBlockName } from '@wordpress/blocks';
+import { useEffect, useState } from 'react';
+import { setDefaultBlockName, cloneBlock } from '@wordpress/blocks';
 import { addAction } from '@wordpress/hooks';
+import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
+import { useSelect, select, useDispatch, store } from '@wordpress/data';
+import { registerPlugin } from '@wordpress/plugins';
 import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
 
@@ -78,5 +82,52 @@ let previousBlocks = [];
 				currentIteration++;
 			}, 200 );
 		}
+	} );
+
+	registerPlugin( 'dlx-gb-hacks', {
+		render: () => {
+
+			const [ clientIds, setClientIds ] = useState( [] );
+
+			// Get the selected block clientIds.
+
+			const selectedBlocks = useSelect( ( select ) => {
+				return select( 'core/block-editor' ).getMultiSelectedBlocks();
+			}, [] );
+
+			const { replaceBlocks, clearSelectedBlock } = useDispatch( store )( 'core/block-editor');
+
+			useEffect( () => {
+				setClientIds( selectedBlocks );
+			}, [ selectedBlocks ] );
+
+			// If no blocks are selected, return.
+			if ( clientIds.length === 0 ) {
+				return null;
+			}
+
+			// If more than one block is selected, add toolbar option to wrap container.
+			if ( clientIds.length > 1 ) {
+				return (
+					<PluginBlockSettingsMenuItem
+						icon="editor-table"
+						label="Wrap in Container"
+						onClick={ () => {
+							const innerBlocks = [];
+							clientIds.forEach( ( clientId ) => {
+								innerBlocks.push( cloneBlock( clientId ) );
+							} );
+							replaceBlocks(
+								select( 'core/block-editor' ).getMultiSelectedBlockClientIds(),
+								wp.blocks.createBlock(
+									'generateblocks/container', {}, innerBlocks
+								)
+							);
+						} }
+					/>
+				);
+			}
+			return null;
+		},
 	} );
 }( window.wp ) );
