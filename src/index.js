@@ -4,8 +4,12 @@ import { addAction } from '@wordpress/hooks';
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
 import { useSelect, select, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
+import uniqueId from 'lodash.uniqueid';
 import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
+import ContainerLogo from './js/blocks/components/icons/ContainerLogo.js';
+import ReplaceIcon from './js/blocks/components/icons/ReplaceIcon.js';
+import { settings } from '@wordpress/icons';
 
 let previousBlocks = [];
 
@@ -84,9 +88,11 @@ let previousBlocks = [];
 		}
 	} );
 
-	registerPlugin( 'dlx-gb-hacks', {
+	/**
+	 * Add a toolbar option to wrap selected blocks in a container.
+	 */
+	registerPlugin( 'dlx-gb-hacks-wrap-container', {
 		render: () => {
-
 			const [ clientIds, setClientIds ] = useState( [] );
 
 			// Get the selected block clientIds.
@@ -95,7 +101,7 @@ let previousBlocks = [];
 				return select( 'core/block-editor' ).getMultiSelectedBlocks();
 			}, [] );
 
-			const { replaceBlocks, clearSelectedBlock } = useDispatch( store )( 'core/block-editor');
+			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
 
 			useEffect( () => {
 				setClientIds( selectedBlocks );
@@ -110,7 +116,7 @@ let previousBlocks = [];
 			if ( clientIds.length > 1 ) {
 				return (
 					<PluginBlockSettingsMenuItem
-						icon="editor-table"
+						icon={ <ContainerLogo /> }
 						label="Wrap in Container"
 						onClick={ () => {
 							const innerBlocks = [];
@@ -129,5 +135,104 @@ let previousBlocks = [];
 			}
 			return null;
 		},
+	} );
+
+	// Unique ID storing.
+	const uniqueIds = [];
+	/**
+	 * Generate New Unique IDs for selected blocks.
+	 */
+	registerPlugin( 'dlx-gb-hacks-generate-unique-ids', {
+		render: () => {
+			const selectedBlock = useSelect( ( select ) => {
+				return select( 'core/block-editor' ).getSelectedBlock();
+			}, [] );
+
+			/**
+			 * Return and generate a new unique ID.
+			 *
+			 * @param {string} clientId The client ID of the block.
+			 *
+			 * @return {string} The uniqueId.
+			 */
+			const generateUniqueId = ( clientId ) => {
+				// Get the substr of current client ID for prefix.
+				const prefix = clientId.substring( 2, 9 ).replace( '-', '' );
+				const newUniqueId = uniqueId( prefix );
+
+				// Make sure it isn't in the array already. Recursive much?
+				if ( uniqueIds.includes( newUniqueId ) ) {
+					return generateUniqueId();
+				}
+				return newUniqueId;
+			};
+
+			/**
+			 * Replace uniqueId attribute with new uniqueId.
+			 *
+			 * @param {Object} block The block object.
+			 */
+			const replaceUniqueId = ( block ) => {
+				const blockClientId = block.clientId;
+				const blockAttributes = block.attributes;
+
+				// If block has a `uniqueId` attribute, generate a new one.
+				if ( 'undefined' !== typeof blockAttributes.uniqueId ) {
+					const newUniqueId = generateUniqueId( blockClientId );
+					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( blockClientId, { uniqueId: newUniqueId } );
+				}
+
+				// Now check if block has innerBlocks.
+				if ( 'undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0 ) {
+					block.innerBlocks.forEach( ( innerBlock ) => {
+						replaceUniqueId( innerBlock );
+					} );
+				}
+			};
+
+			/**
+			 * Return early if no block is selected.
+			 */
+			if ( null === selectedBlock ) {
+				return null;
+			}
+
+			// Get the block name.
+			const { name } = selectedBlock;
+
+			// If name contains `generateblocks`, proceed.
+			if ( name.indexOf( 'generateblocks' ) === -1 ) {
+				return null;
+			}
+
+			// If more than one block is selected, add toolbar option to replace the Unique ID.
+			return (
+				<PluginBlockSettingsMenuItem
+					icon={ <ReplaceIcon /> }
+					label="Generate New Unique IDs"
+					onClick={ () => {
+						replaceUniqueId( selectedBlock ); // This gets the selected block and all innerBlocks.
+					} }
+				/>
+			);
+		},
+	} );
+
+	/**
+	 * Allow transform from group block.
+	 */
+	wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/group', ( blockSettings ) => {
+		if ( blockSettings.name === 'core/group' ) {
+			const transformsTo = blockSettings.transforms?.to || [];
+			transformsTo.push( {
+				type: 'block',
+				blocks: [ 'generateblocks/container' ],
+				transform: ( attributes, innerBlocks ) => {
+					return wp.blocks.createBlock( 'generateblocks/container', {}, innerBlocks );
+				},
+			} );
+			blockSettings.transforms.to = transformsTo;
+		}
+		return blockSettings;
 	} );
 }( window.wp ) );

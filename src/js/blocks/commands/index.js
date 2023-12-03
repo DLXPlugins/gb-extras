@@ -51,32 +51,32 @@ const GBCommands = () => {
 		},
 		context: 'block-editor',
 	} );
-	useCommand( {
-		name: 'dlx-gb-svg-add-asset-library',
-		label: 'Add an SVG to the GenerateBlocks Asset Library',
-		icon: upload,
-		callback: async() => {
-			setIsModalOpen( true );
-			setGroupsLoading( true );
-			const response = await SendCommand(
-				gbHacksPatternInserter.restNonce,
-				{},
-				gbHacksPatternInserter.restUrl + '/get_asset_icon_groups',
-				'get'
-			);
-			// Extract out data.
-			const { data, success } = response.data;
-			if ( success ) {
-				setGroups( data.groups );
-			}
-			setGroupsLoading( false );
-		},
-		context: 'block-editor',
-	} );
+	// useCommand( {
+	// 	name: 'dlx-gb-svg-add-asset-library',
+	// 	label: 'Add an SVG to the GenerateBlocks Asset Library',
+	// 	icon: upload,
+	// 	callback: async() => {
+	// 		setIsModalOpen( true );
+	// 		setGroupsLoading( true );
+	// 		const response = await SendCommand(
+	// 			gbHacksPatternInserter.restNonce,
+	// 			{},
+	// 			gbHacksPatternInserter.restUrl + '/get_asset_icon_groups',
+	// 			'get'
+	// 		);
+	// 		// Extract out data.
+	// 		const { data, success } = response.data;
+	// 		if ( success ) {
+	// 			setGroups( data.groups );
+	// 		}
+	// 		setGroupsLoading( false );
+	// 	},
+	// 	context: 'block-editor',
+	// } );
 
-	const getGroups = () => {
-		
-	}
+	// const getGroups = () => {
+
+	// }
 	return (
 		<>
 			{ isModalOpen && (

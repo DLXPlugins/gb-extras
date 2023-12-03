@@ -1,5 +1,6 @@
 @import '../../node_modules/@wordpress/components/build-style/style.css';
 @import './button-resets.scss';
+@import './breakpoints-mixin.scss';
 
 @keyframes dlx-gbhacks-rotate {
 	100% {
@@ -54,7 +55,10 @@
 		padding: 1.5rem;
 		margin: 0 auto;
 
-		.dlx-gb-hacks-logo {
+		.dlx-gb-hacks-logo-wrapper {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 			max-width: 69.5rem;
 			margin: 0 auto;
 
@@ -86,6 +90,81 @@
     align-items: center;
     padding-top: 25px;
 }
+
+/* Button styles stolen from QuotesDLX */
+.header__btn-wrap {
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	max-width: 100%;
+	margin-top: 15px;
+
+	@include respond-to('small') {
+		max-width: 250px;
+		margin-top: 0;
+	}
+
+	@include respond-to('medium') {
+		max-width: 250px;
+		margin-top: 0;
+	}
+
+	@include respond-to('large') {
+		max-width: 250px;
+		margin-top: 0;
+	}
+
+	&.left,
+	&.right,
+	&.center {
+		display: flex;
+	}
+	&.left {
+		justify-content: flex-start;
+	}
+	&.center {
+		justify-content: center;
+	}
+	&.right {
+		justify-content: flex-end;
+	}
+	button,
+	.has__btn-primary {
+		width: 100%;
+		text-align: center;
+		margin-bottom: 0px;
+		border-radius: 2px;
+		font-size: 1.3em;
+		display: inline-block;
+		background: #fff;
+		color: #4f4f4f;
+		border: 2px solid #4f4f4f;
+		padding: 10px 20px;
+		cursor: pointer;
+		transition: all 0.4s ease-in-out;
+		text-decoration: none;
+
+		&:not([disabled]):hover {
+			border-radius: 2px;
+			background: #4f4f4f;
+			color: #fff;
+			border-color: #fff;
+			text-decoration: none;
+			transition: all 0.4s ease-in-out;
+		}
+	}
+	.has__btn-primary {
+		display: block;
+		width: 100%;
+
+		margin-bottom: 15px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
 
 /**
  * Turn on smooth scroll.

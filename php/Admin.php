@@ -499,10 +499,16 @@ class Admin {
 		?>
 		<div class="dlx-gb-hacks-admin-wrap">
 			<header class="dlx-gb-hacks-admin-header">
-				<div class="dlx-gb-hacks-logo">
-					<h2 id="dlx-gb-hacks-admin-header">
-						<img src="<?php echo esc_url( Functions::get_plugin_url( 'assets/img/logo.png' ) ); ?>" alt="GenerateBlocks Hacks" />
-					</h2>
+				<div class="dlx-gb-hacks-logo-wrapper">
+					<div class="dlx-gb-hacks-logo">
+						<h2 id="dlx-gb-hacks-admin-header">
+							<img src="<?php echo esc_url( Functions::get_plugin_url( 'assets/img/logo.png' ) ); ?>" alt="GenerateBlocks Hacks" />
+						</h2>
+					</div>
+					<div class="header__btn-wrap">
+						<a href="<?php echo esc_url( 'https://docs.dlxplugins.com/v/gb-hacks/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Docs', 'dlx-gb-hacks' ); ?></a>
+						<a href="<?php echo esc_url( 'https://dlxplugins.com/support/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Support', 'dlx-gb-hacks' ); ?></a>
+					</div>
 				</div>
 			</header>
 			<?php

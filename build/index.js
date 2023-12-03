@@ -31,34 +31,6 @@ const settings = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress
 
 /***/ }),
 
-/***/ "./node_modules/@wordpress/icons/build-module/library/upload.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@wordpress/icons/build-module/library/upload.js ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "@wordpress/primitives");
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
-
-/**
- * WordPress dependencies
- */
-
-const upload = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24"
-}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
-  d: "M18.5 15v3.5H13V6.7l4.5 4.1 1-1.1-6.2-5.8-5.8 5.8 1 1.1 4-4v11.7h-6V15H4v5h16v-5z"
-}));
-/* harmony default export */ __webpack_exports__["default"] = (upload);
-//# sourceMappingURL=upload.js.map
-
-/***/ }),
-
 /***/ "./src/js/blocks/commands/index.js":
 /*!*****************************************!*\
   !*** ./src/js/blocks/commands/index.js ***!
@@ -74,14 +46,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/settings.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/upload.js");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utils_SendCommand__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/SendCommand */ "./src/js/blocks/utils/SendCommand.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -143,42 +110,32 @@ var GBCommands = function GBCommands() {
     },
     context: 'block-editor'
   });
-  (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
-    name: 'dlx-gb-svg-add-asset-library',
-    label: 'Add an SVG to the GenerateBlocks Asset Library',
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__["default"],
-    callback: function () {
-      var _callback = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response, _response$data, data, success;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              setIsModalOpen(true);
-              setGroupsLoading(true);
-              _context.next = 4;
-              return (0,_utils_SendCommand__WEBPACK_IMPORTED_MODULE_4__["default"])(gbHacksPatternInserter.restNonce, {}, gbHacksPatternInserter.restUrl + '/get_asset_icon_groups', 'get');
-            case 4:
-              response = _context.sent;
-              // Extract out data.
-              _response$data = response.data, data = _response$data.data, success = _response$data.success;
-              if (success) {
-                setGroups(data.groups);
-              }
-              setGroupsLoading(false);
-            case 8:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee);
-      }));
-      function callback() {
-        return _callback.apply(this, arguments);
-      }
-      return callback;
-    }(),
-    context: 'block-editor'
-  });
-  var getGroups = function getGroups() {};
+  // useCommand( {
+  // 	name: 'dlx-gb-svg-add-asset-library',
+  // 	label: 'Add an SVG to the GenerateBlocks Asset Library',
+  // 	icon: upload,
+  // 	callback: async() => {
+  // 		setIsModalOpen( true );
+  // 		setGroupsLoading( true );
+  // 		const response = await SendCommand(
+  // 			gbHacksPatternInserter.restNonce,
+  // 			{},
+  // 			gbHacksPatternInserter.restUrl + '/get_asset_icon_groups',
+  // 			'get'
+  // 		);
+  // 		// Extract out data.
+  // 		const { data, success } = response.data;
+  // 		if ( success ) {
+  // 			setGroups( data.groups );
+  // 		}
+  // 		setGroupsLoading( false );
+  // 	},
+  // 	context: 'block-editor',
+  // } );
+
+  // const getGroups = () => {
+
+  // }
   return /*#__PURE__*/React.createElement(React.Fragment, null, isModalOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
     isDismissible: true,
     shouldCloseOnClickOutside: false,
@@ -192,6 +149,61 @@ var GBCommands = function GBCommands() {
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__.registerPlugin)('dlxgb-commands', {
   render: GBCommands
 });
+
+/***/ }),
+
+/***/ "./src/js/blocks/components/icons/ContainerLogo.js":
+/*!*********************************************************!*\
+  !*** ./src/js/blocks/components/icons/ContainerLogo.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var ContainerLogo = function ContainerLogo() {
+  return /*#__PURE__*/React.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    width: "24",
+    height: "24",
+    className: "gblocks-block-icon"
+  }, /*#__PURE__*/React.createElement("path", {
+    style: {
+      fill: 'none'
+    },
+    d: "M0 0h24v24H0z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M21.375 22h-3.75v-1.25h3.125v-3.125H22v3.75c0 .345-.28.625-.625.625zM9.188 20.75h5.625V22H9.188zM6.375 22h-3.75A.625.625 0 0 1 2 21.375v-3.75h1.25v3.125h3.125V22zM2 9.187h1.25v5.625H2zm1.25-2.812H2v-3.75C2 2.28 2.28 2 2.625 2h3.75v1.25H3.25v3.125zM9.188 2h5.625v1.25H9.188zM22 6.375h-1.25V3.25h-3.125V2h3.75c.345 0 .625.28.625.625v3.75zm-1.25 2.812H22v5.625h-1.25z"
+  }));
+};
+/* harmony default export */ __webpack_exports__["default"] = (ContainerLogo);
+
+/***/ }),
+
+/***/ "./src/js/blocks/components/icons/ReplaceIcon.js":
+/*!*******************************************************!*\
+  !*** ./src/js/blocks/components/icons/ReplaceIcon.js ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var ReplaceIcon = function ReplaceIcon() {
+  return /*#__PURE__*/React.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    xmlSpace: "preserve",
+    style: {
+      enableBackground: 'new 0 0 452.025 452.025'
+    },
+    width: "24",
+    height: "24",
+    viewBox: "0 0 452.025 452.025"
+  }, /*#__PURE__*/React.createElement("path", {
+    fill: "currentColor",
+    d: "M362.612 34.125h-55.2l13.6-13.6c4.7-4.7 4.7-12.3 0-17s-12.3-4.7-17 0l-34 34.1c-2.3 2.3-3.5 5.3-3.5 8.5s1.3 6.2 3.5 8.5l34.1 34.1c2.3 2.3 5.4 3.5 8.5 3.5s6.1-1.2 8.5-3.5c4.7-4.7 4.7-12.3 0-17l-13.6-13.6h55.2c35.9 0 65 29.2 65 65v40.3c0 6.6 5.4 12 12 12s12-5.4 12-12v-40.3c0-49.1-40-89-89.1-89zM438.812 230.925h-197.1c-6.6 0-12 5.4-12 12v197.1c0 6.6 5.4 12 12 12h197.1c6.6 0 12-5.4 12-12v-197.1c0-6.7-5.4-12-12-12zm-12 197.1h-173.1v-173.1h173.1v173.1zM147.912 363.325c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l13.6 13.6h-55.2c-35.9 0-65-29.2-65-65v-40.3c0-6.6-5.4-12-12-12s-12 5.4-12 12v40.3c0 49.1 39.9 89 89 89h55.2l-13.6 13.6c-4.7 4.7-4.7 12.3 0 17 2.3 2.3 5.4 3.5 8.5 3.5s6.1-1.2 8.5-3.5l34.1-34.1c4.7-4.7 4.7-12.3 0-17l-34.1-34.1zM13.212 24.025c3.2 0 6.3-1.3 8.5-3.5s3.5-5.3 3.5-8.5c0-3.1-1.3-6.3-3.5-8.5s-5.3-3.5-8.5-3.5-6.3 1.3-8.5 3.5-3.5 5.3-3.5 8.5 1.3 6.3 3.5 8.5c2.3 2.2 5.3 3.5 8.5 3.5zM111.812 24.025c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.3 12 12 12zM62.512 24.025c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM161.012 24.025c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM210.312.025c-3.1 0-6.3 1.3-8.5 3.5s-3.5 5.3-3.5 8.5 1.3 6.3 3.5 8.5 5.3 3.5 8.5 3.5 6.3-1.3 8.5-3.5 3.5-5.3 3.5-8.5-1.3-6.3-3.5-8.5-5.3-3.5-8.5-3.5zM210.312 147.925c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12c0-6.7-5.3-12-12-12zM210.312 98.625c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12c0-6.7-5.3-12-12-12zM210.312 49.325c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12-5.3-12-12-12zM210.312 197.125c-3.2 0-6.3 1.3-8.5 3.5s-3.5 5.3-3.5 8.5c0 3.1 1.3 6.3 3.5 8.5s5.3 3.5 8.5 3.5 6.3-1.3 8.5-3.5 3.5-5.3 3.5-8.5-1.3-6.3-3.5-8.5c-2.199-2.2-5.3-3.5-8.5-3.5zM161.012 221.125c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12c0 6.7 5.4 12 12 12zM111.812 221.125c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12c0 6.7 5.3 12 12 12zM62.512 221.125c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12c0 6.7 5.4 12 12 12zM13.212 221.125c3.2 0 6.3-1.3 8.5-3.5s3.5-5.3 3.5-8.5-1.3-6.3-3.5-8.5-5.3-3.5-8.5-3.5-6.3 1.3-8.5 3.5-3.5 5.3-3.5 8.5c0 3.1 1.3 6.3 3.5 8.5 2.3 2.2 5.3 3.5 8.5 3.5zM13.212 171.925c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM13.212 122.625c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM13.212 73.325c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12z"
+  }));
+};
+/* harmony default export */ __webpack_exports__["default"] = (ReplaceIcon);
 
 /***/ }),
 
@@ -7578,14 +7590,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
-/* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
+/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash.uniqueid */ "./node_modules/lodash.uniqueid/index.js");
+/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
+/* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
+/* harmony import */ var _js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/blocks/components/icons/ContainerLogo.js */ "./src/js/blocks/components/icons/ContainerLogo.js");
+/* harmony import */ var _js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./js/blocks/components/icons/ReplaceIcon.js */ "./src/js/blocks/components/icons/ReplaceIcon.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
 
 
 
@@ -7666,7 +7686,11 @@ var previousBlocks = [];
       }, 200);
     }
   });
-  (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('dlx-gb-hacks', {
+
+  /**
+   * Add a toolbar option to wrap selected blocks in a container.
+   */
+  (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('dlx-gb-hacks-wrap-container', {
     render: function render() {
       var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
         _useState2 = _slicedToArray(_useState, 2),
@@ -7679,8 +7703,7 @@ var previousBlocks = [];
         return select('core/block-editor').getMultiSelectedBlocks();
       }, []);
       var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useDispatch)(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.store)('core/block-editor'),
-        replaceBlocks = _useDispatch.replaceBlocks,
-        clearSelectedBlock = _useDispatch.clearSelectedBlock;
+        replaceBlocks = _useDispatch.replaceBlocks;
       (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
         setClientIds(selectedBlocks);
       }, [selectedBlocks]);
@@ -7693,7 +7716,7 @@ var previousBlocks = [];
       // If more than one block is selected, add toolbar option to wrap container.
       if (clientIds.length > 1) {
         return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_3__.PluginBlockSettingsMenuItem, {
-          icon: "editor-table",
+          icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_9__["default"], null),
           label: "Wrap in Container",
           onClick: function onClick() {
             var innerBlocks = [];
@@ -7706,6 +7729,106 @@ var previousBlocks = [];
       }
       return null;
     }
+  });
+
+  // Unique ID storing.
+  var uniqueIds = [];
+  /**
+   * Generate New Unique IDs for selected blocks.
+   */
+  (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__.registerPlugin)('dlx-gb-hacks-generate-unique-ids', {
+    render: function render() {
+      var selectedBlock = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(function (select) {
+        return select('core/block-editor').getSelectedBlock();
+      }, []);
+
+      /**
+       * Return and generate a new unique ID.
+       *
+       * @param {string} clientId The client ID of the block.
+       *
+       * @return {string} The uniqueId.
+       */
+      var generateUniqueId = function generateUniqueId(clientId) {
+        // Get the substr of current client ID for prefix.
+        var prefix = clientId.substring(2, 9).replace('-', '');
+        var newUniqueId = lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6___default()(prefix);
+
+        // Make sure it isn't in the array already. Recursive much?
+        if (uniqueIds.includes(newUniqueId)) {
+          return generateUniqueId();
+        }
+        return newUniqueId;
+      };
+
+      /**
+       * Replace uniqueId attribute with new uniqueId.
+       *
+       * @param {Object} block The block object.
+       */
+      var replaceUniqueId = function replaceUniqueId(block) {
+        var blockClientId = block.clientId;
+        var blockAttributes = block.attributes;
+
+        // If block has a `uniqueId` attribute, generate a new one.
+        if ('undefined' !== typeof blockAttributes.uniqueId) {
+          var newUniqueId = generateUniqueId(blockClientId);
+          wp.data.dispatch('core/block-editor').updateBlockAttributes(blockClientId, {
+            uniqueId: newUniqueId
+          });
+        }
+
+        // Now check if block has innerBlocks.
+        if ('undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0) {
+          block.innerBlocks.forEach(function (innerBlock) {
+            replaceUniqueId(innerBlock);
+          });
+        }
+      };
+
+      /**
+       * Return early if no block is selected.
+       */
+      if (null === selectedBlock) {
+        return null;
+      }
+
+      // Get the block name.
+      var name = selectedBlock.name;
+
+      // If name contains `generateblocks`, proceed.
+      if (name.indexOf('generateblocks') === -1) {
+        return null;
+      }
+
+      // If more than one block is selected, add toolbar option to replace the Unique ID.
+      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_3__.PluginBlockSettingsMenuItem, {
+        icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_10__["default"], null),
+        label: "Generate New Unique IDs",
+        onClick: function onClick() {
+          replaceUniqueId(selectedBlock); // This gets the selected block and all innerBlocks.
+        }
+      });
+    }
+  });
+
+  /**
+   * Allow transform from group block.
+   */
+  wp.hooks.addFilter('blocks.registerBlockType', 'generateblocks/transform/group', function (blockSettings) {
+    if (blockSettings.name === 'core/group') {
+      var _blockSettings$transf;
+      var transformsTo = ((_blockSettings$transf = blockSettings.transforms) === null || _blockSettings$transf === void 0 ? void 0 : _blockSettings$transf.to) || [];
+      transformsTo.push({
+        type: 'block',
+        blocks: ['generateblocks/container'],
+        transform: function transform(attributes, innerBlocks) {
+          return wp.blocks.createBlock('generateblocks/container', {}, innerBlocks);
+        }
+      });
+      blockSettings.transforms.to = transformsTo;
+    }
+    return blockSettings;
   });
 })(window.wp);
 }();
