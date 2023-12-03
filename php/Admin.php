@@ -127,7 +127,7 @@ class Admin {
 	public function plugin_settings_link( $settings ) {
 		$setting_links = array(
 			'settings' => sprintf( '<a href="%s">%s</a>', esc_url( Functions::get_settings_url() ), esc_html__( 'Settings', 'dlx-gb-hacks' ) ),
-			'docs'     => sprintf( '<a href="%s">%s</a>', esc_url( 'https://docs.dlxplugins.com/' ), esc_html__( 'Docs', 'dlx-gb-hacks' ) ),
+			'docs'     => sprintf( '<a href="%s">%s</a>', esc_url( 'https://docs.dlxplugins.com/v/gb-hacks/' ), esc_html__( 'Docs', 'dlx-gb-hacks' ) ),
 			'site'     => sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/gb-hacks/' ), esc_html__( 'Plugin Home', 'dlx-gb-hacks' ) ),
 		);
 		if ( ! is_array( $settings ) ) {
