@@ -1,145 +1,58 @@
-=== AlertsDLX - Alerts, Callouts, and Notifications ===
-Contributors: ronalfy
-Tags: alerts, notifications, notice, shortcode, blocks
-Requires at least: 5.9
-Tested up to: 6.4
-Stable tag: 1.3.1
-Requires PHP: 7.2
+=== GB Hacks ===
+Contributors: (your username here)
+Tags: generateblocks, gutenberg, blocks, patterns, adobe fonts
+Requires at least: 6.1
+Tested up to: WordPress 6.4
+Stable tag: 1.1.1
+Requires PHP: 7.24
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://github.com/sponsors/DLXPlugins
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create beautiful and impactful alerts, callouts, and notifications for your site.
+Enhance your GenerateBlocks experience with GB Hacks, featuring a Pattern Importer, set the Headline block as default, Adobe Fonts integration, and more.
 
 == Description ==
 
-AlertsDLX offers beautifully styled alerts and notifications blocks for the Block Editor, Classic Editor, or anywhere blocks and shortcodes can go.
+GB Hacks is an add-on for GenerateBlocks that brings additional functionality and enhancements to your block editing experience. Key features include:
 
-https://www.youtube.com/watch?v=7dKpw5uBi5o
+1. **Pattern Importer**: Easily import remote patterns, including all images and unique IDs, ensuring no style conflicts.
+2. **Default Headline Block**: Set the versatile Headline block as your default block in the editor.
+3. **Adobe Font Support**: Integrate Adobe Fonts from popular font plugins like Astra’s Typekit plugin and Blocksy’s Adobe Font module.
+4. **Container Block Wrapping**: Select multiple blocks and wrap them in a Container block with ease.
+5. **Transform the Group block to a Container**: Convert Group blocks into Container blocks, maintaining all internal blocks.
+6. **Command Palette Shortcuts**: Access GenerateBlocks settings quickly with shortcut commands in the block editor’s Command Palette.
+7. **Unique ID Generation**: Avoid style conflicts by generating new unique IDs for duplicated or copied blocks.
 
-> <strong>Now Supports Shortcodes!</strong> <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">See shortcode usage</a>.
-
-> <a href="https://app.instawp.io/launch?t=alerts-dlx&d=v2">Spin up a quick demo here</a>.
-
-Quick Links:
-
-* <a href="https://dlxplugins.com/plugins/alertsdlx/">AlertsDLX Home</a>
-* <a href="https://docs.dlxplugins.com/v/alertsdlx/">AlertsDLX Documentation</a>
-* <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">Shortcode Usage</a>
-* <a href="https://dlxplugins.com/support/">AlertsDLX Support</a>
-
-Blocks are styled with inspiration from:
-
-* <a href="https://mui.com/material-ui/react-alert/">Material UI Alerts</a>
-* <a href="https://chakra-ui.com/docs/components/alert">Chakra UI</a>
-* <a href="https://getbootstrap.com/docs/5.0/components/alerts/">Bootstrap</a>.
-* <a href="https://shoelace.style/">Shoelace</a>
-
-Each Alert can have built-in icons or you can set your own with SVGs.
-
-Icons included are from:
-
-* <a href="https://fonts.google.com/icons">Google Fonts Material Icons</a>
-* <a href="https://github.com/chakra-ui/chakra-ui/tree/main/packages/components/icons/src">Chakra UI Icons</a> (GitHub)
-* <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
-
-Development:
-
-Development happens on GitHub. Please <a href="https://github.com/dlxplugins/alerts-dlx">check out the GitHub code repository for AlertsDLX</a>.
+GB Hacks is perfect for users looking to streamline their GenerateBlocks workflow and add more versatility to their block editor.
 
 == Installation ==
 
-1. Search for AlertsDLX on the Add Plugins screen.
-2. Install and activate.
-
-> <a href="https://docs.dlxplugins.com/v/alertsdlx/">In-depth Documentation</a> - Please check out our thorough documentation ❤️️
-
-> <a href="https://app.instawp.io/launch?t=alerts-dlx&d=v2">View a demo</a>
+1. Upload the plugin files to the `/wp-content/plugins/gb-hacks` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Use the plugin via the block editor in your WordPress site.
 
 == Frequently Asked Questions ==
 
-= Does this work with the Classic Editor? =
-
-Yes. AlertsDLX works with the Classic Editor <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">via its shortcode support</a>.
-
-= Does this work with the Block Editor? =
-
-Yes, AlertsDLX comes with four blocks, one for each style of alert (Bootstrap, Chakra, Material, and Shoelace).
-
-= What alert styles does the plugin support? =
-
-* <a href="https://mui.com/material-ui/react-alert/">Material UI</a>
-* <a href="https://getbootstrap.com/docs/5.0/components/alerts/">Bootstrap</a>
-* <a href="https://chakra-ui.com/docs/components/alert">Chakra UI</a>
-* <a href="https://shoelace.style/">Shoelace</a>
-
-To see all the alerts in one place, <a href="https://app.instawp.io/launch?t=alerts-dlx&d=v2">spin up a quick demo here</a>.
-
-= Can I customize the colors? =
-
-I'm afraid not. For the time being, the colors will match the alert style presented.
-
-= How can I get help? =
-
-Please leave a note on <a href="https://dlxplugins.com/support/">our support page</a>.
-
-= Can I use my own icons? =
-
-Yes. The icon picker allows you to enter an SVG. For the shortcode, you must supply your own SVG.
-
-
-== Screenshots ==
-
-1. Warning Alert and Options
-2. Centered Warning Alert
-3. Example Success Alert
-4. Block Style Previews
-5. Icon Selector
-6. Font Size Option
+= What is the Pattern Importer and how does it work? =
+The Pattern Importer allows you to import GenerateBlocks patterns, automatically generating unique IDs and importing images to your site.
 
 == Changelog ==
 
-= 1.3.1 =
-* Released 2023-10-21
-* Several performance improvements to the frontend. Previously the frontend was loading all styles and scripts for all alert types. Now it only loads the styles and scripts for the alert type(s) being used on the page.
-
-= 1.3.0 =
-* Released 2023-09-23
-* Added support for shortcodes.
-* <a href="https://dlxplugins.com/announcements/alertsdlx-1-3-0-includes-shortcode-support/">Read the announcement post</a>.
-* <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">See shortcode usage</a>.
-
-= 1.2.5 =
-* Released 2023-09-10
-* Optimizing scripts and styles to only load when needed to prevent unnecessary style loading.
-
-= 1.2.1 =
-* Released 2023-04-16
-* Hot fix for outputting the block description.
-
-= 1.2.0 =
-* Released 2023-04-16
-* Added Shoelace alert styles.
-* Changing internal structure to innerBlocks.
+= 1.1.1 =
+* Released 2023-12-93
+* Fix for the default block erroring out when no blocks are selected.
 
 = 1.1.0 =
-* Released 2022-10-01
-* Added Darkmode for Chakra and Material alert boxes.
-
-= 1.0.5 =
-* Released 2022-09-12
-* Fixed "error" alert styles in the block editor/frontend.
-* Updated SVG icons for .org.
-
-= 1.0.1 =
-* Released 2022-09-11
-* Added transforms to the blocks so that they are interchangeable.
+* Released 2023-12-03
+* Added Command Palette commands to access GenerateBlocks settings easily from the block editor.
+* Can select multiple blocks and have them wrapped in a Container block.
+* Can generate a new Unique ID for any block from GenerateBlocks.
+* Added documentation and support links to the admin settings.
+* Fixed image status not displaying for the Pattern Importer.
 
 = 1.0.0 =
-* Released 2022-09-09
 * Initial release.
 
 == Upgrade Notice ==
 
-= 1.3.1 =
-Several performance improvements, particularly with style loading.
+= 1.1.1 =
+Fix for the Headline block as default when there are no blocks selected.
