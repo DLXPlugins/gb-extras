@@ -1,10 +1,9 @@
 === GB Hacks ===
-Contributors: (your username here)
 Tags: generateblocks, gutenberg, blocks, patterns, adobe fonts
 Requires at least: 6.1
 Tested up to: WordPress 6.4
-Stable tag: 1.1.1
-Requires PHP: 7.24
+Stable tag: 1.1.2
+Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +36,7 @@ The Pattern Importer allows you to import GenerateBlocks patterns, automatically
 
 == Changelog ==
 
-= 1.1.1 =
+= 1.1.2 =
 * Released 2023-12-93
 * Fix for the default block erroring out when no blocks are selected.
 
@@ -54,5 +53,5 @@ The Pattern Importer allows you to import GenerateBlocks patterns, automatically
 
 == Upgrade Notice ==
 
-= 1.1.1 =
+= 1.1.2 =
 Fix for the Headline block as default when there are no blocks selected.
