@@ -50,8 +50,17 @@ let previousBlocks = [];
 
 		// If previous block is a headline, then the next block should be a headline too.
 		if ( blockIndex > 0 ) {
-			const previousBlock = wp.data.select( 'core/block-editor' ).getBlocks()[ blockIndex - 1 ];
-			if ( previousBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+			const previousSelectedBlock = wp.data.select( 'core/block-editor' ).getBlocks();
+			const previousBlock = previousSelectedBlock[ blockIndex - 1 ] || null;
+			if ( null !== previousBlock && previousBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+				wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
+					wp.blocks.createBlock( 'generateblocks/headline', {
+						uniqueId: '',
+						content: currentBlock.attributes.content,
+						element: defaultHeadlineElement,
+					} ),
+				] );
+			} else if ( null !== previousBlock && previousBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
 				wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 					wp.blocks.createBlock( 'generateblocks/headline', {
 						uniqueId: '',

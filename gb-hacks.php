@@ -3,7 +3,7 @@
  * Plugin Name:       GB Hacks
  * Plugin URI:        https://dlxplugins.com/plugins/gb-hacks/
  * Description:       A collection of enhancements for the GenerateBlocks plugins.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 5.9
  * Requires PHP:      7.2
  * Author:            DLX Plugins
@@ -18,7 +18,7 @@
 
 namespace DLXPlugins\GBHacks;
 
-define( 'GB_HACKS_VERSION', '1.1.0' );
+define( 'GB_HACKS_VERSION', '1.1.1' );
 define( 'GB_HACKS_FILE', __FILE__ );
 define( 'GB_HACKS_PRODUCT_ID', 36631 );
 
