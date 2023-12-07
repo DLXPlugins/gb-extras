@@ -228,7 +228,7 @@ class Admin {
 			// setup the updater.
 			$edd_updater = new Plugin_Updater(
 				'https://dlxplugins.com',
-				__FILE__,
+				GB_HACKS_FILE,
 				array(
 					'version' => Functions::get_plugin_version(),
 					'license' => $options['licenseKey'],
