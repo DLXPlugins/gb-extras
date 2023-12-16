@@ -115,7 +115,7 @@ class Blocks {
 			$fonts_group = array();
 			foreach ( $font_families as $font_family ) {
 				$fonts_group[] = array(
-					'value' => $font_family['name'],
+					'value' => $font_family['slug'],
 					'label' => $font_family['name'],
 				);
 			}
