@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { setDefaultBlockName, cloneBlock } from '@wordpress/blocks';
 import { addAction } from '@wordpress/hooks';
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
-import { useSelect, select, useDispatch, store } from '@wordpress/data';
+import { useSelect, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import { debounce } from '@wordpress/compose';
 import uniqueId from 'lodash.uniqueid';
@@ -17,6 +17,14 @@ let previousSelectedBlock = null;
 let previousParentClientId = null;
 let previousSelectedBlockIndex = null;
 
+const UnGroupIcon = ( props ) => {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="24" height="24" { ...props }>
+			<path fill="currentColor" d="M0 64c0 29.8 20.4 54.9 48 62v100c-27.6 7.1-48 32.2-48 62 0 35.3 28.7 64 64 64 29.8 0 54.9-20.4 62-48h196c7.1 27.6 32.2 48 62 48 35.3 0 64-28.7 64-64 0-29.8-20.4-54.9-48-62V126c27.6-7.1 48-32.2 48-62 0-35.3-28.7-64-64-64-29.8 0-54.9 20.4-62 48H126C118.9 20.4 93.8 0 64 0 28.7 0 0 28.7 0 64zm322 16c5.8 22.5 23.5 40.2 46 46v100c-22.5 5.8-40.2 23.5-46 46H126c-5.8-22.5-23.5-40.2-46-46V126c22.5-5.8 40.2-23.5 46-46h196zm158 128h-16v32h50c5.8 22.5 23.5 40.2 46 46v100c-22.5 5.8-40.2 23.5-46 46H318c-5.8-22.5-23.5-40.2-46-46v-50h-32v50c-27.6 7.1-48 32.2-48 62 0 35.3 28.7 64 64 64 29.8 0 54.9-20.4 62-48h196c7.1 27.6 32.2 48 62 48 35.3 0 64-28.7 64-64 0-29.8-20.4-54.9-48-62V286c27.6-7.1 48-32.2 48-62 0-35.3-28.7-64-64-64-29.8 0-54.9 20.4-62 48h-34zm96 48a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-32 192a32 32 0 1 1 64 0 32 32 0 1 1-64 0zm-288 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm96-192a32 32 0 1 1 64 0 32 32 0 1 1-64 0zM64 320a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM352 64a32 32 0 1 1 64 0 32 32 0 1 1-64 0zM64 96a32 32 0 1 1 0-64 32 32 0 1 1 0 64z" />
+		</svg>
+	)
+};
+
 // Run on load.
 ( function( wp ) {
 	/**
@@ -28,8 +36,11 @@ let previousSelectedBlockIndex = null;
 
 			// Get the selected block clientIds.
 
-			const selectedBlocks = useSelect( ( select ) => {
-				return select( 'core/block-editor' ).getMultiSelectedBlocks();
+			const { selectedBlocks, getMultiSelectedBlockClientIds } = useSelect( ( select ) => {
+				return {
+					selectedBlocks: select( 'core/block-editor' ).getMultiSelectedBlocks(),
+					getMultiSelectedBlockClientIds: select( 'core/block-editor' ).getMultiSelectedBlockClientIds,
+				}
 			}, [] );
 
 			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
@@ -55,7 +66,7 @@ let previousSelectedBlockIndex = null;
 								innerBlocks.push( cloneBlock( clientId ) );
 							} );
 							replaceBlocks(
-								select( 'core/block-editor' ).getMultiSelectedBlockClientIds(),
+								getMultiSelectedBlockClientIds(),
 								wp.blocks.createBlock(
 									'generateblocks/container', {}, innerBlocks
 								)
@@ -143,6 +154,82 @@ let previousSelectedBlockIndex = null;
 					label="Generate New Unique IDs"
 					onClick={ () => {
 						replaceUniqueId( selectedBlock ); // This gets the selected block and all innerBlocks.
+					} }
+				/>
+			);
+		},
+	} );
+
+	/**
+	 * Register a plugin that unwraps (flattens) a container block.
+	 */
+	registerPlugin( 'dlx-gb-hacks-unwrap-container', {
+		render: () => {
+			const selectedBlock = useSelect( ( select ) => {
+				return select( 'core/block-editor' ).getSelectedBlock();
+			}, [] );
+
+			// If no block is selected, return.
+			if ( null === selectedBlock ) {
+				return null;
+			}
+
+			// If block is not a container, return.
+			if ( selectedBlock.name !== 'generateblocks/container' ) {
+				return null;
+			}
+
+			// If block has no innerBlocks, return.
+			if ( selectedBlock.innerBlocks.length === 0 ) {
+				return null;
+			}
+
+			// If more than one block is selected, add toolbar option to unwrap container.
+			return (
+				<PluginBlockSettingsMenuItem
+					icon={ <UnGroupIcon /> }
+					label="Unwrap Container"
+					onClick={ () => {
+						const innerBlocks = selectedBlock.innerBlocks;
+						wp.data.dispatch( 'core/block-editor' ).replaceBlocks( selectedBlock.clientId, innerBlocks );
+					} }
+				/>
+			);
+		},
+	} );
+
+	/**
+	 * Register a plugin that unwraps (flattens) a group block.
+	 */
+	registerPlugin( 'dlx-gb-hacks-unwrap-group', {
+		render: () => {
+			const selectedBlock = useSelect( ( select ) => {
+				return select( 'core/block-editor' ).getSelectedBlock();
+			}, [] );
+
+			// If no block is selected, return.
+			if ( null === selectedBlock ) {
+				return null;
+			}
+
+			// If block is not a container, return.
+			if ( selectedBlock.name !== 'core/graoup' ) {
+				return null;
+			}
+
+			// If block has no innerBlocks, return.
+			if ( selectedBlock.innerBlocks.length === 0 ) {
+				return null;
+			}
+
+			// If more than one block is selected, add toolbar option to unwrap container.
+			return (
+				<PluginBlockSettingsMenuItem
+					icon={ <UnGroupIcon /> }
+					label="Ungroup Blocks"
+					onClick={ () => {
+						const innerBlocks = selectedBlock.innerBlocks;
+						wp.data.dispatch( 'core/block-editor' ).replaceBlocks( selectedBlock.clientId, innerBlocks );
 					} }
 				/>
 			);
