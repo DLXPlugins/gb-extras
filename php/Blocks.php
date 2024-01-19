@@ -310,8 +310,23 @@ class Blocks {
 		);
 
 		// Enqueue block assets.
-		// add_action( 'enqueue_block_assets', array( $this, 'register_block_styles' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'register_block_styles' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_scripts' ) );
+	}
+
+	/**
+	 * Register the block editor styles.
+	 */
+	public function register_block_styles() {
+		wp_register_style(
+			'gb-hacks-block-editor-styles',
+			false
+		);
+		wp_enqueue_style( 'gb-hacks-block-editor-styles' );
+		wp_add_inline_style(
+			'gb-hacks-block-editor-styles',
+			'.dlx-gb-outline { outline: 2px solid #949494; }'
+		);
 	}
 
 	/**
