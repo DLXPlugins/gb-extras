@@ -15,9 +15,10 @@ const OutlineIcon = ( props ) => {
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			xmlSpace="preserve"
-			width="24"
-			height="24"
+			width="16"
+			height="16"
 			viewBox="0 0 384 384"
+			aria-hidden="true"
 			{ ...props }
 		>
 			<path fill="currentColor" d="M85.333 341.333H128V384H85.333zM256 341.333h42.667V384H256zM341.333 341.333H384V384h-42.667zM170.667 341.333h42.667V384h-42.667zM341.333 256H384v42.667h-42.667z" />
@@ -71,7 +72,7 @@ const GBCommands = () => {
 	} );
 	useCommand( {
 		name: 'dlx-gb-hacks-toggle-container-outlines',
-		label: 'Toggle Container Outlines',
+		label: 'Toggle Container Block Outlines',
 		icon: <OutlineIcon />,
 		callback: ( { close } ) => {
 			const selector = '.gb-container[data-type="generateblocks/container"]';

@@ -4,6 +4,7 @@ import { addAction } from '@wordpress/hooks';
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
 import { useSelect, select, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
+import { debounce } from '@wordpress/compose';
 import uniqueId from 'lodash.uniqueid';
 import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
@@ -12,6 +13,9 @@ import ReplaceIcon from './js/blocks/components/icons/ReplaceIcon.js';
 import { settings } from '@wordpress/icons';
 
 let previousBlocks = [];
+let previousSelectedBlock = null;
+let previousParentClientId = null;
+let previousSelectedBlockIndex = null;
 
 // Run on load.
 ( function( wp ) {
@@ -171,53 +175,68 @@ let previousBlocks = [];
 	// Get the default element name.
 	const defaultHeadlineElement = gbHacksPatternInserter.defaultHeadlineBlockElement;
 
-	wp.data.subscribe( () => {
+
+	/**
+	 * Watch for block changes and set the default block to headline.
+	 */
+	const watchForBlockChanges = () => {
 		// Try to find if the paragraph needs to be converted to a headline.
-		const currentBlocks = wp.data.select( 'core/block-editor' ).getBlocks();
 		const currentBlock = wp.data.select( 'core/block-editor' ).getSelectedBlock();
 
-		// Set the default block. Needs to run every render otherwise is forgotten.
-		setDefaultBlockName( 'generateblocks/headline' );
+		setDefaultBlockName( 'generateblocks/headline' ); // Need to set this every render otherwise it's forgotten.
 
 		// If no block is selected, no need to go further.
 		if ( null === currentBlock || 'undefined' === typeof currentBlock ) {
-			previousBlocks = currentBlocks;
 			return;
 		}
 
-		// Check that selected block's client ID is not in previous blocks.
-		if ( previousBlocks.includes( currentBlock.clientId ) ) {
-			previousBlocks = currentBlocks;
-			return;
-		}
-		previousBlocks = currentBlocks;
+		// Store history vars.
+		const parentClientId = wp.data.select( 'core/block-editor' ).getBlockRootClientId( currentBlock.clientId );
+		const currentBlockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( currentBlock.clientId );
 
-		// Get the block's index.
-		const blockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( currentBlock.clientId );
-
-		// If previous block is a headline, then the next block should be a headline too.
-		if ( blockIndex > 0 ) {
-			const previousSelectedBlock = wp.data.select( 'core/block-editor' ).getBlocks();
-			const previousBlock = previousSelectedBlock[ blockIndex - 1 ] || null;
-			if ( null !== previousBlock && previousBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
-				wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
-					wp.blocks.createBlock( 'generateblocks/headline', {
-						uniqueId: '',
-						content: currentBlock.attributes.content,
-						element: defaultHeadlineElement,
-					} ),
-				] );
-			} else if ( null !== previousBlock && previousBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
-				wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
-					wp.blocks.createBlock( 'generateblocks/headline', {
-						uniqueId: '',
-						content: currentBlock.attributes.content,
-						element: defaultHeadlineElement,
-					} ),
-				] );
+		if ( null !== previousSelectedBlock && null !== previousSelectedBlockIndex ) {
+			// If previous selected block is a headline,  current block is a paragraph, and they both have the same parent client ID and index, then we're in a transform and should return.
+			if ( previousSelectedBlock.name !== 'core/paragraph' && currentBlock.name === 'core/paragraph' && parentClientId === previousParentClientId && currentBlockIndex === previousSelectedBlockIndex ) {
+				return;
 			}
 		}
-	} );
+
+		// Check if previous block is a headline block. If so, current block should be headline too and not a paragraph.
+		if ( currentBlockIndex > 0 ) {
+			const adjacentBlockClientId = wp.data.select( 'core/block-editor' ).getAdjacentBlockClientId( currentBlock.clientId, -1 );
+			if ( null !== adjacentBlockClientId ) {
+				const adjacentBlock = wp.data.select( 'core/block-editor' ).getBlock( adjacentBlockClientId );
+
+				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+					// If previous block is a headline, replace current block with a headline.
+					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
+						wp.blocks.createBlock( 'generateblocks/headline', {
+							uniqueId: '',
+							content: currentBlock.attributes.content,
+							element: defaultHeadlineElement,
+						} ),
+					] );
+				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+					// If previous block is a paragraph, convert current block to headline.
+					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
+						wp.blocks.createBlock( 'generateblocks/headline', {
+							uniqueId: '',
+							content: currentBlock.attributes.content,
+							element: defaultHeadlineElement,
+						} ),
+					] );
+				}
+			}
+		}
+
+		// Story history to detect transforms.
+		previousParentClientId = parentClientId;
+		previousSelectedBlockIndex = currentBlockIndex;
+		previousSelectedBlock = currentBlock;
+	};
+
+	// Run the block change watcher. Debounce to run every 150ms.
+	wp.data.subscribe( debounce( watchForBlockChanges, 150 ) );
 
 	/**
 	 * Change default headline element to paragraph.

@@ -69,9 +69,10 @@ var OutlineIcon = function OutlineIcon(props) {
   return /*#__PURE__*/React.createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
     xmlSpace: "preserve",
-    width: "24",
-    height: "24",
-    viewBox: "0 0 384 384"
+    width: "16",
+    height: "16",
+    viewBox: "0 0 384 384",
+    "aria-hidden": "true"
   }, props), /*#__PURE__*/React.createElement("path", {
     fill: "currentColor",
     d: "M85.333 341.333H128V384H85.333zM256 341.333h42.667V384H256zM341.333 341.333H384V384h-42.667zM170.667 341.333h42.667V384h-42.667zM341.333 256H384v42.667h-42.667z"
@@ -138,7 +139,7 @@ var GBCommands = function GBCommands() {
   });
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-hacks-toggle-container-outlines',
-    label: 'Toggle Container Outlines',
+    label: 'Toggle Container Block Outlines',
     icon: /*#__PURE__*/React.createElement(OutlineIcon, null),
     callback: function callback(_ref) {
       var close = _ref.close;
@@ -7729,12 +7730,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lodash.uniqueid */ "./node_modules/lodash.uniqueid/index.js");
-/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
-/* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
-/* harmony import */ var _js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/blocks/components/icons/ContainerLogo.js */ "./src/js/blocks/components/icons/ContainerLogo.js");
-/* harmony import */ var _js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./js/blocks/components/icons/ReplaceIcon.js */ "./src/js/blocks/components/icons/ReplaceIcon.js");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lodash.uniqueid */ "./node_modules/lodash.uniqueid/index.js");
+/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash_uniqueid__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
+/* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
+/* harmony import */ var _js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./js/blocks/components/icons/ContainerLogo.js */ "./src/js/blocks/components/icons/ContainerLogo.js");
+/* harmony import */ var _js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./js/blocks/components/icons/ReplaceIcon.js */ "./src/js/blocks/components/icons/ReplaceIcon.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -7753,7 +7756,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var previousBlocks = [];
+var previousSelectedBlock = null;
+var previousParentClientId = null;
+var previousSelectedBlockIndex = null;
 
 // Run on load.
 (function (wp) {
@@ -7786,7 +7793,7 @@ var previousBlocks = [];
       // If more than one block is selected, add toolbar option to wrap container.
       if (clientIds.length > 1) {
         return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_3__.PluginBlockSettingsMenuItem, {
-          icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_9__["default"], null),
+          icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_10__["default"], null),
           label: "Wrap in Container",
           onClick: function onClick() {
             var innerBlocks = [];
@@ -7822,7 +7829,7 @@ var previousBlocks = [];
       var generateUniqueId = function generateUniqueId(clientId) {
         // Get the substr of current client ID for prefix.
         var prefix = clientId.substring(2, 9).replace('-', '');
-        var newUniqueId = lodash_uniqueid__WEBPACK_IMPORTED_MODULE_6___default()(prefix);
+        var newUniqueId = lodash_uniqueid__WEBPACK_IMPORTED_MODULE_7___default()(prefix);
 
         // Make sure it isn't in the array already. Recursive much?
         if (uniqueIds.includes(newUniqueId)) {
@@ -7873,7 +7880,7 @@ var previousBlocks = [];
 
       // If more than one block is selected, add toolbar option to replace the Unique ID.
       return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_3__.PluginBlockSettingsMenuItem, {
-        icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_10__["default"], null),
+        icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_11__["default"], null),
         label: "Generate New Unique IDs",
         onClick: function onClick() {
           replaceUniqueId(selectedBlock); // This gets the selected block and all innerBlocks.
@@ -7908,49 +7915,61 @@ var previousBlocks = [];
 
   // Get the default element name.
   var defaultHeadlineElement = gbHacksPatternInserter.defaultHeadlineBlockElement;
-  wp.data.subscribe(function () {
-    // Try to find if the paragraph needs to be converted to a headline.
-    var currentBlocks = wp.data.select('core/block-editor').getBlocks();
-    var currentBlock = wp.data.select('core/block-editor').getSelectedBlock();
 
-    // Set the default block. Needs to run every render otherwise is forgotten.
-    (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.setDefaultBlockName)('generateblocks/headline');
+  /**
+   * Watch for block changes and set the default block to headline.
+   */
+  var watchForBlockChanges = function watchForBlockChanges() {
+    // Try to find if the paragraph needs to be converted to a headline.
+    var currentBlock = wp.data.select('core/block-editor').getSelectedBlock();
+    (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.setDefaultBlockName)('generateblocks/headline'); // Need to set this every render otherwise it's forgotten.
 
     // If no block is selected, no need to go further.
     if (null === currentBlock || 'undefined' === typeof currentBlock) {
-      previousBlocks = currentBlocks;
       return;
     }
 
-    // Check that selected block's client ID is not in previous blocks.
-    if (previousBlocks.includes(currentBlock.clientId)) {
-      previousBlocks = currentBlocks;
-      return;
-    }
-    previousBlocks = currentBlocks;
-
-    // Get the block's index.
-    var blockIndex = wp.data.select('core/block-editor').getBlockIndex(currentBlock.clientId);
-
-    // If previous block is a headline, then the next block should be a headline too.
-    if (blockIndex > 0) {
-      var previousSelectedBlock = wp.data.select('core/block-editor').getBlocks();
-      var previousBlock = previousSelectedBlock[blockIndex - 1] || null;
-      if (null !== previousBlock && previousBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '') {
-        wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
-          uniqueId: '',
-          content: currentBlock.attributes.content,
-          element: defaultHeadlineElement
-        })]);
-      } else if (null !== previousBlock && previousBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '') {
-        wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
-          uniqueId: '',
-          content: currentBlock.attributes.content,
-          element: defaultHeadlineElement
-        })]);
+    // Store history vars.
+    var parentClientId = wp.data.select('core/block-editor').getBlockRootClientId(currentBlock.clientId);
+    var currentBlockIndex = wp.data.select('core/block-editor').getBlockIndex(currentBlock.clientId);
+    if (null !== previousSelectedBlock && null !== previousSelectedBlockIndex) {
+      // If previous selected block is a headline,  current block is a paragraph, and they both have the same parent client ID and index, then we're in a transform and should return.
+      if (previousSelectedBlock.name !== 'core/paragraph' && currentBlock.name === 'core/paragraph' && parentClientId === previousParentClientId && currentBlockIndex === previousSelectedBlockIndex) {
+        return;
       }
     }
-  });
+
+    // Check if previous block is a headline block. If so, current block should be headline too and not a paragraph.
+    if (currentBlockIndex > 0) {
+      var adjacentBlockClientId = wp.data.select('core/block-editor').getAdjacentBlockClientId(currentBlock.clientId, -1);
+      if (null !== adjacentBlockClientId) {
+        var adjacentBlock = wp.data.select('core/block-editor').getBlock(adjacentBlockClientId);
+        if (null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '') {
+          // If previous block is a headline, replace current block with a headline.
+          wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
+            uniqueId: '',
+            content: currentBlock.attributes.content,
+            element: defaultHeadlineElement
+          })]);
+        } else if (null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '') {
+          // If previous block is a paragraph, convert current block to headline.
+          wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
+            uniqueId: '',
+            content: currentBlock.attributes.content,
+            element: defaultHeadlineElement
+          })]);
+        }
+      }
+    }
+
+    // Story history to detect transforms.
+    previousParentClientId = parentClientId;
+    previousSelectedBlockIndex = currentBlockIndex;
+    previousSelectedBlock = currentBlock;
+  };
+
+  // Run the block change watcher. Debounce to run every 150ms.
+  wp.data.subscribe((0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__.debounce)(watchForBlockChanges, 150));
 
   /**
    * Change default headline element to paragraph.
