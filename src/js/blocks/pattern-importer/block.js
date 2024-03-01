@@ -24,11 +24,7 @@ import { parse } from '@wordpress/blocks';
 import { useDispatch } from '@wordpress/data';
 
 import {
-	InspectorControls,
-	RichText,
 	useBlockProps,
-	useInnerBlocksProps,
-	insertBlocks,
 	store,
 } from '@wordpress/block-editor';
 
