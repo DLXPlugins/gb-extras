@@ -202,67 +202,6 @@ var GBCommands = function GBCommands() {
 
 /***/ }),
 
-/***/ "./src/js/blocks/components/icons/ContainerLogo.js":
-/*!*********************************************************!*\
-  !*** ./src/js/blocks/components/icons/ContainerLogo.js ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var ContainerLogo = function ContainerLogo() {
-  return /*#__PURE__*/React.createElement("svg", {
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 24 24",
-    width: "24",
-    height: "24",
-    className: "gblocks-block-icon"
-  }, /*#__PURE__*/React.createElement("path", {
-    style: {
-      fill: 'none'
-    },
-    d: "M0 0h24v24H0z"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M21.375 22h-3.75v-1.25h3.125v-3.125H22v3.75c0 .345-.28.625-.625.625zM9.188 20.75h5.625V22H9.188zM6.375 22h-3.75A.625.625 0 0 1 2 21.375v-3.75h1.25v3.125h3.125V22zM2 9.187h1.25v5.625H2zm1.25-2.812H2v-3.75C2 2.28 2.28 2 2.625 2h3.75v1.25H3.25v3.125zM9.188 2h5.625v1.25H9.188zM22 6.375h-1.25V3.25h-3.125V2h3.75c.345 0 .625.28.625.625v3.75zm-1.25 2.812H22v5.625h-1.25z"
-  }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContainerLogo);
-
-/***/ }),
-
-/***/ "./src/js/blocks/components/icons/ReplaceIcon.js":
-/*!*******************************************************!*\
-  !*** ./src/js/blocks/components/icons/ReplaceIcon.js ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var ReplaceIcon = function ReplaceIcon() {
-  return /*#__PURE__*/React.createElement("svg", {
-    xmlns: "http://www.w3.org/2000/svg",
-    xmlSpace: "preserve",
-    style: {
-      enableBackground: 'new 0 0 452.025 452.025'
-    },
-    width: "24",
-    height: "24",
-    viewBox: "0 0 452.025 452.025"
-  }, /*#__PURE__*/React.createElement("path", {
-    fill: "currentColor",
-    d: "M362.612 34.125h-55.2l13.6-13.6c4.7-4.7 4.7-12.3 0-17s-12.3-4.7-17 0l-34 34.1c-2.3 2.3-3.5 5.3-3.5 8.5s1.3 6.2 3.5 8.5l34.1 34.1c2.3 2.3 5.4 3.5 8.5 3.5s6.1-1.2 8.5-3.5c4.7-4.7 4.7-12.3 0-17l-13.6-13.6h55.2c35.9 0 65 29.2 65 65v40.3c0 6.6 5.4 12 12 12s12-5.4 12-12v-40.3c0-49.1-40-89-89.1-89zM438.812 230.925h-197.1c-6.6 0-12 5.4-12 12v197.1c0 6.6 5.4 12 12 12h197.1c6.6 0 12-5.4 12-12v-197.1c0-6.7-5.4-12-12-12zm-12 197.1h-173.1v-173.1h173.1v173.1zM147.912 363.325c-4.7-4.7-12.3-4.7-17 0-4.7 4.7-4.7 12.3 0 17l13.6 13.6h-55.2c-35.9 0-65-29.2-65-65v-40.3c0-6.6-5.4-12-12-12s-12 5.4-12 12v40.3c0 49.1 39.9 89 89 89h55.2l-13.6 13.6c-4.7 4.7-4.7 12.3 0 17 2.3 2.3 5.4 3.5 8.5 3.5s6.1-1.2 8.5-3.5l34.1-34.1c4.7-4.7 4.7-12.3 0-17l-34.1-34.1zM13.212 24.025c3.2 0 6.3-1.3 8.5-3.5s3.5-5.3 3.5-8.5c0-3.1-1.3-6.3-3.5-8.5s-5.3-3.5-8.5-3.5-6.3 1.3-8.5 3.5-3.5 5.3-3.5 8.5 1.3 6.3 3.5 8.5c2.3 2.2 5.3 3.5 8.5 3.5zM111.812 24.025c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.3 12 12 12zM62.512 24.025c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM161.012 24.025c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM210.312.025c-3.1 0-6.3 1.3-8.5 3.5s-3.5 5.3-3.5 8.5 1.3 6.3 3.5 8.5 5.3 3.5 8.5 3.5 6.3-1.3 8.5-3.5 3.5-5.3 3.5-8.5-1.3-6.3-3.5-8.5-5.3-3.5-8.5-3.5zM210.312 147.925c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12c0-6.7-5.3-12-12-12zM210.312 98.625c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12c0-6.7-5.3-12-12-12zM210.312 49.325c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12-5.3-12-12-12zM210.312 197.125c-3.2 0-6.3 1.3-8.5 3.5s-3.5 5.3-3.5 8.5c0 3.1 1.3 6.3 3.5 8.5s5.3 3.5 8.5 3.5 6.3-1.3 8.5-3.5 3.5-5.3 3.5-8.5-1.3-6.3-3.5-8.5c-2.199-2.2-5.3-3.5-8.5-3.5zM161.012 221.125c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12c0 6.7 5.4 12 12 12zM111.812 221.125c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12c0 6.7 5.3 12 12 12zM62.512 221.125c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12c0 6.7 5.4 12 12 12zM13.212 221.125c3.2 0 6.3-1.3 8.5-3.5s3.5-5.3 3.5-8.5-1.3-6.3-3.5-8.5-5.3-3.5-8.5-3.5-6.3 1.3-8.5 3.5-3.5 5.3-3.5 8.5c0 3.1 1.3 6.3 3.5 8.5 2.3 2.2 5.3 3.5 8.5 3.5zM13.212 171.925c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM13.212 122.625c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12zM13.212 73.325c6.6 0 12-5.4 12-12s-5.4-12-12-12-12 5.4-12 12 5.4 12 12 12z"
-  }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ReplaceIcon);
-
-/***/ }),
-
 /***/ "./src/js/blocks/pattern-importer/block.js":
 /*!*************************************************!*\
   !*** ./src/js/blocks/pattern-importer/block.js ***!
@@ -7756,8 +7695,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash_uniqueid__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
 /* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
-/* harmony import */ var _js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./js/blocks/components/icons/ContainerLogo.js */ "./src/js/blocks/components/icons/ContainerLogo.js");
-/* harmony import */ var _js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./js/blocks/components/icons/ReplaceIcon.js */ "./src/js/blocks/components/icons/ReplaceIcon.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './js/blocks/components/icons/ContainerLogo.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './js/blocks/components/icons/ReplaceIcon.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -7830,7 +7769,7 @@ var UnGroupIcon = function UnGroupIcon(props) {
       // If more than one block is selected, add toolbar option to wrap container.
       if (clientIds.length > 1) {
         return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_3__.PluginBlockSettingsMenuItem, {
-          icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ContainerLogo_js__WEBPACK_IMPORTED_MODULE_10__["default"], null),
+          icon: /*#__PURE__*/React.createElement(Object(function webpackMissingModule() { var e = new Error("Cannot find module './js/blocks/components/icons/ContainerLogo.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null),
           label: "Wrap in Container",
           onClick: function onClick() {
             var innerBlocks = [];
@@ -7917,7 +7856,7 @@ var UnGroupIcon = function UnGroupIcon(props) {
 
       // If more than one block is selected, add toolbar option to replace the Unique ID.
       return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_3__.PluginBlockSettingsMenuItem, {
-        icon: /*#__PURE__*/React.createElement(_js_blocks_components_icons_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_11__["default"], null),
+        icon: /*#__PURE__*/React.createElement(Object(function webpackMissingModule() { var e = new Error("Cannot find module './js/blocks/components/icons/ReplaceIcon.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), null),
         label: "Generate New Unique IDs",
         onClick: function onClick() {
           replaceUniqueId(selectedBlock); // This gets the selected block and all innerBlocks.
