@@ -4,25 +4,19 @@
 /**
  * External dependencies
  */
-
+import './editor.scss';
 import classnames from 'classnames';
 import { useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import uniqueId from 'lodash.uniqueid';
 import {
-	PanelBody,
-	PanelRow,
-	ToggleControl,
-	TextControl,
 	Button,
-	ButtonGroup,
-	RangeControl,
-	BaseControl,
 	TextareaControl,
 	Card,
 	CardHeader,
 	CardFooter,
 	CardBody,
+	CheckboxControl,
 	Spinner,
 } from '@wordpress/components';
 
@@ -42,8 +36,7 @@ import { useInstanceId } from '@wordpress/compose';
 import SendCommand from '../utils/SendCommand';
 
 // Image RegEx.
-const imageRegEx = /(<img[^>]+src=")([^">]+)("[^>]+>)/gi;
-const backgroundImageRegEx = /url\(["']?(.+?\.(jpg|jpeg|png|gif|webp))["']?\)/gi;
+const imageUrlRegex = /(http(?:s?):)([\/|.|@|\w|\s|-])*\.(?:jpg|gif|png|jpeg|webp|avif)/gi;
 const uniqueIdRegex = /\"uniqueId\"\:\"([^"]+)\"/gi;
 
 // Unique ID storing.
@@ -62,9 +55,9 @@ const PatternImporter = ( props ) => {
 
 	const [ patternText, setPatternText ] = useState( '' );
 	const [ patternImages, setPatternImages ] = useState( [] );
-	const [ patternBackgroundImages, setPatternBackgroundImages ] = useState( [] );
 	const [ importing, setImporting ] = useState( false );
 	const [ imageProcessingCount, setImageProcessingCount ] = useState( 0 );
+	const [ doNotImportRemoteImages, setDoNotImportRemoteImages ] = useState( false );
 
 	const { replaceBlock } = useDispatch( store );
 
@@ -82,116 +75,111 @@ const PatternImporter = ( props ) => {
 			return response;
 		};
 
-		const matches = [ ...patternText.matchAll( imageRegEx ) ];
+		/**
+		 * Import a pattern.
+		 *
+		 * @param {string} pattern The pattern.
+		 */
+		const importPattern = ( pattern ) => {
+			pattern = replaceUniqueIds( pattern );
+
+			// Convert pattern to blocks.
+			try {
+				const patternBlocks = parse( pattern );
+
+				replaceBlock( clientId, patternBlocks );
+
+				// Insert block in place of this one.
+				//replaceInnerBlocks( clientId, patternBlocks );
+			} catch ( error ) {
+			}
+		};
+
+		const matches = [ ...patternText.matchAll( imageUrlRegex ) ];
 		const imagesToProcess = [];
-
-		// If there are matches, we need to process them.
-		if ( matches.length ) {
-			setPatternImages( matches );
-			matches.forEach( ( match ) => {
-				imagesToProcess.push( match[ 2 ] );
-			} );
-		}
-
-		// Check for background images.
-		const bgMatches = [ ...patternText.matchAll( backgroundImageRegEx ) ];
-
-		// If there are bg matches, we need to process them.
-		if ( bgMatches.length ) {
-			setPatternBackgroundImages( bgMatches );
-
-			bgMatches.forEach( ( match ) => {
-				imagesToProcess.push( match[ 1 ] );
-			} );
-		}
-
-		const imagesProcessed = [];
-		let imagePromises = [];
 		let localPatternText = patternText;
 
-		// Let's loop through images and process.
-		if ( imagesToProcess.length ) {
-			imagePromises = imagesToProcess.map( ( image ) => {
-				try {
-					const response = processImage( image, '' );
-					response.then( ( restResponse ) => {
-						imagesProcessed.push( image );
-						const { data, success } = restResponse.data;
-						if ( success ) {
-							imageCount++;
-							setImageProcessingCount( imageCount );
+		if ( ! doNotImportRemoteImages ) {
+			// If there are matches, we need to process them.
+			if ( matches.length ) {
+				matches.forEach( ( match ) => {
+					// Push if not a duplicate.
+					if ( ! imagesToProcess.includes( match[ 0 ] ) ) {
+						imagesToProcess.push( match[ 0 ] );
+					}
+				} );
+				setPatternImages( imagesToProcess );
+			}
 
-							// Get the image URL and replace in pattern.
-							const newImageUrl = data.attachmentUrl;
+			const imagesProcessed = [];
+			let imagePromises = [];
 
-							// Replace old URL with new URL.
-							localPatternText = localPatternText.replace( image, newImageUrl );
-							setPatternText( localPatternText );
-						} else {
+			// Let's loop through images and process.
+			if ( imagesToProcess.length ) {
+				imagePromises = imagesToProcess.map( ( image ) => {
+					try {
+						const response = processImage( image, '' );
+						response.then( ( restResponse ) => {
+							imagesProcessed.push( image );
+							const { data, success } = restResponse.data;
+							if ( success ) {
+								imageCount++;
+								setImageProcessingCount( imageCount );
+
+								// Get the image URL and replace in pattern.
+								const newImageUrl = data.attachmentUrl;
+
+								// Replace old URL with new URL.
+								localPatternText = localPatternText.replace( image, newImageUrl );
+								setPatternText( localPatternText );
+							} else {
+								// Fail silently.
+								imageCount++;
+								setImageProcessingCount( imageCount );
+							}
+						} ).catch( ( error ) => {
 							// Fail silently.
 							imageCount++;
 							setImageProcessingCount( imageCount );
-						}
-					} ).catch( ( error ) => {
+						} );
+						return response;
+					} catch ( error ) {
 						// Fail silently.
 						imageCount++;
 						setImageProcessingCount( imageCount );
-					} );
-					return response;
-				} catch ( error ) {
-					// Fail silently.
-					imageCount++;
-					setImageProcessingCount( imageCount );
-				}
+					}
+				} );
+			}
+
+			Promise.all( imagePromises ).then( () => {
+				importPattern( localPatternText );
+			} ).catch( ( error ) => {
+				importPattern( localPatternText );
+			} );
+		} else {
+			importPattern( localPatternText );
+		}
+	};
+
+	/**
+	 * Return and generate a new unique ID.
+	 *
+	 * @param {string} blockPatternText The block pattern text.
+	 *
+	 * @return {string} The blockPatternText.
+	 */
+	const replaceUniqueIds = ( blockPatternText ) => {
+		const pwUniqueIdMatches = [ ...blockPatternText.matchAll( uniqueIdRegex ) ];
+
+		if ( pwUniqueIdMatches.length ) {
+			// Loop through matches, generate unique ID, and replace.
+			pwUniqueIdMatches.forEach( ( match ) => {
+				const newUniqueId = generateUniqueId();
+				uniqueIds.push( newUniqueId );
+				blockPatternText.replace( match[ 1 ], `"uniqueId":"${ newUniqueId }"` );
 			} );
 		}
-
-		Promise.all( imagePromises ).then( () => {
-			const gbUniqueIdMatches = [ ...localPatternText.matchAll( uniqueIdRegex ) ];
-
-			// If there are matches, we need to process them.
-			if ( gbUniqueIdMatches.length ) {
-				// Loop through matches, generate unique ID, and replace.
-				gbUniqueIdMatches.forEach( ( match ) => {
-					const newUniqueId = generateUniqueId();
-					uniqueIds.push( newUniqueId );
-					patternText.replace( match[ 1 ], `"uniqueId":"${ newUniqueId }"` );
-				} );
-			}
-
-			// Convert pattern to blocks.
-			try {
-				const patternBlocks = parse( localPatternText );
-
-				replaceBlock( clientId, patternBlocks );
-
-				// Insert block in place of this one.
-				//replaceInnerBlocks( clientId, patternBlocks );
-			} catch ( error ) {
-			}
-		} ).catch( ( error ) => {
-			const gbUniqueIdMatches = [ ...localPatternText.matchAll( uniqueIdRegex ) ];
-
-			// If there are matches, we need to process them.
-			if ( gbUniqueIdMatches.length ) {
-				// Loop through matches, generate unique ID, and replace.
-				gbUniqueIdMatches.forEach( ( match ) => {
-					const newUniqueId = generateUniqueId();
-					uniqueIds.push( newUniqueId );
-					patternText.replace( match[ 1 ], `"uniqueId":"${ newUniqueId }"` );
-				} );
-			}
-			// Convert pattern to blocks.
-			try {
-				const patternBlocks = parse( localPatternText );
-
-				replaceBlock( clientId, patternBlocks );
-
-				// Insert block in place of this one.
-				//replaceInnerBlocks( clientId, patternBlocks );
-			} catch ( error ) {
-			}
-		} );
+		return blockPatternText;
 	};
 
 	/**
@@ -225,6 +213,13 @@ const PatternImporter = ( props ) => {
 						onChange={ ( value ) => setPatternText( value ) }
 						disabled={ importing }
 					/>
+					<CheckboxControl
+						label={ __( 'Do not import remote images', 'dlx-pattern-wrangler' ) }
+						checked={ doNotImportRemoteImages }
+						onChange={ ( value ) => setDoNotImportRemoteImages( value ) }
+						disabled={ importing }
+						className="gb-hacks-card-checkbox"
+					/>
 				</CardBody>
 				<CardFooter>
 					<Button
@@ -238,7 +233,7 @@ const PatternImporter = ( props ) => {
 						<span className="gb-pattern-importer-image">
 							<Spinner />
 							{
-								`Processing ${ imageCount } of ${ patternImages.length } images.`
+								`Processing ${ imageProcessingCount } of ${ patternImages.length } images.`
 							}
 						</span>
 					) }

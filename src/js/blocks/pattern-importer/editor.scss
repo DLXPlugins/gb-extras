@@ -1,0 +1,9 @@
+.gb-hacks-card-checkbox {
+	input {
+		width: 100% !important;
+	}
+	label.components-checkbox-control__label {
+		display: inline-block;
+		width: unset;
+	}
+}

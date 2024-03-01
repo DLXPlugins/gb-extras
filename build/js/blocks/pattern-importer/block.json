@@ -24,5 +24,6 @@
       "preview": true
     }
   },
-  "editorScript": "gb-hacks-pattern-inserter-block"
+  "editorScript": "gb-hacks-pattern-inserter-block",
+  "editorStyle": "gb-hacks-pattern-inserter-block-css"
 }

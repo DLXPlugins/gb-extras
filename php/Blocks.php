@@ -335,11 +335,21 @@ class Blocks {
 	public function register_block_editor_scripts() {
 		$options = Options::get_options();
 
+		wp_register_style(
+			'gb-hacks-pattern-inserter-block-css',
+			Functions::get_plugin_url( 'build/index.css' ),
+			array(),
+			Functions::get_plugin_version(),
+			'all'
+		);
+
+		$deps = require_once Functions::get_plugin_dir( 'build/index.asset.php' );
+
 		wp_register_script(
 			'gb-hacks-pattern-inserter-block',
 			Functions::get_plugin_url( 'build/index.js' ),
-			array(),
-			Functions::get_plugin_version(),
+			$deps['dependencies'],
+			$deps['version'],
 			true
 		);
 
