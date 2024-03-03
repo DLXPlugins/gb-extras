@@ -8077,14 +8077,19 @@ var UnGroupIcon = function UnGroupIcon(props) {
       var adjacentBlockClientId = wp.data.select('core/block-editor').getAdjacentBlockClientId(currentBlock.clientId, -1);
       if (null !== adjacentBlockClientId) {
         var adjacentBlock = wp.data.select('core/block-editor').getBlock(adjacentBlockClientId);
-        if (null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ('' === currentBlock.attributes.content || (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content))) {
+        var currentBlockContent = currentBlock.attributes.content;
+        var currentBlockContentLength = (currentBlockContent === null || currentBlockContent === void 0 ? void 0 : currentBlockContent.length) || null;
+
+        // In WP 6.4, the content attribute is a string, but in 6.5, it's a richtext object.
+        // If length is null, then it's a richtext object.
+        if (null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ('' === currentBlock.attributes.content || null === currentBlockContentLength && (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content))) {
           // If previous block is a headline, replace current block with a headline.
           wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
             uniqueId: '',
             content: currentBlock.attributes.content,
             element: defaultHeadlineElement
           })]);
-        } else if (null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ('' === currentBlock.attributes.content || (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content))) {
+        } else if (null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ('' === currentBlock.attributes.content || null === currentBlockContentLength && (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content))) {
           // If previous block is a paragraph, convert current block to headline.
           wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
             uniqueId: '',

@@ -303,8 +303,12 @@ const UnGroupIcon = ( props ) => {
 			const adjacentBlockClientId = wp.data.select( 'core/block-editor' ).getAdjacentBlockClientId( currentBlock.clientId, -1 );
 			if ( null !== adjacentBlockClientId ) {
 				const adjacentBlock = wp.data.select( 'core/block-editor' ).getBlock( adjacentBlockClientId );
+				const currentBlockContent = currentBlock.attributes.content;
+				const currentBlockContentLength = currentBlockContent?.length || null;
 
-				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || isEmpty( currentBlock.attributes.content ) ) ) {
+				// In WP 6.4, the content attribute is a string, but in 6.5, it's a richtext object.
+				// If length is null, then it's a richtext object.
+				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || ( null === currentBlockContentLength && isEmpty( currentBlock.attributes.content ) ) ) ) {
 					// If previous block is a headline, replace current block with a headline.
 					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 						wp.blocks.createBlock( 'generateblocks/headline', {
@@ -313,7 +317,7 @@ const UnGroupIcon = ( props ) => {
 							element: defaultHeadlineElement,
 						} ),
 					] );
-				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || isEmpty( currentBlock.attributes.content ) ) ) {
+				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || ( null === currentBlockContentLength && isEmpty( currentBlock.attributes.content ) ) ) ) {
 					// If previous block is a paragraph, convert current block to headline.
 					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 						wp.blocks.createBlock( 'generateblocks/headline', {
