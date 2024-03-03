@@ -183,6 +183,9 @@ const UnGroupIcon = ( props ) => {
 				return null;
 			}
 
+			// Get the first child block.
+			const firstChildBlock = selectedBlock.innerBlocks[ 0 ] || null;
+
 			// If more than one block is selected, add toolbar option to unwrap container.
 			return (
 				<PluginBlockSettingsMenuItem
@@ -191,6 +194,9 @@ const UnGroupIcon = ( props ) => {
 					onClick={ () => {
 						const innerBlocks = selectedBlock.innerBlocks;
 						wp.data.dispatch( 'core/block-editor' ).replaceBlocks( selectedBlock.clientId, innerBlocks );
+
+						// Select the first child block in the editor.
+						wp.data.dispatch( 'core/block-editor' ).selectBlock( firstChildBlock.clientId );
 					} }
 				/>
 			);

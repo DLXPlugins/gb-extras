@@ -7962,6 +7962,9 @@ var UnGroupIcon = function UnGroupIcon(props) {
         return null;
       }
 
+      // Get the first child block.
+      var firstChildBlock = selectedBlock.innerBlocks[0] || null;
+
       // If more than one block is selected, add toolbar option to unwrap container.
       return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
         icon: /*#__PURE__*/React.createElement(UnGroupIcon, null),
@@ -7969,6 +7972,9 @@ var UnGroupIcon = function UnGroupIcon(props) {
         onClick: function onClick() {
           var innerBlocks = selectedBlock.innerBlocks;
           wp.data.dispatch('core/block-editor').replaceBlocks(selectedBlock.clientId, innerBlocks);
+
+          // Select the first child block in the editor.
+          wp.data.dispatch('core/block-editor').selectBlock(firstChildBlock.clientId);
         }
       });
     }
