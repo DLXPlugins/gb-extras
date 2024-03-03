@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { setDefaultBlockName, cloneBlock } from '@wordpress/blocks';
 import { addAction } from '@wordpress/hooks';
+import { isEmpty } from '@wordpress/rich-text';
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
 import { useSelect, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
@@ -8,11 +9,9 @@ import { debounce } from '@wordpress/compose';
 import uniqueId from 'lodash.uniqueid';
 import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
-import ContainerLogo from './js/blocks/components/icons/ContainerLogo.js';
-import ReplaceIcon from './js/blocks/components/icons/ReplaceIcon.js';
-import { settings } from '@wordpress/icons';
+import ContainerLogo from './js/blocks/components/ContainerIcon.js';
+import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
 
-let previousBlocks = [];
 let previousSelectedBlock = null;
 let previousParentClientId = null;
 let previousSelectedBlockIndex = null;
@@ -262,6 +261,13 @@ const UnGroupIcon = ( props ) => {
 	// Get the default element name.
 	const defaultHeadlineElement = gbHacksPatternInserter.defaultHeadlineBlockElement;
 
+	registerPlugin( 'dlx-gb-hacks-default-headline', {
+		render: () => {
+			useEffect( () => {
+				setDefaultBlockName( 'generateblocks/headline' );
+			}, [] );
+		},
+	} );
 
 	/**
 	 * Watch for block changes and set the default block to headline.
@@ -269,8 +275,6 @@ const UnGroupIcon = ( props ) => {
 	const watchForBlockChanges = () => {
 		// Try to find if the paragraph needs to be converted to a headline.
 		const currentBlock = wp.data.select( 'core/block-editor' ).getSelectedBlock();
-
-		setDefaultBlockName( 'generateblocks/headline' ); // Need to set this every render otherwise it's forgotten.
 
 		// If no block is selected, no need to go further.
 		if ( null === currentBlock || 'undefined' === typeof currentBlock ) {
@@ -294,7 +298,7 @@ const UnGroupIcon = ( props ) => {
 			if ( null !== adjacentBlockClientId ) {
 				const adjacentBlock = wp.data.select( 'core/block-editor' ).getBlock( adjacentBlockClientId );
 
-				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && isEmpty( currentBlock.attributes.content ) ) {
 					// If previous block is a headline, replace current block with a headline.
 					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 						wp.blocks.createBlock( 'generateblocks/headline', {
@@ -303,7 +307,7 @@ const UnGroupIcon = ( props ) => {
 							element: defaultHeadlineElement,
 						} ),
 					] );
-				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && currentBlock.attributes.content === '' ) {
+				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && isEmpty( currentBlock.attributes.content ) ) {
 					// If previous block is a paragraph, convert current block to headline.
 					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 						wp.blocks.createBlock( 'generateblocks/headline', {
