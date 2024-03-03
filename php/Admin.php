@@ -53,7 +53,7 @@ class Admin {
 	public function ajax_admin_preview_validate() {
 		// Do permissions check.
 		$nonce = filter_input( INPUT_GET, 'nonce', FILTER_DEFAULT );
-		if ( ! \wp_verify_nonce( $nonce, 'dlx-gb-hacks-admin-preview-iframe') || ! current_user_can( 'manage_options' ) ) {
+		if ( ! \wp_verify_nonce( $nonce, 'dlx-gb-hacks-admin-preview-iframe' ) || ! current_user_can( 'manage_options' ) ) {
 			\wp_send_json_error( array() );
 		}
 
@@ -291,7 +291,7 @@ class Admin {
 
 		$form_enabled_post_types = $form_data['enabledPostTypes'] ?? array();
 		$enabled_post_types      = array();
-		
+
 		// Loop through enabled post types to save them in the right format.
 		foreach ( $form_enabled_post_types as $post_type => $enabled ) {
 			$post_type = trim( sanitize_text_field( $post_type ) );
@@ -425,15 +425,16 @@ class Admin {
 			return;
 		}
 
-		$options = Options::get_options();
+		$options     = Options::get_options();
 		$current_tab = Functions::get_admin_tab();
 		if ( null === $current_tab || 'settings' === $current_tab ) {
 			// Enqueue main scripts.
+			$deps = require_once Functions::get_plugin_dir( 'dist/gb-hacks-admin.asset.php' );
 			wp_enqueue_script(
 				'dlx-gb-hacks-admin',
 				Functions::get_plugin_url( 'dist/gb-hacks-admin.js' ),
-				array(),
-				Functions::get_plugin_version(),
+				$deps['dependencies'],
+				$deps['version'],
 				true
 			);
 
@@ -444,7 +445,7 @@ class Admin {
 				),
 				'objects'
 			);
-			$excluded   = array( 'attachment', 'revision', 'nav_menu_item', 'gblocks_templates', 'gblocks_global_style'  );
+			$excluded   = array( 'attachment', 'revision', 'nav_menu_item', 'gblocks_templates', 'gblocks_global_style' );
 			foreach ( $excluded as $exclude ) {
 				if ( isset( $post_types[ $exclude ] ) ) {
 					unset( $post_types[ $exclude ] );
@@ -455,20 +456,21 @@ class Admin {
 				'dlx-gb-hacks-admin',
 				'dlxGBHacksAdmin',
 				array(
-					'getNonce'   => wp_create_nonce( 'dlx-gb-hacks-admin-get-options' ),
-					'saveNonce'  => wp_create_nonce( 'dlx-gb-hacks-admin-save-options' ),
-					'resetNonce' => wp_create_nonce( 'dlx-gb-hacks-admin-reset-options' ),
+					'getNonce'     => wp_create_nonce( 'dlx-gb-hacks-admin-get-options' ),
+					'saveNonce'    => wp_create_nonce( 'dlx-gb-hacks-admin-save-options' ),
+					'resetNonce'   => wp_create_nonce( 'dlx-gb-hacks-admin-reset-options' ),
 					'previewNonce' => wp_create_nonce( 'dlx-gb-hacks-admin-preview' ),
-					'ajaxurl'	=> admin_url( 'admin-ajax.php' ),
-					'postTypes'     => $post_types,
+					'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+					'postTypes'    => $post_types,
 				)
 			);
 		} elseif ( 'license' === $current_tab ) {
+			$deps = require_once Functions::get_plugin_dir( 'dist/gb-hacks-admin-license.asset.php' );
 			wp_enqueue_script(
 				'dlx-gb-hacks-admin-license',
 				Functions::get_plugin_url( 'dist/gb-hacks-admin-license.js' ),
-				array(),
-				Functions::get_plugin_version(),
+				$deps['dependencies'],
+				$deps['version'],
 				true
 			);
 			wp_localize_script(

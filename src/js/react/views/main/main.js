@@ -2,32 +2,19 @@
 import React, { Suspense, useState } from 'react';
 import {
 	ToggleControl,
-	TextControl,
 	CheckboxControl,
-	ComboboxControl,
-	BaseControl,
 	SelectControl,
-	PanelBody,
-	Button,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useForm, Controller, useWatch, useFormState } from 'react-hook-form';
 import { useAsyncResource } from 'use-async-resource';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTriangleExclamation as TriangleExclamation, faCircleCheck as CircleCheck, faEye, faExternalLink as ExternalLink } from '@fortawesome/free-solid-svg-icons';
-import { faCircleExclamation as CircularExclamation } from '@fortawesome/free-solid-svg-icons/faCircleExclamation';
-import classNames from 'classnames';
+import { faTriangleExclamation as TriangleExclamation, faCircleCheck as CircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 // Local imports.
 import SendCommand from '../../utils/SendCommand';
 import Notice from '../../components/Notice';
 import SaveResetButtons from '../../components/SaveResetButtons';
-import gfontJson from '../../google-fonts.json';
-
-const gfontJsonArr = [];
-for ( const [ key, value ] of Object.entries( gfontJson ) ) {
-	gfontJsonArr.push( { label: key, value: key } );
-}
 
 const retrieveOptions = () => {
 	return SendCommand( 'dlx_gb_hacks_get_options', {
@@ -59,9 +46,6 @@ const Interface = ( props ) => {
 	const { data } = response.data;
 
 	const [ licenseValid ] = useState( data.licenseValid );
-	const [ currentGoogleFont, setCurrentGoogleFont ] = useState( '' );
-	const [ comboxFormValue, setComboboxFormValue ] = useState( '' );
-	const [ comboboxRef, setComboboxRef ] = useState( null );
 
 	const {
 		control,

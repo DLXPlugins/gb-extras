@@ -37,6 +37,7 @@
     "@types/react": "^18.0.14",
     "@wordpress/commands": "^0.16.0",
     "@wordpress/components": "^25.11.0",
+    "@wordpress/dependency-extraction-webpack-plugin": "^5.3.0",
     "@wordpress/element": "^4.9.0",
     "@wordpress/eslint-plugin": "^12.8.0",
     "@wordpress/i18n": "^4.11.0",
