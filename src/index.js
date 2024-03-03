@@ -304,7 +304,7 @@ const UnGroupIcon = ( props ) => {
 			if ( null !== adjacentBlockClientId ) {
 				const adjacentBlock = wp.data.select( 'core/block-editor' ).getBlock( adjacentBlockClientId );
 
-				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && isEmpty( currentBlock.attributes.content ) ) {
+				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || isEmpty( currentBlock.attributes.content ) ) ) {
 					// If previous block is a headline, replace current block with a headline.
 					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 						wp.blocks.createBlock( 'generateblocks/headline', {
@@ -313,7 +313,7 @@ const UnGroupIcon = ( props ) => {
 							element: defaultHeadlineElement,
 						} ),
 					] );
-				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && isEmpty( currentBlock.attributes.content ) ) {
+				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || isEmpty( currentBlock.attributes.content ) ) ) {
 					// If previous block is a paragraph, convert current block to headline.
 					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
 						wp.blocks.createBlock( 'generateblocks/headline', {

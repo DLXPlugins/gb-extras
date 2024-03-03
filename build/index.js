@@ -8077,14 +8077,14 @@ var UnGroupIcon = function UnGroupIcon(props) {
       var adjacentBlockClientId = wp.data.select('core/block-editor').getAdjacentBlockClientId(currentBlock.clientId, -1);
       if (null !== adjacentBlockClientId) {
         var adjacentBlock = wp.data.select('core/block-editor').getBlock(adjacentBlockClientId);
-        if (null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content)) {
+        if (null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ('' === currentBlock.attributes.content || (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content))) {
           // If previous block is a headline, replace current block with a headline.
           wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
             uniqueId: '',
             content: currentBlock.attributes.content,
             element: defaultHeadlineElement
           })]);
-        } else if (null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content)) {
+        } else if (null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ('' === currentBlock.attributes.content || (0,_wordpress_rich_text__WEBPACK_IMPORTED_MODULE_3__.isEmpty)(currentBlock.attributes.content))) {
           // If previous block is a paragraph, convert current block to headline.
           wp.data.dispatch('core/block-editor').replaceBlocks(currentBlock.clientId, [wp.blocks.createBlock('generateblocks/headline', {
             uniqueId: '',
