@@ -64,6 +64,7 @@ const Interface = ( props ) => {
 			resetNonce: dlxGBHacksAdmin.resetNonce,
 			enabledPostTypes: data.enabledPostTypes,
 			allowedGoogleFonts: data.allowedGoogleFonts,
+			enableMarkdownToHeadlineBlock: data.enableMarkdownToHeadlineBlock,
 		},
 	} );
 	const formValues = useWatch( { control } );
@@ -150,12 +151,12 @@ const Interface = ( props ) => {
 											control={ control }
 											render={ ( { field: { onChange } } ) => (
 												<ToggleControl
-													label={ __( 'Enable Default Headline Block', 'dlx-gb-hacks' ) }
+													label={ __( 'Enable Default Headline Block (Experimental)', 'dlx-gb-hacks' ) }
 													checked={ getValues( 'enableDefaultHeadlineBlock' ) }
 													onChange={ ( boolValue ) => {
 														onChange( boolValue );
 													} }
-													help={ __( 'Enable the GenerateBlocks headline block to be the default block.', 'dlx-gb-hacks' ) }
+													help={ __( 'Enable the GenerateBlocks headline block to be the default block. This feature is still experimental, and does not support markdown.', 'dlx-gb-hacks' ) }
 												/>
 											) }
 										/>
@@ -187,6 +188,33 @@ const Interface = ( props ) => {
 														) }
 													/>
 												</>
+											)
+										}
+									</div>
+									<div className="dlx-admin__row">
+										<Controller
+											name="enableMarkdownToHeadlineBlock"
+											control={ control }
+											render={ ( { field: { onChange } } ) => (
+												<ToggleControl
+													label={ __( 'Enable Markdown to Headline Block', 'dlx-gb-hacks' ) }
+													checked={ getValues( 'enableMarkdownToHeadlineBlock' ) }
+													onChange={ ( boolValue ) => {
+														onChange( boolValue );
+													} }
+													help={ __( 'By default, the markdown syntax for headings creates Core heading blocks. By enabling this, the markdown will now be converted to the Headline block.', 'dlx-gb-hacks' ) }
+												/>
+											) }
+										/>
+										{
+											( getValues( 'enableDefaultHeadlineBlock' ) && getValues( 'enableMarkdownToHeadlineBlock' ) ) && (
+												<Notice
+													message={ __( 'Markdown syntax is unavailable if the default block is set to the headline block.', 'dlx-gb-hacks' ) }
+													status="warning"
+													politeness="assertive"
+													inline={ true }
+													icon={ () => <FontAwesomeIcon icon={ TriangleExclamation } style={ { color: 'currentColor' } } /> }
+												/>
 											)
 										}
 									</div>

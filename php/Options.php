@@ -101,16 +101,17 @@ class Options {
 	public static function get_defaults() {
 
 		$defaults = array(
-			'enableAdobeFonts'           => true,
-			'enableDefaultHeadlineBlock' => false,
-			'headlineBlockElement'       => 'h2',
-			'licenseKey'                 => '',
-			'priceId'                    => '1',
-			'enabledPostTypes'           => array(
+			'enableAdobeFonts'              => true,
+			'enableDefaultHeadlineBlock'    => false,
+			'enableMarkdownToHeadlineBlock' => false,
+			'headlineBlockElement'          => 'h2',
+			'licenseKey'                    => '',
+			'priceId'                       => '1',
+			'enabledPostTypes'              => array(
 				'post' => true,
 				'page' => true,
 			),
-			'allowedGoogleFonts'         => array(),
+			'allowedGoogleFonts'            => array(),
 		);
 		return $defaults;
 	}

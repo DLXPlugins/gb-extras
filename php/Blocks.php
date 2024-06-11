@@ -362,6 +362,7 @@ class Blocks {
 				'allowedGoogleFonts'          => $options['allowedGoogleFonts'] ?? array(),
 				'defaultHeadlineBlockEnabled' => (bool) $options['enableDefaultHeadlineBlock'] ?? false,
 				'defaultHeadlineBlockElement' => $options['headlineBlockElement'] ?? '',
+				'enableMarkdownToHeadlineBlock' => (bool) $options['enableMarkdownToHeadlineBlock'] ?? false,
 			)
 		);
 	}

@@ -258,6 +258,69 @@ const UnGroupIcon = ( props ) => {
 		}
 		return blockSettings;
 	} );
+
+	/**
+	 * Allow markdown to transform to the headline block.
+	 */
+	if ( gbHacksPatternInserter.enableMarkdownToHeadlineBlock ) {
+		wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/markdown', ( blockSettings ) => {
+			if ( blockSettings.name === 'core/paragraph' || blockSettings.name === 'generateblocks/headline' ) {
+				const transformFrom = blockSettings.transforms?.from || [];
+				transformFrom.push( {
+					type: 'prefix',
+					prefix: '#',
+					transform: ( content ) => {
+						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h1' } );
+					},
+					priority: 1,
+				} );
+				transformFrom.push( {
+					type: 'prefix',
+					prefix: '##',
+					transform: ( content ) => {
+						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h2' } );
+					},
+					priority: 1,
+				} );
+				transformFrom.push( {
+					type: 'prefix',
+					prefix: '###',
+					transform: ( content ) => {
+						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h3' } );
+					},
+					priority: 1,
+				} );
+				transformFrom.push( {
+					type: 'prefix',
+					prefix: '####',
+					transform: ( content ) => {
+						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h4' } );
+					},
+					priority: 1,
+				} );
+				transformFrom.push( {
+					type: 'prefix',
+					prefix: '#####',
+					transform: ( content ) => {
+						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h5' } );
+					},
+					priority: 1,
+				} );
+				transformFrom.push( {
+					type: 'prefix',
+					prefix: '######',
+					transform: ( content ) => {
+						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h6' } );
+					},
+					priority: 1,
+				} );
+
+				blockSettings.transforms.from = transformFrom;
+			}
+			return blockSettings;
+		} );
+	}
+
 	// Check to see if the default block is a headline. If not, return.
 	const defaultHeadlineBlockEnabled = gbHacksPatternInserter.defaultHeadlineBlockEnabled;
 	if ( ! defaultHeadlineBlockEnabled ) {
