@@ -1,5 +1,5 @@
 {
-  "name": "gb-hacks",
+  "name": "gb-extras",
   "version": "1.0.0",
   "description": "A companion plugin for the GenerateBlocks suite of plugins.",
   "main": "src/index.js",
@@ -20,9 +20,9 @@
   "author": "Ronald Huereca",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/dlxplugins/gb-hacks/issues"
+    "url": "https://github.com/dlxplugins/gb-extras/issues"
   },
-  "homepage": "https://dlxplugins.com/plugins/gb-hacks/",
+  "homepage": "https://dlxplugins.com/plugins/gb-extras/",
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",
     "@babel/plugin-proposal-class-properties": "^7.17.12",

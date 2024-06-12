@@ -12,7 +12,7 @@
     "inserter"
   ],
   "version": "1.0.0",
-  "textdomain": "gb-hacks",
+  "textdomain": "gb-extras",
   "attributes": {
     "preview": {
       "type": "boolean",
@@ -24,6 +24,6 @@
       "preview": true
     }
   },
-  "editorScript": "gb-hacks-pattern-inserter-block",
-  "editorStyle": "gb-hacks-pattern-inserter-block-css"
+  "editorScript": "gb-extras-pattern-inserter-block",
+  "editorStyle": "gb-extras-pattern-inserter-block-css"
 }

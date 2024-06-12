@@ -9,12 +9,12 @@ class ComposerStaticInit5ffc2044fb5721659a1089088baf7590
     public static $prefixLengthsPsr4 = array (
         'D' => 
         array (
-            'DLXPlugins\\GBHacks\\' => 19,
+            'DLXPlugins\\GBExtras\\' => 19,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'DLXPlugins\\GBHacks\\' => 
+        'DLXPlugins\\GBExtras\\' => 
         array (
             0 => __DIR__ . '/../..' . '/php',
         ),

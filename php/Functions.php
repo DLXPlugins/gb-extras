@@ -2,10 +2,10 @@
 /**
  * Helper functions for the plugin.
  *
- * @package GBHacks
+ * @package GBExtras
  */
 
-namespace DLXPlugins\GBHacks;
+namespace DLXPlugins\GBExtras;
 
 /**
  * Class Functions
@@ -128,7 +128,7 @@ class Functions {
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
 	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
-		$options_url = admin_url( 'admin.php?page=dlx-gb-hacks' );
+		$options_url = admin_url( 'admin.php?page=dlx-gb-extras' );
 		if ( ! empty( $tab ) ) {
 			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
 			if ( ! empty( $sub_tab ) ) {
@@ -175,7 +175,7 @@ class Functions {
 	 * @return string plugin slug.
 	 */
 	public static function get_plugin_slug() {
-		return dirname( plugin_basename( GB_HACKS_FILE ) );
+		return dirname( plugin_basename( GB_EXTRAS_FILE ) );
 	}
 
 	/**
@@ -184,7 +184,7 @@ class Functions {
 	 * @return string base file for the plugin.
 	 */
 	public static function get_plugin_file() {
-		return plugin_basename( GB_HACKS_FILE );
+		return plugin_basename( GB_EXTRAS_FILE );
 	}
 
 	/**
@@ -193,7 +193,7 @@ class Functions {
 	 * @return float version for the plugin.
 	 */
 	public static function get_plugin_version() {
-		return GB_HACKS_VERSION;
+		return GB_EXTRAS_VERSION;
 	}
 
 	/**
@@ -291,7 +291,7 @@ class Functions {
 	 * @return string The new path.
 	 */
 	public static function get_plugin_dir( $path = '' ) {
-		$dir = rtrim( plugin_dir_path( GB_HACKS_FILE ), '/' );
+		$dir = rtrim( plugin_dir_path( GB_EXTRAS_FILE ), '/' );
 		if ( ! empty( $path ) && is_string( $path ) ) {
 			$dir .= '/' . ltrim( $path, '/' );
 		}
@@ -306,7 +306,7 @@ class Functions {
 	 * @return string URL to to the file.
 	 */
 	public static function get_plugin_url( $path = '' ) {
-		$dir = rtrim( plugin_dir_url( GB_HACKS_FILE ), '/' );
+		$dir = rtrim( plugin_dir_url( GB_EXTRAS_FILE ), '/' );
 		if ( ! empty( $path ) && is_string( $path ) ) {
 			$dir .= '/' . ltrim( $path, '/' );
 		}

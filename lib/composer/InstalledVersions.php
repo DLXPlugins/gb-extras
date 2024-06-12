@@ -31,11 +31,11 @@ private static $installed = array (
     array (
     ),
     'reference' => '43c614dc6629909234202976c5ee5590255d1098',
-    'name' => 'dlxplugins/gb-hacks',
+    'name' => 'dlxplugins/gb-extras',
   ),
   'versions' => 
   array (
-    'dlxplugins/gb-hacks' => 
+    'dlxplugins/gb-extras' => 
     array (
       'pretty_version' => 'dev-main',
       'version' => 'dev-main',

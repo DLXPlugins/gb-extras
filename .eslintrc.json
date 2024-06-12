@@ -5,9 +5,9 @@
 		"wpApiSettings": true,
 		"window": true,
 		"document": true,
-		"dlxGBHacksLicense": "readonly",
-		"dlxGBHacksAdmin": "readonly",
-		"gbHacksPatternInserter": "readonly"
+		"dlxGBExtrasLicense": "readonly",
+		"dlxGBExtrasAdmin": "readonly",
+		"gbExtrasPatternInserter": "readonly"
 
 	},
 	"env": {

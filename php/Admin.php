@@ -2,10 +2,10 @@
 /**
  * Admin class.
  *
- * @package GBHacks
+ * @package GBExtras
  */
 
-namespace DLXPlugins\GBHacks;
+namespace DLXPlugins\GBExtras;
 
 /**
  * Admin class.
@@ -23,22 +23,22 @@ class Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// For retrieving the options.
-		add_action( 'wp_ajax_dlx_gb_hacks_get_options', array( $this, 'ajax_get_options' ) );
+		add_action( 'wp_ajax_dlx_gb_extras_get_options', array( $this, 'ajax_get_options' ) );
 
 		// For saving the options.
-		add_action( 'wp_ajax_dlx_gb_hacks_save_options', array( $this, 'ajax_save_options' ) );
+		add_action( 'wp_ajax_dlx_gb_extras_save_options', array( $this, 'ajax_save_options' ) );
 
 		// For resetting the options.
-		add_action( 'wp_ajax_dlx_gb_hacks_reset_options', array( $this, 'ajax_reset_options' ) );
+		add_action( 'wp_ajax_dlx_gb_extras_reset_options', array( $this, 'ajax_reset_options' ) );
 
 		// For getting license options.
-		add_action( 'wp_ajax_dlx_gb_hacks_license_get_options', array( $this, 'ajax_license_get_options' ) );
+		add_action( 'wp_ajax_dlx_gb_extras_license_get_options', array( $this, 'ajax_license_get_options' ) );
 
 		// For revoking a license.
-		add_action( 'wp_ajax_dlx_gb_hacks_revoke_license', array( $this, 'ajax_revoke_license' ) );
+		add_action( 'wp_ajax_dlx_gb_extras_revoke_license', array( $this, 'ajax_revoke_license' ) );
 
 		// For saving a license.
-		add_action( 'wp_ajax_dlx_gb_hacks_save_license', array( $this, 'ajax_save_license' ) );
+		add_action( 'wp_ajax_dlx_gb_extras_save_license', array( $this, 'ajax_save_license' ) );
 
 		// For initializing EDD license.
 		add_action( 'admin_init', array( $this, 'init_license_system' ) );
@@ -48,72 +48,11 @@ class Admin {
 	}
 
 	/**
-	 * Validate a form submitted in the preview modal.
-	 */
-	public function ajax_admin_preview_validate() {
-		// Do permissions check.
-		$nonce = filter_input( INPUT_GET, 'nonce', FILTER_DEFAULT );
-		if ( ! \wp_verify_nonce( $nonce, 'dlx-gb-hacks-admin-preview-iframe' ) || ! current_user_can( 'manage_options' ) ) {
-			\wp_send_json_error( array() );
-		}
-
-		// Get secret key.
-		$secret_key = filter_input( INPUT_GET, 'secretKey', FILTER_DEFAULT );
-
-		// Get token.
-		$token = filter_input( INPUT_GET, 'turnstyleToken', FILTER_DEFAULT );
-
-		$can_proceed = false;
-
-		// Make sure token is valid.
-		if ( $token ) {
-
-			$cloudflare_endpoint_api = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-
-			// Build data envelope.
-			$data = array(
-				'secret'   => sanitize_text_field( $secret_key ),
-				'response' => sanitize_text_field( $token ),
-			);
-
-			$args = array(
-				'body'      => $data,
-				'method'    => 'POST',
-				'sslverify' => true,
-			);
-
-			$response = wp_remote_post( esc_url( $cloudflare_endpoint_api ), $args );
-
-			// If error, show response.
-			if ( is_wp_error( $response ) ) {
-				$can_proceed = false;
-			}
-
-			// Get body.
-			$body = json_decode( wp_remote_retrieve_body( $response ), true );
-
-			$is_success = $body['success'] ?? false;
-			// If not a success, error.
-			if ( ! $is_success ) {
-				$can_proceed = false;
-			} else {
-				$can_proceed = true;
-			}
-
-			// Success!
-			if ( $can_proceed ) {
-				\wp_send_json_success( array() );
-			}
-		}
-		\wp_send_json_error( array() );
-	}
-
-	/**
 	 * Initialize the setting links for the plugin page.
 	 */
 	public function init_settings_links() {
 		$prefix = Functions::is_multisite() ? 'network_admin_' : '';
-		add_action( $prefix . 'plugin_action_links_' . plugin_basename( GB_HACKS_FILE ), array( $this, 'plugin_settings_link' ) );
+		add_action( $prefix . 'plugin_action_links_' . plugin_basename( GB_EXTRAS_FILE ), array( $this, 'plugin_settings_link' ) );
 	}
 
 	/**
@@ -126,9 +65,9 @@ class Admin {
 	 */
 	public function plugin_settings_link( $settings ) {
 		$setting_links = array(
-			'settings' => sprintf( '<a href="%s">%s</a>', esc_url( Functions::get_settings_url() ), esc_html__( 'Settings', 'dlx-gb-hacks' ) ),
-			'docs'     => sprintf( '<a href="%s">%s</a>', esc_url( 'https://docs.dlxplugins.com/v/gb-hacks/' ), esc_html__( 'Docs', 'dlx-gb-hacks' ) ),
-			'site'     => sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/gb-hacks/' ), esc_html__( 'Plugin Home', 'dlx-gb-hacks' ) ),
+			'settings' => sprintf( '<a href="%s">%s</a>', esc_url( Functions::get_settings_url() ), esc_html__( 'Settings', 'gb-extras' ) ),
+			'docs'     => sprintf( '<a href="%s">%s</a>', esc_url( 'https://docs.dlxplugins.com/v/gb-extras/' ), esc_html__( 'Docs', 'gb-extras' ) ),
+			'site'     => sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/gb-extras/' ), esc_html__( 'Plugin Home', 'gb-extras' ) ),
 		);
 		if ( ! is_array( $settings ) ) {
 			return $setting_links;
@@ -141,7 +80,7 @@ class Admin {
 	 * Ajax revoke license.
 	 */
 	public function ajax_revoke_license() {
-		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'dlx-gb-hacks-admin-license-revoke' ) || ! current_user_can( 'manage_options' ) ) {
+		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'dlx-gb-extras-admin-license-revoke' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array() );
 		}
 
@@ -187,7 +126,7 @@ class Admin {
 	 * Save/Check a license key.
 	 */
 	public function ajax_save_license() {
-		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'dlx-gb-hacks-admin-license-save' ) || ! current_user_can( 'manage_options' ) ) {
+		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'dlx-gb-extras-admin-license-save' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array() );
 		}
 
@@ -228,11 +167,11 @@ class Admin {
 			// setup the updater.
 			$edd_updater = new Plugin_Updater(
 				'https://dlxplugins.com',
-				GB_HACKS_FILE,
+				GB_EXTRAS_FILE,
 				array(
 					'version' => Functions::get_plugin_version(),
 					'license' => $options['licenseKey'],
-					'item_id' => GB_HACKS_PRODUCT_ID,
+					'item_id' => GB_EXTRAS_PRODUCT_ID,
 					'author'  => 'Ronald Huereca',
 					'beta'    => true,
 					'url'     => home_url(),
@@ -249,14 +188,14 @@ class Admin {
 		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ) );
 
 		// Verify nonce.
-		$nonce_action = 'dlx-gb-hacks-admin-license-get';
+		$nonce_action = 'dlx-gb-extras-admin-license-get';
 		if ( ! wp_verify_nonce( $nonce, $nonce_action ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message'     => __( 'Nonce or permission verification failed.', 'dlx-gb-hacks' ),
+					'message'     => __( 'Nonce or permission verification failed.', 'gb-extras' ),
 					'type'        => 'error',
 					'dismissable' => true,
-					'title'       => __( 'Error', 'dlx-gb-hacks' ),
+					'title'       => __( 'Error', 'gb-extras' ),
 				)
 			);
 		}
@@ -273,13 +212,13 @@ class Admin {
 		$form_data = filter_input( INPUT_POST, 'formData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
 		$nonce = $form_data['saveNonce'] ?? false;
-		if ( ! wp_verify_nonce( $nonce, 'dlx-gb-hacks-admin-save-options' ) || ! current_user_can( 'manage_options' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'dlx-gb-extras-admin-save-options' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message'     => __( 'Nonce or permission verification failed.', 'dlx-gb-hacks' ),
+					'message'     => __( 'Nonce or permission verification failed.', 'gb-extras' ),
 					'type'        => 'critical',
 					'dismissable' => true,
-					'title'       => __( 'Error', 'dlx-gb-hacks' ),
+					'title'       => __( 'Error', 'gb-extras' ),
 				)
 			);
 		}
@@ -313,7 +252,7 @@ class Admin {
 		// Send success message.
 		wp_send_json_success(
 			array(
-				'message'     => __( 'Options saved.', 'dlx-gb-hacks' ),
+				'message'     => __( 'Options saved.', 'gb-extras' ),
 				'type'        => 'success',
 				'dismissable' => true,
 			)
@@ -328,13 +267,13 @@ class Admin {
 		$form_data = filter_input( INPUT_POST, 'formData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
 		$nonce = $form_data['resetNonce'] ?? false;
-		if ( ! wp_verify_nonce( $nonce, 'dlx-gb-hacks-admin-reset-options' ) || ! current_user_can( 'manage_options' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'dlx-gb-extras-admin-reset-options' ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message'     => __( 'Nonce or permission verification failed.', 'dlx-gb-hacks' ),
+					'message'     => __( 'Nonce or permission verification failed.', 'gb-extras' ),
 					'type'        => 'error',
 					'dismissable' => true,
-					'title'       => __( 'Error', 'dlx-gb-hacks' ),
+					'title'       => __( 'Error', 'gb-extras' ),
 				)
 			);
 		}
@@ -369,7 +308,7 @@ class Admin {
 		// Send success message.
 		wp_send_json_success(
 			array(
-				'message'     => __( 'Options reset.', 'dlx-gb-hacks' ),
+				'message'     => __( 'Options reset.', 'gb-extras' ),
 				'type'        => 'success',
 				'dismissable' => true,
 				'formData'    => $default_options,
@@ -385,14 +324,14 @@ class Admin {
 		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ) );
 
 		// Verify nonce.
-		$nonce_action = 'dlx-gb-hacks-admin-get-options';
+		$nonce_action = 'dlx-gb-extras-admin-get-options';
 		if ( ! wp_verify_nonce( $nonce, $nonce_action ) || ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message'     => __( 'Nonce or permission verification failed.', 'dlx-gb-hacks' ),
+					'message'     => __( 'Nonce or permission verification failed.', 'gb-extras' ),
 					'type'        => 'error',
 					'dismissable' => true,
-					'title'       => __( 'Error', 'dlx-gb-hacks' ),
+					'title'       => __( 'Error', 'gb-extras' ),
 				)
 			);
 		}
@@ -406,10 +345,10 @@ class Admin {
 	public function add_admin_menu() {
 		add_submenu_page(
 			'generateblocks',
-			__( 'Hacks', 'pmpro-turnstile' ),
-			__( 'Hacks', 'pmpro-turnstile' ),
+			__( 'Extras', 'gb-extras' ),
+			__( 'Extras', 'gb-extras' ),
 			'manage_options',
-			'dlx-gb-hacks',
+			'dlx-gb-extras',
 			array( $this, 'admin_page' ),
 			4
 		);
@@ -421,7 +360,7 @@ class Admin {
 	 * @param string $hook The current admin page.
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( 'generateblocks_page_dlx-gb-hacks' !== $hook ) {
+		if ( 'generateblocks_page_dlx-gb-extras' !== $hook ) {
 			return;
 		}
 
@@ -429,10 +368,10 @@ class Admin {
 		$current_tab = Functions::get_admin_tab();
 		if ( null === $current_tab || 'settings' === $current_tab ) {
 			// Enqueue main scripts.
-			$deps = require_once Functions::get_plugin_dir( 'dist/gb-hacks-admin.asset.php' );
+			$deps = require_once Functions::get_plugin_dir( 'dist/gb-extras-admin.asset.php' );
 			wp_enqueue_script(
-				'dlx-gb-hacks-admin',
-				Functions::get_plugin_url( 'dist/gb-hacks-admin.js' ),
+				'dlx-gb-extras-admin',
+				Functions::get_plugin_url( 'dist/gb-extras-admin.js' ),
 				$deps['dependencies'],
 				$deps['version'],
 				true
@@ -453,41 +392,41 @@ class Admin {
 			}
 
 			wp_localize_script(
-				'dlx-gb-hacks-admin',
-				'dlxGBHacksAdmin',
+				'dlx-gb-extras-admin',
+				'dlxGBExtrasAdmin',
 				array(
-					'getNonce'     => wp_create_nonce( 'dlx-gb-hacks-admin-get-options' ),
-					'saveNonce'    => wp_create_nonce( 'dlx-gb-hacks-admin-save-options' ),
-					'resetNonce'   => wp_create_nonce( 'dlx-gb-hacks-admin-reset-options' ),
-					'previewNonce' => wp_create_nonce( 'dlx-gb-hacks-admin-preview' ),
+					'getNonce'     => wp_create_nonce( 'dlx-gb-extras-admin-get-options' ),
+					'saveNonce'    => wp_create_nonce( 'dlx-gb-extras-admin-save-options' ),
+					'resetNonce'   => wp_create_nonce( 'dlx-gb-extras-admin-reset-options' ),
+					'previewNonce' => wp_create_nonce( 'dlx-gb-extras-admin-preview' ),
 					'ajaxurl'      => admin_url( 'admin-ajax.php' ),
 					'postTypes'    => $post_types,
 				)
 			);
 		} elseif ( 'license' === $current_tab ) {
-			$deps = require_once Functions::get_plugin_dir( 'dist/gb-hacks-admin-license.asset.php' );
+			$deps = require_once Functions::get_plugin_dir( 'dist/gb-extras-admin-license.asset.php' );
 			wp_enqueue_script(
-				'dlx-gb-hacks-admin-license',
-				Functions::get_plugin_url( 'dist/gb-hacks-admin-license.js' ),
+				'dlx-gb-extras-admin-license',
+				Functions::get_plugin_url( 'dist/gb-extras-admin-license.js' ),
 				$deps['dependencies'],
 				$deps['version'],
 				true
 			);
 			wp_localize_script(
-				'dlx-gb-hacks-admin-license',
-				'dlxGBHacksLicense',
+				'dlx-gb-extras-admin-license',
+				'dlxGBExtrasLicense',
 				array(
-					'getNonce'    => wp_create_nonce( 'dlx-gb-hacks-admin-license-get' ),
-					'saveNonce'   => wp_create_nonce( 'dlx-gb-hacks-admin-license-save' ),
-					'revokeNonce' => wp_create_nonce( 'dlx-gb-hacks-admin-license-revoke' ),
+					'getNonce'    => wp_create_nonce( 'dlx-gb-extras-admin-license-get' ),
+					'saveNonce'   => wp_create_nonce( 'dlx-gb-extras-admin-license-save' ),
+					'revokeNonce' => wp_create_nonce( 'dlx-gb-extras-admin-license-revoke' ),
 				)
 			);
 		}
 
 		// Enqueue admin styles.
 		wp_enqueue_style(
-			'dlx-gb-hacks-admin-css',
-			Functions::get_plugin_url( 'dist/gb-hacks-admin-css.css' ),
+			'dlx-gb-extras-admin-css',
+			Functions::get_plugin_url( 'dist/gb-extras-admin-css.css' ),
 			array(),
 			Functions::get_plugin_version(),
 			'all'
@@ -499,17 +438,17 @@ class Admin {
 	 */
 	public function admin_page() {
 		?>
-		<div class="dlx-gb-hacks-admin-wrap">
-			<header class="dlx-gb-hacks-admin-header">
-				<div class="dlx-gb-hacks-logo-wrapper">
-					<div class="dlx-gb-hacks-logo">
-						<h2 id="dlx-gb-hacks-admin-header">
+		<div class="dlx-gb-extras-admin-wrap">
+			<header class="dlx-gb-extras-admin-header">
+				<div class="dlx-gb-extras-logo-wrapper">
+					<div class="dlx-gb-extras-logo">
+						<h2 id="dlx-gb-extras-admin-header">
 							<img src="<?php echo esc_url( Functions::get_plugin_url( 'assets/img/logo.png' ) ); ?>" alt="GenerateBlocks Hacks" />
 						</h2>
 					</div>
 					<div class="header__btn-wrap">
-						<a href="<?php echo esc_url( 'https://docs.dlxplugins.com/v/gb-hacks/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Docs', 'dlx-gb-hacks' ); ?></a>
-						<a href="<?php echo esc_url( 'https://dlxplugins.com/support/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Support', 'dlx-gb-hacks' ); ?></a>
+						<a href="<?php echo esc_url( 'https://docs.dlxplugins.com/v/gb-extras/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Docs', 'gb-extras' ); ?></a>
+						<a href="<?php echo esc_url( 'https://dlxplugins.com/support/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Support', 'gb-extras' ); ?></a>
 					</div>
 				</div>
 			</header>
@@ -528,22 +467,22 @@ class Admin {
 				$help_tab_class[] = 'nav-tab-active';
 			}
 			?>
-			<main class="dlx-gb-hacks-admin-body-wrapper">
+			<main class="dlx-gb-extras-admin-body-wrapper">
 				<div class="has-admin-container-body">
 					<nav class="nav-tab-wrapper">
-						<a  class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url() ); ?>"><?php esc_html_e( 'Settings', 'dlx-gb-hacks' ); ?></a>
-						<a  class="<?php echo esc_attr( implode( ' ', $license_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'license' ) ); ?>"><?php esc_html_e( 'License', 'dlx-gb-hacks' ); ?></a>
+						<a  class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url() ); ?>"><?php esc_html_e( 'Settings', 'gb-extras' ); ?></a>
+						<a  class="<?php echo esc_attr( implode( ' ', $license_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'license' ) ); ?>"><?php esc_html_e( 'License', 'gb-extras' ); ?></a>
 					</nav>
 				</div>
-				<div class="dlx-gb-hacks-body__content">
+				<div class="dlx-gb-extras-body__content">
 					<?php
 					if ( null === $current_tab || 'settings' === $current_tab ) {
 						?>
-							<div id="dlx-gb-hacks"></div>
+							<div id="dlx-gb-extras"></div>
 						<?php
 					} elseif ( 'license' === $current_tab ) {
 						?>
-							<div id="dlx-gb-hacks-license"></div>
+							<div id="dlx-gb-extras-license"></div>
 						<?php
 					}
 					?>

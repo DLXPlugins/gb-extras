@@ -2,10 +2,10 @@
 /**
  * Perform license actions.
  *
- * @package GBHacks
+ * @package GBExtras
  */
 
-namespace DLXPlugins\GBHacks;
+namespace DLXPlugins\GBExtras;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access.' );

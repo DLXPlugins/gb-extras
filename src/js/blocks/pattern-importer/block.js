@@ -61,12 +61,12 @@ const PatternImporter = ( props ) => {
 		setImporting( true );
 		const processImage = async( imgUrl, imgAlt ) => {
 			const response = await SendCommand(
-				gbHacksPatternInserter.restNonce,
+				gbExtrasPatternInserter.restNonce,
 				{
 					imgUrl,
 					imgAlt,
 				},
-				gbHacksPatternInserter.restUrl + '/process_image'
+				gbExtrasPatternInserter.restUrl + '/process_image'
 			);
 			return response;
 		};
@@ -214,7 +214,7 @@ const PatternImporter = ( props ) => {
 						checked={ doNotImportRemoteImages }
 						onChange={ ( value ) => setDoNotImportRemoteImages( value ) }
 						disabled={ importing }
-						className="gb-hacks-card-checkbox"
+						className="gb-extras-card-checkbox"
 					/>
 				</CardBody>
 				<CardFooter>

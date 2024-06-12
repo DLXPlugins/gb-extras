@@ -19,8 +19,8 @@ import SendCommand from '../../utils/SendCommand';
 import Notice from '../../components/Notice';
 
 const retrieveOptions = () => {
-	return SendCommand( 'dlx_gb_hacks_license_get_options', {
-		nonce: dlxGBHacksLicense.getNonce,
+	return SendCommand( 'dlx_gb_extras_license_get_options', {
+		nonce: dlxGBExtrasLicense.getNonce,
 	} );
 };
 
@@ -33,7 +33,7 @@ const License = ( props ) => {
 		<Suspense
 			fallback={
 				<>
-					<h2>{ __( 'Loading…', 'dlx-gb-hacks' ) }</h2>
+					<h2>{ __( 'Loading…', 'gb-extras' ) }</h2>
 				</>
 			}
 		>
@@ -86,8 +86,8 @@ const Interface = ( props ) => {
 
 	const onSubmit = ( formData ) => {
 		setSaving( true );
-		SendCommand( 'dlx_gb_hacks_save_license', {
-			nonce: dlxGBHacksLicense.saveNonce,
+		SendCommand( 'dlx_gb_extras_save_license', {
+			nonce: dlxGBExtrasLicense.saveNonce,
 			formData,
 		} )
 			.then( ( ajaxResponse ) => {
@@ -123,8 +123,8 @@ const Interface = ( props ) => {
 
 	const revokeLicense = ( e ) => {
 		setRevokingLicense( true );
-		SendCommand( 'dlx_gb_hacks_revoke_license', {
-			nonce: dlxGBHacksLicense.revokeNonce,
+		SendCommand( 'dlx_gb_extras_revoke_license', {
+			nonce: dlxGBExtrasLicense.revokeNonce,
 			formData: formValues,
 		} )
 			.then( ( ajaxResponse ) => {
@@ -145,7 +145,7 @@ const Interface = ( props ) => {
 						type: 'validate',
 						message: __(
 							'Revoking the license resulted in an error and could not be deactivated. Please reactivate the license and try again.',
-							'dlx-gb-hacks'
+							'gb-extras'
 						),
 					} );
 				}
@@ -185,7 +185,7 @@ const Interface = ( props ) => {
 		if ( getValues( 'licenseValid' ) ) {
 			return (
 				<Notice
-					message={ __( 'Your license is valid. Thank you so much for purchasing a license.', 'dlx-gb-hacks' ) }
+					message={ __( 'Your license is valid. Thank you so much for purchasing a license.', 'gb-extras' ) }
 					status="success"
 					politeness="polite"
 					icon={ () => <FontAwesomeIcon icon={ CircleCheck } style={ { color: 'currentColor' } } /> }
@@ -196,7 +196,7 @@ const Interface = ( props ) => {
 			<Notice
 				message={ __(
 					'Please enter a valid license to receive support and updates.',
-					'dlx-gb-hacks'
+					'gb-extras'
 				) }
 				status="warning"
 				politeness="polite"
@@ -206,12 +206,12 @@ const Interface = ( props ) => {
 	};
 
 	const getSaveButton = () => {
-		let saveText = __( 'Save License', 'dlx-gb-hacks' );
-		let saveTextLoading = __( 'Saving…', 'dlx-gb-hacks' );
+		let saveText = __( 'Save License', 'gb-extras' );
+		let saveTextLoading = __( 'Saving…', 'gb-extras' );
 
 		if ( ! getValues( 'licenseValid' ) ) {
-			saveText = __( 'Activate License', 'dlx-gb-hacks' );
-			saveTextLoading = __( 'Activating…', 'dlx-gb-hacks' );
+			saveText = __( 'Activate License', 'gb-extras' );
+			saveTextLoading = __( 'Activating…', 'gb-extras' );
 		}
 		return (
 			<>
@@ -236,8 +236,8 @@ const Interface = ( props ) => {
 
 	return (
 		<>
-			<div className="dlx-gb-hacks-admin-content-heading">
-				<h1><span className="dlx-gb-hacks-content-heading-text">{ __( 'License', 'dlx-gb-hacks' ) }</span></h1>
+			<div className="dlx-gb-extras-admin-content-heading">
+				<h1><span className="dlx-gb-extras-content-heading-text">{ __( 'License', 'gb-extras' ) }</span></h1>
 				{
 					getLicenseNotice()
 				}
@@ -257,8 +257,8 @@ const Interface = ( props ) => {
 							render={ ( { field: { onChange, value } } ) => (
 								<TextControl
 									value={ value }
-									label={ __( 'License Key', 'dlx-gb-hacks' ) }
-									id="search-dlx-gb-hacks-license-secret"
+									label={ __( 'License Key', 'gb-extras' ) }
+									id="search-dlx-gb-extras-license-secret"
 									className={ classNames(
 										'dlx-admin__text-control-license',
 										{
@@ -273,7 +273,7 @@ const Interface = ( props ) => {
 									aria-required="true"
 									help={ __(
 										'Entering a license will enable support and updates.',
-										'dlx-gb-hacks'
+										'gb-extras'
 									) }
 									type={ showSecret ? 'text' : 'password' }
 								/>
@@ -281,11 +281,11 @@ const Interface = ( props ) => {
 						/>
 						<div className="dlx-admin__license--input-preview">
 							<input
-								id="dlx-gb-hacks-license-show-hide"
+								id="dlx-gb-extras-license-show-hide"
 								type="checkbox"
 								aria-label={ __(
 									'Click to Show or Hide the License',
-									'dlx-gb-hacks'
+									'gb-extras'
 								) }
 								onClick={ () => {
 									if ( showSecret ) {
@@ -296,25 +296,25 @@ const Interface = ( props ) => {
 								} }
 								title={
 									showSecret
-										? __( 'Hide License', 'dlx-gb-hacks' )
-										: __( 'Show License', 'dlx-gb-hacks' )
+										? __( 'Hide License', 'gb-extras' )
+										: __( 'Show License', 'gb-extras' )
 								}
 							/>
-							<label htmlFor="dlx-gb-hacks-license-show-hide not-is-required">
-								<span className="dlx-gb-hacks-license-show-hide--label">
-									{ __( 'Click to Show or Hide the License', 'dlx-gb-hacks' ) }
+							<label htmlFor="dlx-gb-extras-license-show-hide not-is-required">
+								<span className="dlx-gb-extras-license-show-hide--label">
+									{ __( 'Click to Show or Hide the License', 'gb-extras' ) }
 								</span>
-								<span className="dlx-gb-hacks-license-show-hide--icon">
+								<span className="dlx-gb-extras-license-show-hide--icon">
 									{ ! showSecret ? (
 										<Button
-											label={ __( 'Show License', 'dlx-gb-hacks' ) }
+											label={ __( 'Show License', 'gb-extras' ) }
 											size={ 20 }
 											icon={ () => <FontAwesomeIcon icon={ EyeIcon } style={ { color: 'currentColor' } } /> }
 											className="button-reset"
 										/>
 									) : (
 										<Button
-											label={ __( 'Hide License', 'dlx-gb-hacks' ) }
+											label={ __( 'Hide License', 'gb-extras' ) }
 											size={ 20 }
 											icon={ () => <FontAwesomeIcon icon={ EyeSlash } style={ { color: 'currentColor' } } /> }
 											className="button-reset"
@@ -355,7 +355,7 @@ const Interface = ( props ) => {
 					</div>
 					<div
 						className={ classNames(
-							'dlx-admin__tabs--content-actions dlx-admin-buttons dlx-gb-hacks-admin-buttons',
+							'dlx-admin__tabs--content-actions dlx-admin-buttons dlx-gb-extras-admin-buttons',
 							{
 								'can-revoke': getValues( 'licenseValid' ),
 							}
@@ -372,8 +372,8 @@ const Interface = ( props ) => {
 								type="button"
 								text={
 									revokingLicense
-										? __( 'Revoking License…', 'dlx-gb-hacks' )
-										: __( 'Revoke License', 'dlx-gb-hacks' )
+										? __( 'Revoking License…', 'gb-extras' )
+										: __( 'Revoke License', 'gb-extras' )
 								}
 								icon={ revokingLicense ? <FontAwesomeIcon icon={ Loader } style={ { color: 'currentColor' } } /> : false }
 								iconSize="1x"
@@ -392,7 +392,7 @@ const Interface = ( props ) => {
 						<Notice
 							message={ __(
 								'There are form validation errors. Please correct them above.',
-								'dlx-gb-hacks'
+								'gb-extras'
 							) }
 							status="error"
 							politeness="polite"
@@ -400,7 +400,7 @@ const Interface = ( props ) => {
 					) }
 					{ isSaved && (
 						<Notice
-							message={ __( 'Your settings have been saved.', 'dlx-gb-hacks' ) }
+							message={ __( 'Your settings have been saved.', 'gb-extras' ) }
 							status="success"
 							politeness="assertive"
 						/>
@@ -409,7 +409,7 @@ const Interface = ( props ) => {
 						<Notice
 							message={ __(
 								'Your license has been deactivated for this site.',
-								'dlx-gb-hacks'
+								'gb-extras'
 							) }
 							status="success"
 							politeness="assertive"
@@ -425,21 +425,21 @@ const Interface = ( props ) => {
 										<div className="dlx-admin-admin__tabs--content-heading">
 											<h1>
 												<span className="dlx-admin-admin__heading--text">
-													{ __( 'License Information', 'dlx-gb-hacks' ) }
+													{ __( 'License Information', 'gb-extras' ) }
 												</span>
 											</h1>
 										</div>
 										<div className="dlx-admin-admin__tabs--content-inner">
-											<table className="dlx-gb-hacks-table dlx-gb-hacks-table--responsive dlx-gb-hacks-table--license-ui">
+											<table className="dlx-gb-extras-table dlx-gb-extras-table--responsive dlx-gb-extras-table--license-ui">
 												<thead>
 													<tr>
-														<th scope="col">{ __( 'Item Name', 'dlx-gb-hacks' ) }</th>
-														<th scope="col">{ __( 'License Type', 'dlx-gb-hacks' ) }</th>
+														<th scope="col">{ __( 'Item Name', 'gb-extras' ) }</th>
+														<th scope="col">{ __( 'License Type', 'gb-extras' ) }</th>
 														<th scope="col">
-															{ __( 'License Activations', 'dlx-gb-hacks' ) }
+															{ __( 'License Activations', 'gb-extras' ) }
 														</th>
-														<th scope="col">{ __( 'Expires On', 'dlx-gb-hacks' ) }</th>
-														<th scope="col">{ __( 'Days Left', 'dlx-gb-hacks' ) }</th>
+														<th scope="col">{ __( 'Expires On', 'gb-extras' ) }</th>
+														<th scope="col">{ __( 'Days Left', 'gb-extras' ) }</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -455,7 +455,7 @@ const Interface = ( props ) => {
 																<span className="">
 																	{ licenseData.site_count } of{ ' ' }
 																	{ licenseData.license_limit === 0
-																		? __( 'Unlimited', 'dlx-gb-hacks' )
+																		? __( 'Unlimited', 'gb-extras' )
 																		: licenseData.license_limit }
 																</span>
 															</p>

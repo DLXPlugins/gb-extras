@@ -1,26 +1,27 @@
 <?php
 /**
- * Plugin Name:       GB Hacks
- * Plugin URI:        https://dlxplugins.com/plugins/gb-hacks/
+ * Plugin Name:       GB Extras
+ * Plugin URI:        https://dlxplugins.com/plugins/gb-extras/
  * Description:       A collection of enhancements for the GenerateBlocks plugins.
- * Version:           1.4.0
+ * Version:           1.5.0
  * Requires at least: 5.9
  * Requires PHP:      7.2
  * Author:            DLX Plugins
  * Author URI:        https://dlxplugins.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       gb-hacks
+ * Text Domain:       gb-extras
  * Domain Path:       /languages
+ * Requires Plugins: generateblocks
  *
- * @package GBHacks
+ * @package GBExtras
  */
 
-namespace DLXPlugins\GBHacks;
+namespace DLXPlugins\GBExtras;
 
-define( 'GB_HACKS_VERSION', '1.4.0' );
-define( 'GB_HACKS_FILE', __FILE__ );
-define( 'GB_HACKS_PRODUCT_ID', 36631 );
+define( 'GB_EXTRAS_VERSION', '1.5.0' );
+define( 'GB_EXTRAS_FILE', __FILE__ );
+define( 'GB_EXTRAS_PRODUCT_ID', 37604 );
 
 // Support for site-level autoloading.
 if ( file_exists( __DIR__ . '/lib/autoload.php' ) ) {
@@ -28,14 +29,14 @@ if ( file_exists( __DIR__ . '/lib/autoload.php' ) ) {
 }
 
 /**
- * GBHacks class.
+ * GBExtras class.
  */
-class GBHacks {
+class GBExtras {
 
 	/**
 	 * Holds the class instance.
 	 *
-	 * @var GBHacks $instance
+	 * @var GBExtras $instance
 	 */
 	private static $instance = null;
 
@@ -46,7 +47,7 @@ class GBHacks {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return GBHacks class instance.
+	 * @return GBExtras class instance.
 	 */
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -60,7 +61,7 @@ class GBHacks {
 	 */
 	public function plugins_loaded() {
 		load_plugin_textdomain(
-			'gb-hacks',
+			'gb-extras',
 			false,
 			basename( __DIR__ ) . '/languages'
 		);
@@ -71,13 +72,13 @@ class GBHacks {
 		$admin->run();
 
 		/**
-		 * When GBHacks can be extended.
+		 * When GBExtras can be extended.
 		 *
-		 * Filter when GBHacks can be extended.
+		 * Filter when GBExtras can be extended.
 		 *
 		 * @since 1.0.0
 		 */
-		do_action( 'gb_hacks_loaded' );
+		do_action( 'gb_extras_loaded' );
 	}
 
 	/**
@@ -92,7 +93,7 @@ class GBHacks {
 add_action(
 	'plugins_loaded',
 	function () {
-		$gb = GBHacks::get_instance();
+		$gb = GBExtras::get_instance();
 		$gb->plugins_loaded();
 	}
 );

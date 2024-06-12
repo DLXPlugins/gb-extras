@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'DLXPlugins\\GBHacks\\' => array($baseDir . '/php'),
+    'DLXPlugins\\GBExtras\\' => array($baseDir . '/php'),
 );

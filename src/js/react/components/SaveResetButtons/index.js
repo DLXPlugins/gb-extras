@@ -38,7 +38,7 @@ const SaveResetButtons = ( props ) => {
 	 * Save the options by setting promise as state.
 	 */
 	const saveOptions = async () => {
-		const saveOptionsPromise = SendCommand( 'dlx_gb_hacks_save_options', { formData: formValues } );
+		const saveOptionsPromise = SendCommand( 'dlx_gb_extras_save_options', { formData: formValues } );
 		setSavePromise( saveOptionsPromise );
 		setSaving( true );
 		await saveOptionsPromise;
@@ -49,7 +49,7 @@ const SaveResetButtons = ( props ) => {
 	 * Reset the options by setting promise as state.
 	 */
 	const resetOptions = async () => {
-		const resetOptionsPromise = SendCommand( 'dlx_gb_hacks_reset_options', { formData: formValues } );
+		const resetOptionsPromise = SendCommand( 'dlx_gb_extras_reset_options', { formData: formValues } );
 		setResetPromise( resetOptionsPromise );
 		setResetting( true );
 		const resetResponse = await resetOptionsPromise;
@@ -79,30 +79,30 @@ const SaveResetButtons = ( props ) => {
 
 	const getSaveText = () => {
 		if ( saving ) {
-			return __( 'Saving…', 'dlx-gb-hacks' );
+			return __( 'Saving…', 'gb-extras' );
 		}
 		if ( isSaved ) {
-			return __( 'Saved', 'dlx-gb-hacks' );
+			return __( 'Saved', 'gb-extras' );
 		}
-		return __( 'Save Options', 'dlx-gb-hacks' );
+		return __( 'Save Options', 'gb-extras' );
 	};
 
 	const getResetText = () => {
 		if ( resetting ) {
-			return __( 'Resetting to Defaults…', 'dlx-gb-hacks' );
+			return __( 'Resetting to Defaults…', 'gb-extras' );
 		}
 		if ( isReset ) {
-			return __( 'Options Restored to Defaults', 'dlx-gb-hacks' );
+			return __( 'Options Restored to Defaults', 'gb-extras' );
 		}
-		return __( 'Reset to Defaults', 'dlx-gb-hacks' );
+		return __( 'Reset to Defaults', 'gb-extras' );
 	};
 
 	return (
 		<>
-			<div className="dlx-gb-hacks-admin-buttons">
+			<div className="dlx-gb-extras-admin-buttons">
 				<Button
 					className={ classNames(
-						'dlx-gb_hacks__btn dlx-gb_hacks__btn-primary dlx-gb_hacks__btn--icon-right',
+						'dlx-gb_extras__btn dlx-gb_extras__btn-primary dlx-gb_extras__btn--icon-right',
 						{ 'has-error': hasErrors() },
 						{ 'has-icon': saving || isSaved },
 						{ 'is-saving': saving && ! isSaved },
@@ -125,7 +125,7 @@ const SaveResetButtons = ( props ) => {
 				/>
 				<Button
 					className={ classNames(
-						'dlx-gb_hacks__btn dlx-gb_hacks__btn-danger dlx-gb_hacks__btn--icon-right',
+						'dlx-gb_extras__btn dlx-gb_extras__btn-danger dlx-gb_extras__btn--icon-right',
 						{ 'has-icon': resetting },
 						{ 'is-resetting': { resetting } },
 					) }
@@ -143,20 +143,20 @@ const SaveResetButtons = ( props ) => {
 					} }
 				/>
 			</div>
-			<div className="dlx-gb-hacks-admin-notices-bottom">
+			<div className="dlx-gb-extras-admin-notices-bottom">
 				<SnackPop
 					ajaxOptions={ savePromise }
-					loadingMessage={ __( 'Saving Options…', 'dlx-gb-hacks' ) }
+					loadingMessage={ __( 'Saving Options…', 'gb-extras' ) }
 				/>
 				<SnackPop
 					ajaxOptions={ resetPromise }
-					loadingMessage={ __( 'Resetting to defaults…', 'dlx-gb-hacks' ) }
+					loadingMessage={ __( 'Resetting to defaults…', 'gb-extras' ) }
 				/>
 				{ hasErrors() && (
 					<Notice
 						message={ __(
 							'There are form validation errors. Please correct them above.',
-							'dlx-gb-hacks',
+							'gb-extras',
 						) }
 						status="error"
 						politeness="polite"

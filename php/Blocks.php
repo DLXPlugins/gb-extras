@@ -2,10 +2,10 @@
 /**
  * Set up the blocks and their attributes.
  *
- * @package GBHacks
+ * @package GBExtras
  */
 
-namespace DLXPlugins\GBHacks;
+namespace DLXPlugins\GBExtras;
 
 /**
  * Helper class for registering blocks.
@@ -88,7 +88,7 @@ class Blocks {
 		}
 		if ( ! empty( $fonts_group ) ) {
 			$fonts[] = array(
-				'label'   => __( 'Adobe Fonts', 'gb-hacks' ),
+				'label'   => __( 'Adobe Fonts', 'gb-extras' ),
 				'options' => $fonts_group,
 			);
 		}
@@ -120,7 +120,7 @@ class Blocks {
 				);
 			}
 			$fonts[] = array(
-				'label'   => __( 'Adobe Fonts', 'gb-hacks' ),
+				'label'   => __( 'Adobe Fonts', 'gb-extras' ),
 				'options' => $fonts_group,
 			);
 		}
@@ -155,7 +155,7 @@ class Blocks {
 	 */
 	public function init_rest_api() {
 		register_rest_route(
-			'dlxplugins/gb-hacks/v1',
+			'dlxplugins/gb-extras/v1',
 			'/process_image',
 			array(
 				'methods'             => 'POST',
@@ -164,7 +164,7 @@ class Blocks {
 			)
 		);
 		register_rest_route(
-			'dlxplugins/gb-hacks/v1',
+			'dlxplugins/gb-extras/v1',
 			'/get_asset_icon_groups',
 			array(
 				'methods'             => 'GET',
@@ -206,7 +206,7 @@ class Blocks {
 			if ( ! $extension ) {
 				\wp_send_json_error(
 					array(
-						'message' => __( 'File extension not found.', 'gb-hacks' ),
+						'message' => __( 'File extension not found.', 'gb-extras' ),
 					),
 					400
 				);
@@ -215,7 +215,7 @@ class Blocks {
 			if ( ! in_array( $extension, $valid_extensions, true ) ) {
 				\wp_send_json_error(
 					array(
-						'message' => __( 'Invalid file extension.', 'gb-hacks' ),
+						'message' => __( 'Invalid file extension.', 'gb-extras' ),
 					),
 					400
 				);
@@ -257,7 +257,7 @@ class Blocks {
 		}
 		\wp_send_json_error(
 			array(
-				'message' => __( 'Invalid image URL.', 'gb-hacks' ),
+				'message' => __( 'Invalid image URL.', 'gb-extras' ),
 			),
 			400
 		);
@@ -319,12 +319,12 @@ class Blocks {
 	 */
 	public function register_block_styles() {
 		wp_register_style(
-			'gb-hacks-block-editor-styles',
+			'gb-extras-block-editor-styles',
 			false
 		);
-		wp_enqueue_style( 'gb-hacks-block-editor-styles' );
+		wp_enqueue_style( 'gb-extras-block-editor-styles' );
 		wp_add_inline_style(
-			'gb-hacks-block-editor-styles',
+			'gb-extras-block-editor-styles',
 			'.dlx-gb-outline { outline: 2px solid #949494; }'
 		);
 	}
@@ -336,7 +336,7 @@ class Blocks {
 		$options = Options::get_options();
 
 		wp_register_style(
-			'gb-hacks-pattern-inserter-block-css',
+			'gb-extras-pattern-inserter-block-css',
 			Functions::get_plugin_url( 'build/index.css' ),
 			array(),
 			Functions::get_plugin_version(),
@@ -346,7 +346,7 @@ class Blocks {
 		$deps = require_once Functions::get_plugin_dir( 'build/index.asset.php' );
 
 		wp_register_script(
-			'gb-hacks-pattern-inserter-block',
+			'gb-extras-pattern-inserter-block',
 			Functions::get_plugin_url( 'build/index.js' ),
 			$deps['dependencies'],
 			$deps['version'],
@@ -354,10 +354,10 @@ class Blocks {
 		);
 
 		wp_localize_script(
-			'gb-hacks-pattern-inserter-block',
-			'gbHacksPatternInserter',
+			'gb-extras-pattern-inserter-block',
+			'gbExtrasPatternInserter',
 			array(
-				'restUrl'                     => rest_url( 'dlxplugins/gb-hacks/v1' ),
+				'restUrl'                     => rest_url( 'dlxplugins/gb-extras/v1' ),
 				'restNonce'                   => wp_create_nonce( 'wp_rest' ),
 				'allowedGoogleFonts'          => $options['allowedGoogleFonts'] ?? array(),
 				'defaultHeadlineBlockEnabled' => (bool) $options['enableDefaultHeadlineBlock'] ?? false,

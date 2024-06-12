@@ -45,7 +45,7 @@
 }
 
 /* Admin container and header */
-.dlx-gb-hacks-admin-wrap {
+.dlx-gb-extras-admin-wrap {
 	position: relative;
 	padding: 0;
 	margin: 0;
@@ -55,7 +55,7 @@
 		padding: 1.5rem;
 		margin: 0 auto;
 
-		.dlx-gb-hacks-logo-wrapper {
+		.dlx-gb-extras-logo-wrapper {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -69,12 +69,12 @@
 		}
 	}
 
-	.dlx-gb-hacks-admin-body-wrapper {
+	.dlx-gb-extras-admin-body-wrapper {
 		max-width: 69.5rem;
 		margin: 0 auto;
 		padding: 2.4em 20px;
 	}
-	.dlx-gb-hacks-body__content {
+	.dlx-gb-extras-body__content {
 		padding: 10px 35px;
 		background: #f0f0f1;
 		border: 1px solid #c3c4c7;
@@ -84,7 +84,7 @@
 		margin-bottom: 40px;
 	}
 }
-.dlx-gb-hacks-admin-buttons {
+.dlx-gb-extras-admin-buttons {
 	display: flex;
     justify-content: space-between;
     align-items: center;
@@ -238,7 +238,7 @@ html {
 	}
 }
 
-.dlx-gb-hacks-admin-buttons button {
+.dlx-gb-extras-admin-buttons button {
 	margin-right: 20px;
 	&:last-child {
 		margin-right: 0;
@@ -274,7 +274,7 @@ html {
 /**
  * Snackbar styles.
  */
- .dlx-gb-hacks-snackbar.components-snackbar {
+ .dlx-gb-extras-snackbar.components-snackbar {
 	position: fixed;
 	top: 32px;
 	right: 0;
@@ -296,7 +296,7 @@ html {
 		line-height: 0;
 	}
 
-	&.dlx-gb-hacks-snackbar-loading {
+	&.dlx-gb-extras-snackbar-loading {
 		svg {
 			animation: dlx-gbhacks-rotate;
 			animation-duration: 1.2s;
@@ -304,16 +304,16 @@ html {
 			animation-timing-function: linear;
 		}
 	}
-	&.dlx-gb-hacks-snackbar-success {
+	&.dlx-gb-extras-snackbar-success {
 		background: #14720D;
 		color: #FFF;
 	}
-	&.dlx-gb-hacks-snackbar-error,
-	&.dlx-gb-hacks-snackbar-critical {
+	&.dlx-gb-extras-snackbar-error,
+	&.dlx-gb-extras-snackbar-critical {
 		background: #820000;
 		color: #FFF;
 	}
-	&.dlx-gb-hacks-snackbar-warning {
+	&.dlx-gb-extras-snackbar-warning {
 		background: #FFC107;
 		color: #000;
 	}
@@ -555,11 +555,11 @@ html {
 			top: 0;
 			z-index: 1;
 
-			span.dlx-gb-hacks--show-hide--label {
+			span.dlx-gb-extras--show-hide--label {
 				display: none;
 			}
 
-			.dlx-gb-hacks--show-hide--icon {
+			.dlx-gb-extras--show-hide--icon {
 				position: relative;
 
 				svg {
@@ -578,7 +578,7 @@ html {
 }
 
 /* License Table */
-.dlx-gb-hacks-table {
+.dlx-gb-extras-table {
 	box-sizing: border-box;
 	border: 0;
 	border-collapse: collapse;
@@ -614,7 +614,7 @@ html {
 	height: 32px;
 }
 
-#dlx-gb-hacks-license-show-hide {
+#dlx-gb-extras-license-show-hide {
 	&:hover {
 		& ~ label {
 			svg path {
@@ -886,7 +886,7 @@ div.can-revoke {
 
 /* Fancybox content */
 
-#dlx-gb-hacks-preview {
+#dlx-gb-extras-preview {
 	max-width: 600px;
 	margin: 0 auto;
 }

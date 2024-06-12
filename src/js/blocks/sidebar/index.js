@@ -1,11 +1,11 @@
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginSidebar } from '@wordpress/edit-post';
 import { PanelBody } from '@wordpress/components';
-import GBHacksIcon from '../components/GBHacksIcon';
+import GBExtrasIcon from '../components/GBExtrasIcon';
 const MySidebar = () => (
 	<PluginSidebar
-		name="gb-hacks"
-		title="GB Hacks"
+		name="gb-extras"
+		title="GB Extras"
 	>
 		<PanelBody>
 			asdfsadf
@@ -14,6 +14,6 @@ const MySidebar = () => (
 );
 
 registerPlugin( 'dlx-gb-sidebar', {
-	icon: <GBHacksIcon />,
+	icon: <GBExtrasIcon />,
 	render: MySidebar,
 } );

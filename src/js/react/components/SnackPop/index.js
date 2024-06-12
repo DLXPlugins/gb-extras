@@ -98,7 +98,7 @@ const SnackPop = ( props ) => {
 				setNotificationOptions( {
 					type: 'critical',
 					message: error.message,
-					title: __( 'An Error Has Occurred', 'dlx-gb-hacks' ),
+					title: __( 'An Error Has Occurred', 'gb-extras' ),
 					isDismissable: false,
 					isBusy: false,
 					isPersistent: true,
@@ -140,10 +140,10 @@ const SnackPop = ( props ) => {
 		const actions = [];
 		if ( notificationOptions.type === 'success' ) {
 			actions.push( {
-				label: __( 'Back to Top', 'dlx-gb-hacks' ),
-				url: '#dlx-gb-hacks-admin-header',
+				label: __( 'Back to Top', 'gb-extras' ),
+				url: '#dlx-gb-extras-admin-header',
 				variant: 'link',
-				className: 'dlx-gb-hacks-admin__notice-action dlx-gb-hacks-admin__notice-action--to-top',
+				className: 'dlx-gb-extras-admin__notice-action dlx-gb-extras-admin__notice-action--to-top',
 			} );
 		}
 		return actions;
@@ -154,9 +154,9 @@ const SnackPop = ( props ) => {
 			<WPSnackBar
 				className={
 					classnames(
-						`dlx-gb-hacks-snackbar dlx-gb-hacks-snackbar-${ notificationOptions.type }`,
+						`dlx-gb-extras-snackbar dlx-gb-extras-snackbar-${ notificationOptions.type }`,
 						{
-							'dlx-gb-hacks-snackbar-loading': isBusy,
+							'dlx-gb-extras-snackbar-loading': isBusy,
 						}
 					)
 				}
@@ -176,13 +176,13 @@ const SnackPop = ( props ) => {
 				<Modal
 					className={
 						classnames(
-							`dlx-gb-hacks-modal dlx-gb-hacks-modal-${ notificationOptions.type }`,
+							`dlx-gb-extras-modal dlx-gb-extras-modal-${ notificationOptions.type }`,
 							{
-								'dlx-gb-hacks-modal-loading': isBusy,
+								'dlx-gb-extras-modal-loading': isBusy,
 							}
 						)
 					}
-					bodyOpenClassName={ 'dlx-gb-hacks-modal-body-open' }
+					bodyOpenClassName={ 'dlx-gb-extras-modal-body-open' }
 					title={ notificationOptions.title }
 					onRequestClose={ () => {
 						setIsModalVisible( false );
@@ -198,7 +198,7 @@ const SnackPop = ( props ) => {
 						icon={ getIcon }
 						inline={ false }
 					/>
-					<div className="dlx-gb-hacks-modal-button-group">
+					<div className="dlx-gb-extras-modal-button-group">
 						<Button
 							className="button button-error"
 							variant="secondary"
@@ -206,7 +206,7 @@ const SnackPop = ( props ) => {
 								setIsModalVisible( false );
 							} }
 						>
-							{ __( 'OK', 'dlx-gb-hacks' ) }
+							{ __( 'OK', 'gb-extras' ) }
 						</Button>
 					</div>
 				</Modal>

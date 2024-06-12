@@ -62,16 +62,16 @@ const GBCommands = () => {
 		context: 'block-editor',
 	} );
 	useCommand( {
-		name: 'dlx-gb-hacks-Settings',
+		name: 'dlx-gb-extras-Settings',
 		label: 'Go to GenerateBlocks (GB) Hacks Settings',
 		icon: settings,
 		callback: () => {
-			document.location.href = 'admin.php?page=dlx-gb-hacks';
+			document.location.href = 'admin.php?page=dlx-gb-extras';
 		},
 		context: 'block-editor',
 	} );
 	useCommand( {
-		name: 'dlx-gb-hacks-toggle-container-outlines',
+		name: 'dlx-gb-extras-toggle-container-outlines',
 		label: 'Toggle Container Block Outlines',
 		icon: <OutlineIcon />,
 		callback: ( { close } ) => {
@@ -100,9 +100,9 @@ const GBCommands = () => {
 	// 		setIsModalOpen( true );
 	// 		setGroupsLoading( true );
 	// 		const response = await SendCommand(
-	// 			gbHacksPatternInserter.restNonce,
+	// 			gbExtrasPatternInserter.restNonce,
 	// 			{},
-	// 			gbHacksPatternInserter.restUrl + '/get_asset_icon_groups',
+	// 			gbExtrasPatternInserter.restUrl + '/get_asset_icon_groups',
 	// 			'get'
 	// 		);
 	// 		// Extract out data.

@@ -29,7 +29,7 @@ const UnGroupIcon = ( props ) => {
 	/**
 	 * Add a toolbar option to wrap selected blocks in a container.
 	 */
-	registerPlugin( 'dlx-gb-hacks-wrap-container', {
+	registerPlugin( 'dlx-gb-extras-wrap-container', {
 		render: () => {
 			const [ clientIds, setClientIds ] = useState( [] );
 
@@ -83,7 +83,7 @@ const UnGroupIcon = ( props ) => {
 	/**
 	 * Generate New Unique IDs for selected blocks.
 	 */
-	registerPlugin( 'dlx-gb-hacks-generate-unique-ids', {
+	registerPlugin( 'dlx-gb-extras-generate-unique-ids', {
 		render: () => {
 			const selectedBlock = useSelect( ( select ) => {
 				return select( 'core/block-editor' ).getSelectedBlock();
@@ -162,7 +162,7 @@ const UnGroupIcon = ( props ) => {
 	/**
 	 * Register a plugin that unwraps (flattens) a container block.
 	 */
-	registerPlugin( 'dlx-gb-hacks-unwrap-container', {
+	registerPlugin( 'dlx-gb-extras-unwrap-container', {
 		render: () => {
 			const selectedBlock = useSelect( ( select ) => {
 				return select( 'core/block-editor' ).getSelectedBlock();
@@ -206,7 +206,7 @@ const UnGroupIcon = ( props ) => {
 	/**
 	 * Register a plugin that unwraps (flattens) a group block.
 	 */
-	registerPlugin( 'dlx-gb-hacks-unwrap-group', {
+	registerPlugin( 'dlx-gb-extras-unwrap-group', {
 		render: () => {
 			const selectedBlock = useSelect( ( select ) => {
 				return select( 'core/block-editor' ).getSelectedBlock();
@@ -262,7 +262,7 @@ const UnGroupIcon = ( props ) => {
 	/**
 	 * Allow markdown to transform to the headline block.
 	 */
-	if ( gbHacksPatternInserter.enableMarkdownToHeadlineBlock ) {
+	if ( gbExtrasPatternInserter.enableMarkdownToHeadlineBlock ) {
 		wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/markdown', ( blockSettings ) => {
 			if ( blockSettings.name === 'core/paragraph' || blockSettings.name === 'generateblocks/headline' ) {
 				const transformFrom = blockSettings.transforms?.from || [];
@@ -322,15 +322,15 @@ const UnGroupIcon = ( props ) => {
 	}
 
 	// Check to see if the default block is a headline. If not, return.
-	const defaultHeadlineBlockEnabled = gbHacksPatternInserter.defaultHeadlineBlockEnabled;
+	const defaultHeadlineBlockEnabled = gbExtrasPatternInserter.defaultHeadlineBlockEnabled;
 	if ( ! defaultHeadlineBlockEnabled ) {
 		return;
 	}
 
 	// Get the default element name.
-	const defaultHeadlineElement = gbHacksPatternInserter.defaultHeadlineBlockElement;
+	const defaultHeadlineElement = gbExtrasPatternInserter.defaultHeadlineBlockElement;
 
-	registerPlugin( 'dlx-gb-hacks-default-headline', {
+	registerPlugin( 'dlx-gb-extras-default-headline', {
 		render: () => {
 			useEffect( () => {
 				setDefaultBlockName( 'generateblocks/headline' );

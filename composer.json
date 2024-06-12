@@ -1,5 +1,5 @@
 {
-    "name": "dlxplugins/gb-hacks",
+    "name": "dlxplugins/gb-extras",
     "description": "GenerateBlocks enhancements.",
     "type": "project",
     "license": "GPL",
@@ -15,7 +15,7 @@
     },
       "autoload": {
         "psr-4": {
-            "DLXPlugins\\GBHacks\\": "php/"
+            "DLXPlugins\\GBExtras\\": "php/"
         }
     }
 }

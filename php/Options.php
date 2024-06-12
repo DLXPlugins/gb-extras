@@ -3,10 +3,10 @@
 /**
  * Admin class.
  *
- * @package GBHacks
+ * @package GBExtras
  */
 
-namespace DLXPlugins\GBHacks;
+namespace DLXPlugins\GBExtras;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'No direct access.' );
@@ -30,7 +30,7 @@ class Options {
 	 *
 	 * @var string
 	 */
-	protected static $options_key = 'dlx_gb_hacks_options';
+	protected static $options_key = 'dlx_gb_extras_options';
 
 	/**
 	 * Update options via sanitization

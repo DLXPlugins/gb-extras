@@ -1,5 +1,5 @@
 import React from 'react';
-const GBHacksIcon = ( props ) => (
+const GBExtrasIcon = ( props ) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		xmlSpace="preserve"
@@ -63,4 +63,4 @@ const GBHacksIcon = ( props ) => (
 		/>
 	</svg>
 );
-export default GBHacksIcon;
+export default GBExtrasIcon;
