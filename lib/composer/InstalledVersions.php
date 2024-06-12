@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '43c614dc6629909234202976c5ee5590255d1098',
+    'reference' => '608972ac053fddbff364316593b5231e2efe2a71',
     'name' => 'dlxplugins/gb-extras',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '43c614dc6629909234202976c5ee5590255d1098',
+      'reference' => '608972ac053fddbff364316593b5231e2efe2a71',
     ),
   ),
 );
