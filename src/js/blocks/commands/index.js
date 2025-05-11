@@ -58,7 +58,7 @@ const GBIcon = ( props ) => {
 const addOutlineClasses = createHigherOrderComponent( ( BlockListBlock ) => {
 	return ( props ) => {
 		const { name, attributes } = props;
-		const { display } = attributes;
+		const { styles } = attributes;
 
 		// Only add classes if outlines are enabled.
 		if ( ! globalShowContainerOutlines ) {
@@ -75,7 +75,7 @@ const addOutlineClasses = createHigherOrderComponent( ( BlockListBlock ) => {
 		}
 
 		// Add grid class if display is grid.
-		if ( display === 'grid' ) {
+		if ( styles?.display === 'grid' ) {
 			props.className = `${ props.className || '' } dlx-gb-outline-grid`.trim();
 		}
 
@@ -256,6 +256,9 @@ const GBCommands = () => {
 			if ( showContainerOutlines ) {
 				containerOutlines.forEach( ( container ) => {
 					container.classList.remove( 'dlx-gb-outline' );
+					container.classList.remove( 'dlx-gb-outline-container' );
+					container.classList.remove( 'dlx-gb-outline-element' );
+					container.classList.remove( 'dlx-gb-outline-grid' );
 				} );
 				setShowContainerOutlines( false );
 			} else {
@@ -272,7 +275,8 @@ const GBCommands = () => {
 					}
 
 					// If container has a display type of grid, add `dlx-gb-outline-grid`
-					if ( container.dataset.display === 'grid' ) {
+					if ( /Grid/.test( container.dataset.title ) ) {
+						console.log( 'Grid match found, adding class...' );
 						container.classList.add( 'dlx-gb-outline-grid' );
 					}
 					setShowContainerOutlines( true );

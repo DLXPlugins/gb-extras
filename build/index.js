@@ -5158,7 +5158,7 @@ var addOutlineClasses = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__.creat
   return function (props) {
     var name = props.name,
       attributes = props.attributes;
-    var display = attributes.display;
+    var styles = attributes.styles;
 
     // Only add classes if outlines are enabled.
     if (!globalShowContainerOutlines) {
@@ -5174,7 +5174,7 @@ var addOutlineClasses = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_6__.creat
     }
 
     // Add grid class if display is grid.
-    if (display === 'grid') {
+    if ((styles === null || styles === void 0 ? void 0 : styles.display) === 'grid') {
       props.className = "".concat(props.className || '', " dlx-gb-outline-grid").trim();
     }
     return /*#__PURE__*/React.createElement(BlockListBlock, props);
@@ -5463,6 +5463,9 @@ var GBCommands = function GBCommands() {
       if (showContainerOutlines) {
         containerOutlines.forEach(function (container) {
           container.classList.remove('dlx-gb-outline');
+          container.classList.remove('dlx-gb-outline-container');
+          container.classList.remove('dlx-gb-outline-element');
+          container.classList.remove('dlx-gb-outline-grid');
         });
         setShowContainerOutlines(false);
       } else {
@@ -5479,7 +5482,8 @@ var GBCommands = function GBCommands() {
           }
 
           // If container has a display type of grid, add `dlx-gb-outline-grid`
-          if (container.dataset.display === 'grid') {
+          if (/Grid/.test(container.dataset.title)) {
+            console.log('Grid match found, adding class...');
             container.classList.add('dlx-gb-outline-grid');
           }
           setShowContainerOutlines(true);

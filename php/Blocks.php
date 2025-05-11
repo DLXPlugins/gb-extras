@@ -364,7 +364,9 @@ class Blocks {
 		wp_enqueue_style( 'gb-extras-block-editor-styles' );
 		wp_add_inline_style(
 			'gb-extras-block-editor-styles',
-			'.dlx-gb-outline { outline: 2px solid #949494; }'
+			'.dlx-gb-outline { outline: 3px solid #949494; }
+			.dlx-gb-outline-container { outline: 3px solid #00a32a; }
+			.dlx-gb-outline-element { outline: 3px solid #007cba; }'
 		);
 	}
 
