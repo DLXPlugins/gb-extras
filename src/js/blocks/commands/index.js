@@ -22,24 +22,23 @@ let globalShowContainerOutlines = false;
 const OutlineIcon = ( props ) => {
 	return (
 		<svg
+			viewBox="0 0 14 14"
 			xmlns="http://www.w3.org/2000/svg"
-			xmlSpace="preserve"
-			width="16"
-			height="16"
-			viewBox="0 0 384 384"
-			aria-hidden="true"
+			width={14}
+			height={14}
+			fill="none"
 			{ ...props }
-		>
-			<path
-				fill="currentColor"
-				d="M85.333 341.333H128V384H85.333zM256 341.333h42.667V384H256zM341.333 341.333H384V384h-42.667zM170.667 341.333h42.667V384h-42.667zM341.333 256H384v42.667h-42.667z"
-			/>
-			<path
-				fill="currentColor"
-				d="M0 0v384h42.667V42.667H384V0zM341.333 170.667H384v42.667h-42.667z"
-			/>
-			<path fill="currentColor" d="M341.333 85.333H384V128h-42.667z" />
-		</svg>
+  >
+    <clipPath id="a">
+      <path d="M0 0h14v14H0z" fill="currentColor" />
+    </clipPath>
+    <g fill="currentColor" fillRule="evenodd" clipPath="url(#a)" clipRule="evenodd">
+      <path d="M7 5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 7 5z" />
+      <path d="M5 7a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 5 7zM11 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 11 7zM0 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 7z" />
+      <path d="M1.5 1a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5zM0 1.5A1.5 1.5 0 0 1 1.5 0h11A1.5 1.5 0 0 1 14 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 0 12.5z" />
+      <path d="M7 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 0zM7 11a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 11z" />
+    </g>
+  </svg>
 	);
 };
 
@@ -245,8 +244,8 @@ const GBCommands = () => {
 	} );
 	useCommand( {
 		name: 'dlx-gb-extras-toggle-container-outlines',
-		label: 'Toggle Container Block Outlines',
-		icon: <OutlineIcon />,
+		label: 'Toggle GenerateBlocks Container/Element Outlines',
+		icon: <OutlineIcon width="16" height="16" />,
 		callback: ( { close } ) => {
 			const selector = [
 				'.gb-container[data-type="generateblocks/container"]',

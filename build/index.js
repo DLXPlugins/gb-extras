@@ -5123,22 +5123,30 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 var globalShowContainerOutlines = false;
 var OutlineIcon = function OutlineIcon(props) {
   return /*#__PURE__*/React.createElement("svg", _extends({
+    viewBox: "0 0 14 14",
     xmlns: "http://www.w3.org/2000/svg",
-    xmlSpace: "preserve",
-    width: "16",
-    height: "16",
-    viewBox: "0 0 384 384",
-    "aria-hidden": "true"
-  }, props), /*#__PURE__*/React.createElement("path", {
+    width: 14,
+    height: 14,
+    fill: "none"
+  }, props), /*#__PURE__*/React.createElement("clipPath", {
+    id: "a"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M0 0h14v14H0z",
+    fill: "currentColor"
+  })), /*#__PURE__*/React.createElement("g", {
     fill: "currentColor",
-    d: "M85.333 341.333H128V384H85.333zM256 341.333h42.667V384H256zM341.333 341.333H384V384h-42.667zM170.667 341.333h42.667V384h-42.667zM341.333 256H384v42.667h-42.667z"
+    fillRule: "evenodd",
+    clipPath: "url(#a)",
+    clipRule: "evenodd"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M7 5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 7 5z"
   }), /*#__PURE__*/React.createElement("path", {
-    fill: "currentColor",
-    d: "M0 0v384h42.667V42.667H384V0zM341.333 170.667H384v42.667h-42.667z"
+    d: "M5 7a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 5 7zM11 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 11 7zM0 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 7z"
   }), /*#__PURE__*/React.createElement("path", {
-    fill: "currentColor",
-    d: "M341.333 85.333H384V128h-42.667z"
-  }));
+    d: "M1.5 1a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5zM0 1.5A1.5 1.5 0 0 1 1.5 0h11A1.5 1.5 0 0 1 14 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 0 12.5z"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M7 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 0zM7 11a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 11z"
+  })));
 };
 var GBIcon = function GBIcon(props) {
   return /*#__PURE__*/React.createElement("svg", _extends({
@@ -5454,8 +5462,11 @@ var GBCommands = function GBCommands() {
   });
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-extras-toggle-container-outlines',
-    label: 'Toggle Container Block Outlines',
-    icon: /*#__PURE__*/React.createElement(OutlineIcon, null),
+    label: 'Toggle GenerateBlocks Container/Element Outlines',
+    icon: /*#__PURE__*/React.createElement(OutlineIcon, {
+      width: "16",
+      height: "16"
+    }),
     callback: function callback(_ref4) {
       var close = _ref4.close;
       var selector = ['.gb-container[data-type="generateblocks/container"]', '.wp-block-generateblocks-element[data-type="generateblocks/element"]'].join(',');
@@ -5657,6 +5668,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_SendCommand__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/SendCommand */ "./src/js/blocks/utils/SendCommand.js");
+/* harmony import */ var _utils_ReplaceUniqueIds__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/ReplaceUniqueIds */ "./src/js/blocks/utils/ReplaceUniqueIds.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5698,9 +5710,6 @@ var uniqueIds = [];
 
 // For storing the number of images imported.
 var imageCount = 0;
-var escapeRegExp = function escapeRegExp(content) {
-  return content.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-};
 var PatternImporter = function PatternImporter(props) {
   // Shortcuts.
   var attributes = props.attributes,
@@ -5729,10 +5738,10 @@ var PatternImporter = function PatternImporter(props) {
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_7__.useDispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_8__.store),
     replaceBlock = _useDispatch.replaceBlock;
   var onPatternSubmit = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var processImage, importPattern, matches, imagesToProcess, localPatternText, imagesProcessed, imagePromises;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
           case 0:
             setImporting(true);
             processImage = /*#__PURE__*/function () {
@@ -5764,18 +5773,37 @@ var PatternImporter = function PatternImporter(props) {
              *
              * @param {string} pattern The pattern.
              */
-            importPattern = function importPattern(pattern) {
-              pattern = replaceUniqueIds(pattern);
-
-              // Convert pattern to blocks.
-              try {
-                var patternBlocks = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__.parse)(pattern);
-                replaceBlock(clientId, patternBlocks);
-
-                // Insert block in place of this one.
-                //replaceInnerBlocks( clientId, patternBlocks );
-              } catch (error) {}
-            };
+            importPattern = /*#__PURE__*/function () {
+              var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(pattern) {
+                var patternBlocks, newPatternBlocks, i;
+                return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+                  while (1) switch (_context2.prev = _context2.next) {
+                    case 0:
+                      _context2.prev = 0;
+                      patternBlocks = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_6__.parse)(pattern);
+                      newPatternBlocks = [];
+                      for (i = 0; i < patternBlocks.length; i++) {
+                        newPatternBlocks.push((0,_utils_ReplaceUniqueIds__WEBPACK_IMPORTED_MODULE_11__.replaceUniqueIds)(patternBlocks[i]));
+                      }
+                      _context2.next = 6;
+                      return replaceBlock(clientId, newPatternBlocks);
+                    case 6:
+                      _context2.next = 11;
+                      break;
+                    case 8:
+                      _context2.prev = 8;
+                      _context2.t0 = _context2["catch"](0);
+                      console.error(_context2.t0);
+                    case 11:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }, _callee2, null, [[0, 8]]);
+              }));
+              return function importPattern(_x3) {
+                return _ref3.apply(this, arguments);
+              };
+            }();
             matches = _toConsumableArray(patternText.matchAll(imageUrlRegex));
             imagesToProcess = [];
             localPatternText = patternText;
@@ -5839,51 +5867,14 @@ var PatternImporter = function PatternImporter(props) {
             }
           case 7:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
-      }, _callee2);
+      }, _callee3);
     }));
     return function onPatternSubmit() {
       return _ref.apply(this, arguments);
     };
   }();
-
-  /**
-   * Return and generate a new unique ID.
-   *
-   * @param {string} blockPatternText The block pattern text.
-   *
-   * @return {string} The blockPatternText.
-   */
-  var replaceUniqueIds = function replaceUniqueIds(blockPatternText) {
-    var pwUniqueIdMatches = _toConsumableArray(blockPatternText.matchAll(uniqueIdRegex));
-    if (pwUniqueIdMatches.length) {
-      // Loop through matches, generate unique ID, and replace.
-      pwUniqueIdMatches.forEach(function (match) {
-        var newUniqueId = _generateUniqueId();
-        uniqueIds.push(newUniqueId);
-        blockPatternText.replace(match[1], "\"uniqueId\":\"".concat(newUniqueId, "\""));
-      });
-    }
-    return blockPatternText;
-  };
-
-  /**
-   * Return and generate a new unique ID.
-   *
-   * @return {string} The uniqueId.
-   */
-  var _generateUniqueId = function generateUniqueId() {
-    // Get the substr of current client ID for prefix.
-    var prefix = clientId.substring(2, 9).replace('-', '');
-    var newUniqueId = lodash_uniqueid__WEBPACK_IMPORTED_MODULE_4___default()(prefix);
-
-    // Make sure it isn't in the array already. Recursive much?
-    if (uniqueIds.includes(newUniqueId)) {
-      return _generateUniqueId();
-    }
-    return newUniqueId;
-  };
   var block = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Card, {
     className: "dlx-pattern-inserter"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.CardHeader, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Pattern Importer', 'alerts-dlx')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.CardBody, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextareaControl, {
@@ -6001,6 +5992,81 @@ var v1VariationNames = ['tabs', 'accordion'];
  */
 var v2Blocks = ['generateblocks/text', 'generateblocks/element', 'generateblocks/media', 'generateblocks/shape', 'generateblocks/query', 'generateblocks/looper', 'generateblocks/query-no-results', 'generateblocks/query-page-numbers', 'generateblocks/loop-item', 'generateblocks-pro/accordion', 'generateblocks-pro/accordion-item', 'generateblocks-pro/accordion-toggle', 'generateblocks-pro/accordion-toggle-icon', 'generateblocks-pro/accordion-content', 'generateblocks-pro/tabs', 'generateblocks-pro/tabs-menu', 'generateblocks-pro/tab-menu-item', 'generateblocks-pro/tab-items', 'generateblocks-pro/tab-item', 'generateblocks/button-container'];
 var vdVariationNames = [];
+
+
+/***/ }),
+
+/***/ "./src/js/blocks/utils/ReplaceUniqueIds.js":
+/*!*************************************************!*\
+  !*** ./src/js/blocks/utils/ReplaceUniqueIds.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   generateUniqueId: () => (/* binding */ _generateUniqueId),
+/* harmony export */   replaceUniqueIds: () => (/* binding */ _replaceUniqueIds)
+/* harmony export */ });
+/* harmony import */ var _BlockTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BlockTypes */ "./src/js/blocks/utils/BlockTypes.js");
+/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash.uniqueid */ "./node_modules/lodash.uniqueid/index.js");
+/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_uniqueid__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var uniqueIds = [];
+/**
+ * Replace uniqueId attribute with new uniqueId.
+ *
+ * @param {Object} block The block object.
+ *
+ * @return {Object} The block object.
+ */
+var _replaceUniqueIds = function replaceUniqueIds(block) {
+  var blockClientId = block.clientId;
+  var blockAttributes = block.attributes;
+  var blockName = block.name;
+
+  // If block has a `uniqueId` attribute, generate a new one.
+  if ('undefined' !== typeof blockAttributes.uniqueId) {
+    var newUniqueId = _generateUniqueId(blockClientId);
+    block.attributes.uniqueId = newUniqueId;
+  }
+  if (!_BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v1Blocks.includes(blockName) && !_BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v2Blocks.includes(blockName)) {
+    if ('undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0) {
+      block.innerBlocks = block.innerBlocks.map(function (innerBlock) {
+        return _replaceUniqueIds(innerBlock);
+      });
+    }
+    return block;
+  }
+
+  // Now check if block has innerBlocks.
+  if ('undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0) {
+    block.innerBlocks = block.innerBlocks.map(function (innerBlock) {
+      return _replaceUniqueIds(innerBlock);
+    });
+  }
+  return block;
+};
+
+/**
+ * Return and generate a new unique ID.
+ *
+ * @param {string} clientId The client ID of the block.
+ *
+ * @return {string} The uniqueId.
+ */
+var _generateUniqueId = function generateUniqueId(clientId) {
+  // Get the substr of current client ID for prefix.
+  var prefix = clientId.substring(2, 9).replace('-', '');
+  var newUniqueId = lodash_uniqueid__WEBPACK_IMPORTED_MODULE_1___default()(prefix);
+
+  // Make sure it isn't in the array already. Recursive much?
+  if (uniqueIds.includes(newUniqueId)) {
+    return _generateUniqueId();
+  }
+  return newUniqueId;
+};
 
 
 /***/ }),
@@ -6297,13 +6363,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lodash.uniqueid */ "./node_modules/lodash.uniqueid/index.js");
-/* harmony import */ var lodash_uniqueid__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(lodash_uniqueid__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
-/* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
-/* harmony import */ var _js_blocks_components_ContainerIcon_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./js/blocks/components/ContainerIcon.js */ "./src/js/blocks/components/ContainerIcon.js");
-/* harmony import */ var _js_blocks_components_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./js/blocks/components/ReplaceIcon.js */ "./src/js/blocks/components/ReplaceIcon.js");
-/* harmony import */ var _js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./js/blocks/utils/BlockTypes.js */ "./src/js/blocks/utils/BlockTypes.js");
+/* harmony import */ var _js_blocks_pattern_importer_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/blocks/pattern-importer/index.js */ "./src/js/blocks/pattern-importer/index.js");
+/* harmony import */ var _js_blocks_commands_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/blocks/commands/index.js */ "./src/js/blocks/commands/index.js");
+/* harmony import */ var _js_blocks_components_ContainerIcon_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./js/blocks/components/ContainerIcon.js */ "./src/js/blocks/components/ContainerIcon.js");
+/* harmony import */ var _js_blocks_components_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./js/blocks/components/ReplaceIcon.js */ "./src/js/blocks/components/ReplaceIcon.js");
+/* harmony import */ var _js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./js/blocks/utils/BlockTypes.js */ "./src/js/blocks/utils/BlockTypes.js");
+/* harmony import */ var _js_blocks_utils_ReplaceUniqueIds_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./js/blocks/utils/ReplaceUniqueIds.js */ "./src/js/blocks/utils/ReplaceUniqueIds.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -6377,7 +6442,7 @@ var UnGroupIcon = function UnGroupIcon(props) {
       // If more than one block is selected, add toolbar option to wrap container.
       if (clientIds.length > 1) {
         return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
-          icon: /*#__PURE__*/React.createElement(_js_blocks_components_ContainerIcon_js__WEBPACK_IMPORTED_MODULE_11__["default"], null),
+          icon: /*#__PURE__*/React.createElement(_js_blocks_components_ContainerIcon_js__WEBPACK_IMPORTED_MODULE_10__["default"], null),
           label: "Wrap in Container",
           onClick: function onClick() {
             var innerBlocks = [];
@@ -6401,54 +6466,14 @@ var UnGroupIcon = function UnGroupIcon(props) {
    */
   (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-generate-unique-ids', {
     render: function render() {
-      var selectedBlock = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
-        return select('core/block-editor').getSelectedBlock();
-      }, []);
-
-      /**
-       * Return and generate a new unique ID.
-       *
-       * @param {string} clientId The client ID of the block.
-       *
-       * @return {string} The uniqueId.
-       */
-      var _generateUniqueId = function generateUniqueId(clientId) {
-        // Get the substr of current client ID for prefix.
-        var prefix = clientId.substring(2, 9).replace('-', '');
-        var newUniqueId = lodash_uniqueid__WEBPACK_IMPORTED_MODULE_8___default()(prefix);
-
-        // Make sure it isn't in the array already. Recursive much?
-        if (uniqueIds.includes(newUniqueId)) {
-          return _generateUniqueId();
-        }
-        return newUniqueId;
-      };
-
-      /**
-       * Replace uniqueId attribute with new uniqueId.
-       *
-       * @param {Object} block The block object.
-       */
-      var _replaceUniqueId = function replaceUniqueId(block) {
-        var blockClientId = block.clientId;
-        var blockAttributes = block.attributes;
-
-        // If block has a `uniqueId` attribute, generate a new one.
-        if ('undefined' !== typeof blockAttributes.uniqueId) {
-          var newUniqueId = _generateUniqueId(blockClientId);
-          wp.data.dispatch('core/block-editor').updateBlockAttributes(blockClientId, {
-            uniqueId: newUniqueId
-          });
-        }
-
-        // Now check if block has innerBlocks.
-        if ('undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0) {
-          block.innerBlocks.forEach(function (innerBlock) {
-            _replaceUniqueId(innerBlock);
-          });
-        }
-      };
-
+      var _useSelect2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
+          return {
+            selectedBlock: select('core/block-editor').getSelectedBlock()
+          };
+        }, []),
+        selectedBlock = _useSelect2.selectedBlock;
+      var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.store)('core/block-editor'),
+        replaceBlocks = _useDispatch2.replaceBlocks;
       /**
        * Return early if no block is selected.
        */
@@ -6460,16 +6485,17 @@ var UnGroupIcon = function UnGroupIcon(props) {
       var name = selectedBlock.name;
 
       // If name contains `generateblocks`, proceed.
-      if (!_js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_13__.v1Blocks.includes(name) && !_js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_13__.v2Blocks.includes(name)) {
+      if (!_js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_12__.v1Blocks.includes(name) && !_js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_12__.v2Blocks.includes(name)) {
         return null;
       }
 
       // If more than one block is selected, add toolbar option to replace the Unique ID.
       return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
-        icon: /*#__PURE__*/React.createElement(_js_blocks_components_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_12__["default"], null),
+        icon: /*#__PURE__*/React.createElement(_js_blocks_components_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_11__["default"], null),
         label: "Generate New Unique IDs",
         onClick: function onClick() {
-          _replaceUniqueId(selectedBlock); // This gets the selected block and all innerBlocks.
+          var newBlock = (0,_js_blocks_utils_ReplaceUniqueIds_js__WEBPACK_IMPORTED_MODULE_13__.replaceUniqueIds)(selectedBlock); // This gets the selected block and all innerBlocks.
+          replaceBlocks(selectedBlock.clientId, newBlock);
         }
       });
     }

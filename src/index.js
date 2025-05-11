@@ -6,13 +6,12 @@ import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
 import { useSelect, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import { debounce } from '@wordpress/compose';
-import uniqueId from 'lodash.uniqueid';
 import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
 import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
-
+import { replaceUniqueIds } from './js/blocks/utils/ReplaceUniqueIds.js';
 let previousSelectedBlock = null;
 let previousParentClientId = null;
 let previousSelectedBlockIndex = null;
@@ -89,52 +88,13 @@ const UnGroupIcon = ( props ) => {
 	 */
 	registerPlugin( 'dlx-gb-extras-generate-unique-ids', {
 		render: () => {
-			const selectedBlock = useSelect( ( select ) => {
-				return select( 'core/block-editor' ).getSelectedBlock();
+			const { selectedBlock } = useSelect( ( select ) => {
+				return {
+					selectedBlock: select( 'core/block-editor' ).getSelectedBlock(),
+				}
 			}, [] );
 
-			/**
-			 * Return and generate a new unique ID.
-			 *
-			 * @param {string} clientId The client ID of the block.
-			 *
-			 * @return {string} The uniqueId.
-			 */
-			const generateUniqueId = ( clientId ) => {
-				// Get the substr of current client ID for prefix.
-				const prefix = clientId.substring( 2, 9 ).replace( '-', '' );
-				const newUniqueId = uniqueId( prefix );
-
-				// Make sure it isn't in the array already. Recursive much?
-				if ( uniqueIds.includes( newUniqueId ) ) {
-					return generateUniqueId();
-				}
-				return newUniqueId;
-			};
-
-			/**
-			 * Replace uniqueId attribute with new uniqueId.
-			 *
-			 * @param {Object} block The block object.
-			 */
-			const replaceUniqueId = ( block ) => {
-				const blockClientId = block.clientId;
-				const blockAttributes = block.attributes;
-
-				// If block has a `uniqueId` attribute, generate a new one.
-				if ( 'undefined' !== typeof blockAttributes.uniqueId ) {
-					const newUniqueId = generateUniqueId( blockClientId );
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( blockClientId, { uniqueId: newUniqueId } );
-				}
-
-				// Now check if block has innerBlocks.
-				if ( 'undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0 ) {
-					block.innerBlocks.forEach( ( innerBlock ) => {
-						replaceUniqueId( innerBlock );
-					} );
-				}
-			};
-
+			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
 			/**
 			 * Return early if no block is selected.
 			 */
@@ -156,7 +116,8 @@ const UnGroupIcon = ( props ) => {
 					icon={ <ReplaceIcon /> }
 					label="Generate New Unique IDs"
 					onClick={ () => {
-						replaceUniqueId( selectedBlock ); // This gets the selected block and all innerBlocks.
+						const newBlock = replaceUniqueIds( selectedBlock ); // This gets the selected block and all innerBlocks.
+						replaceBlocks( selectedBlock.clientId, newBlock );
 					} }
 				/>
 			);
