@@ -5049,10 +5049,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_commands__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/settings.js");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_SendCommand__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/SendCommand */ "./src/js/blocks/utils/SendCommand.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/settings.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utils_SendCommand__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/SendCommand */ "./src/js/blocks/utils/SendCommand.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -5066,6 +5072,20 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 
 
 
+
+
+
+/**
+ * Begin v1 legacy block modifications.
+ */
+var v1Blocks = ['generateblocks/button', 'generateblocks/headline', 'generateblocks/container', 'generateblocks/grid', 'generateblocks/image', 'generateblocks/query-loop'];
+var v1VariationNames = ['tabs', 'accordion'];
+
+/**
+ * V2 blocks that need to be labeled.
+ */
+var v2Blocks = ['generateblocks/text', 'generateblocks/element', 'generateblocks/media', 'generateblocks/shape', 'generateblocks/query', 'generateblocks/looper', 'generateblocks/query-no-results', 'generateblocks/query-page-numbers', 'generateblocks/loop-item', 'generateblocks-pro/accordion', 'generateblocks-pro/accordion-item', 'generateblocks-pro/accordion-toggle', 'generateblocks-pro/accordion-toggle-icon', 'generateblocks-pro/accordion-content', 'generateblocks-pro/tabs', 'generateblocks-pro/tabs-menu', 'generateblocks-pro/tab-menu-item', 'generateblocks-pro/tab-items', 'generateblocks-pro/tab-item', 'generateblocks/button-container', 'generateblocks/grid', 'generateblocks/image', 'generateblocks/shape'];
+var v1Variations = [];
 var OutlineIcon = function OutlineIcon(props) {
   return /*#__PURE__*/React.createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
@@ -5098,14 +5118,64 @@ var GBCommands = function GBCommands() {
     _useState6 = _slicedToArray(_useState5, 2),
     groupsLoading = _useState6[0],
     setGroupsLoading = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    groups = _useState8[0],
-    setGroups = _useState8[1];
+    blockTransformConfirmation = _useState8[0],
+    setBlockTransformConfirmation = _useState8[1];
+
+  /**
+   * Recursively get all blocks.
+   *
+   * @param  blocks
+   */
+  var _transformBlocks = function transformBlocks(blocks) {
+    blocks.forEach(function (block) {
+      // First, recursively transform children and update them before working on parent
+      if (block.innerBlocks.length > 0) {
+        var _select$getBlock;
+        transformBlock(block);
+        block.innerBlocks = ((_select$getBlock = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core/block-editor').getBlock(block.clientId)) === null || _select$getBlock === void 0 ? void 0 : _select$getBlock.innerBlocks) || [];
+        _transformBlocks(block.innerBlocks);
+      } else {
+        transformBlock(block);
+      }
+    });
+    return blocks;
+  };
+
+  /**
+   * Transform a block.
+   *
+   * @param  block
+   */
+  var transformBlock = function transformBlock(block) {
+    if (v1Blocks.includes(block.name) || v1VariationNames.includes(block.name)) {
+      // Get transform options for the block.
+      var transformOptions = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__.getBlockTransforms)('to', block.name);
+      if (transformOptions) {
+        transformOptions.forEach(function (transform) {
+          // Has transform.blocks, which is an array of blocks it can transform to.
+          if (transform.blocks) {
+            transform.blocks.forEach(function (transformBlockName) {
+              if (v2Blocks.includes(transformBlockName)) {
+                // Now do the transform.
+                var result = transform.transform(block.attributes, block.innerBlocks);
+                if (result) {
+                  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)('core/block-editor').replaceBlocks([block.clientId], result);
+                } else {
+                  console.error('Failed to transform', block.name, 'to', transformBlockName);
+                }
+              }
+            });
+          }
+        });
+      }
+    }
+  };
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-admin-settings',
     label: 'Go to GenerateBlocks Settings',
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     callback: function callback() {
       document.location.href = 'admin.php?page=generateblocks-settings';
     },
@@ -5114,7 +5184,7 @@ var GBCommands = function GBCommands() {
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-local-patterns',
     label: 'Go to GenerateBlocks Local Patterns',
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     callback: function callback() {
       document.location.href = 'edit.php?post_type=gblocks_templates';
     },
@@ -5123,7 +5193,7 @@ var GBCommands = function GBCommands() {
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-global-styles',
     label: 'Go to GenerateBlocks Global Styles',
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     callback: function callback() {
       document.location.href = 'edit.php?post_type=gblocks_templates';
     },
@@ -5132,7 +5202,7 @@ var GBCommands = function GBCommands() {
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-extras-Settings',
     label: 'Go to GenerateBlocks (GB) Hacks Settings',
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_5__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
     callback: function callback() {
       document.location.href = 'admin.php?page=dlx-gb-extras';
     },
@@ -5161,6 +5231,14 @@ var GBCommands = function GBCommands() {
     },
     context: 'block-editor'
   });
+  (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
+    name: 'dlx-transform-v1-blocks-to-v2',
+    label: 'GenerateBlocks: Transform V1 Blocks to V2',
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_8__["default"],
+    callback: function callback() {
+      setBlockTransformConfirmation(true);
+    }
+  });
   // useCommand( {
   // 	name: 'dlx-gb-svg-add-asset-library',
   // 	label: 'Add an SVG to the GenerateBlocks Asset Library',
@@ -5187,7 +5265,27 @@ var GBCommands = function GBCommands() {
   // const getGroups = () => {
 
   // }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, isModalOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Modal, {
+  if (blockTransformConfirmation) {
+    return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Modal, {
+      isDismissible: true,
+      shouldCloseOnClickOutside: false,
+      shouldCloseOnEsc: true,
+      title: "Transform V1 Blocks to V2"
+    }, /*#__PURE__*/React.createElement("p", null, "Are you sure you want to transform all V1 blocks to V2?"), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Button, {
+      variant: "primary",
+      onClick: function onClick() {
+        // Let's get all the blocks, and let's parse until infinity.
+        _transformBlocks((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core/block-editor').getBlocks());
+        setBlockTransformConfirmation(false);
+      }
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Transform', 'dlx-gb-extras')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Button, {
+      variant: "secondary",
+      onClick: function onClick() {
+        setBlockTransformConfirmation(false);
+      }
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Cancel', 'dlx-gb-extras')));
+  }
+  return /*#__PURE__*/React.createElement(React.Fragment, null, isModalOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Modal, {
     isDismissible: true,
     shouldCloseOnClickOutside: false,
     shouldCloseOnEsc: true,
@@ -5195,7 +5293,7 @@ var GBCommands = function GBCommands() {
     onRequestClose: function onRequestClose() {
       setIsModalOpen(false);
     }
-  }, groupsLoading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null))));
+  }, groupsLoading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Spinner, null))));
 };
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__.registerPlugin)('dlxgb-commands', {
   render: GBCommands
