@@ -11,6 +11,7 @@ import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
+import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
 
 let previousSelectedBlock = null;
 let previousParentClientId = null;
@@ -34,7 +35,6 @@ const UnGroupIcon = ( props ) => {
 			const [ clientIds, setClientIds ] = useState( [] );
 
 			// Get the selected block clientIds.
-
 			const { selectedBlocks, getMultiSelectedBlockClientIds } = useSelect( ( select ) => {
 				return {
 					selectedBlocks: select( 'core/block-editor' ).getMultiSelectedBlocks(),
@@ -67,7 +67,7 @@ const UnGroupIcon = ( props ) => {
 							replaceBlocks(
 								getMultiSelectedBlockClientIds(),
 								wp.blocks.createBlock(
-									'generateblocks/container', {}, innerBlocks
+									'generateblocks/element', {}, innerBlocks
 								)
 							);
 						} }
@@ -142,7 +142,7 @@ const UnGroupIcon = ( props ) => {
 			const { name } = selectedBlock;
 
 			// If name contains `generateblocks`, proceed.
-			if ( name.indexOf( 'generateblocks' ) === -1 ) {
+			if ( ! v1Blocks.includes( name ) ) {
 				return null;
 			}
 
@@ -174,7 +174,7 @@ const UnGroupIcon = ( props ) => {
 			}
 
 			// If block is not a container, return.
-			if ( selectedBlock.name !== 'generateblocks/container' ) {
+			if ( selectedBlock.name !== 'generateblocks/container' && selectedBlock.name !== 'generateblocks/element' ) {
 				return null;
 			}
 
