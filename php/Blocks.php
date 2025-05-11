@@ -354,6 +354,9 @@ class Blocks {
 	 * Register the block editor styles.
 	 */
 	public function register_block_styles() {
+		if ( ! is_admin() ) {
+			return;
+		}
 		wp_register_style(
 			'gb-extras-block-editor-styles',
 			false
@@ -369,6 +372,9 @@ class Blocks {
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
+		if ( ! is_admin() ) {
+			return;
+		}
 		$options = Options::get_options();
 
 		wp_register_style(
