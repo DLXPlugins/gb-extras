@@ -399,12 +399,16 @@ class Blocks {
 			'gb-extras-pattern-inserter-block',
 			'gbExtrasPatternInserter',
 			array(
-				'restUrl'                     => rest_url( 'dlxplugins/gb-extras/v1' ),
-				'restNonce'                   => wp_create_nonce( 'wp_rest' ),
-				'allowedGoogleFonts'          => $options['allowedGoogleFonts'] ?? array(),
-				'defaultHeadlineBlockEnabled' => (bool) $options['enableDefaultHeadlineBlock'] ?? false,
-				'defaultHeadlineBlockElement' => $options['headlineBlockElement'] ?? '',
-				'enableMarkdownToHeadlineBlock' => (bool) $options['enableMarkdownToHeadlineBlock'] ?? false,
+				'restUrl'                       => rest_url( 'dlxplugins/gb-extras/v1' ),
+				'restNonce'                     => wp_create_nonce( 'wp_rest' ),
+				'allowedGoogleFonts'            => $options['allowedGoogleFonts'] ?? array(),
+				'enableMarkdownToHeadlineBlock' => ( ( $options['enableMarkdownToHeadlineBlock'] ?? false ) ? 'true' : 'false' ),
+				'enableV1Transformations'       => ( ( $options['enableV1Transformations'] ?? false ) ? 'true' : 'false' ),
+				'enableV1Blocks'                => ( ( $options['enableV1Blocks'] ?? false ) ? 'true' : 'false' ),
+				'v1CategoryLabel'               => esc_html( $options['v1CategoryLabel'] ?? esc_html__( 'GenerateBlocks v1', 'gb-extras' ) ),
+				'v2CategoryLabel'               => esc_html( $options['v2CategoryLabel'] ?? esc_html__( 'GenerateBlocks v2', 'gb-extras' ) ),
+				'v1BlockSuffix'                 => esc_html( $options['v1BlockSuffix'] ?? esc_html__( '(v1)', 'gb-extras' ) ),
+				'v2BlockSuffix'                 => esc_html( $options['v2BlockSuffix'] ?? esc_html__( '(v2)', 'gb-extras' ) ),
 			)
 		);
 

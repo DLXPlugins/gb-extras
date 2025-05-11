@@ -110,7 +110,7 @@ class Options {
 				'page' => true,
 			),
 			'allowedGoogleFonts'            => array(),
-			'enableV1Transformations'       => true,
+			'enableV1Transformations'       => false,
 			'enableV1Blocks'                => false,
 			'v1CategoryLabel'               => 'GenerateBlocks v1',
 			'v2CategoryLabel'               => 'GenerateBlocks v2',
