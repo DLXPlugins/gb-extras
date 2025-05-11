@@ -204,44 +204,6 @@ const UnGroupIcon = ( props ) => {
 	} );
 
 	/**
-	 * Register a plugin that unwraps (flattens) a group block.
-	 */
-	registerPlugin( 'dlx-gb-extras-unwrap-group', {
-		render: () => {
-			const selectedBlock = useSelect( ( select ) => {
-				return select( 'core/block-editor' ).getSelectedBlock();
-			}, [] );
-
-			// If no block is selected, return.
-			if ( null === selectedBlock ) {
-				return null;
-			}
-
-			// If block is not a container, return.
-			if ( selectedBlock.name !== 'core/graoup' ) {
-				return null;
-			}
-
-			// If block has no innerBlocks, return.
-			if ( selectedBlock.innerBlocks.length === 0 ) {
-				return null;
-			}
-
-			// If more than one block is selected, add toolbar option to unwrap container.
-			return (
-				<PluginBlockSettingsMenuItem
-					icon={ <UnGroupIcon /> }
-					label="Ungroup Blocks"
-					onClick={ () => {
-						const innerBlocks = selectedBlock.innerBlocks;
-						wp.data.dispatch( 'core/block-editor' ).replaceBlocks( selectedBlock.clientId, innerBlocks );
-					} }
-				/>
-			);
-		},
-	} );
-
-	/**
 	 * Allow transform from group block.
 	 */
 	wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/group', ( blockSettings ) => {
@@ -264,7 +226,7 @@ const UnGroupIcon = ( props ) => {
 	 */
 	if ( gbExtrasPatternInserter.enableMarkdownToHeadlineBlock ) {
 		wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/markdown', ( blockSettings ) => {
-			if ( blockSettings.name === 'core/paragraph' || blockSettings.name === 'generateblocks/headline' ) {
+			if ( blockSettings.name === 'core/paragraph' || blockSettings.name === 'generateblocks/text' ) {
 				const transformFrom = blockSettings.transforms?.from || [];
 				transformFrom.push( {
 					type: 'prefix',
