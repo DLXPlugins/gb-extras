@@ -16,6 +16,8 @@ import { __ } from '@wordpress/i18n';
  * Begin v1 legacy block modifications.
  */
 const v1Blocks = [
+	'generateblocks/button-container',
+	'generateblocks/buttons',
 	'generateblocks/button',
 	'generateblocks/headline',
 	'generateblocks/container',
@@ -83,54 +85,77 @@ const GBCommands = () => {
 	const [ blockTransformConfirmation, setBlockTransformConfirmation ] = useState( false );
 
 	/**
-	 * Recursively get all blocks.
+	 * Get block nesting level.
 	 *
-	 * @param  blocks
+	 * @param {Array} blocks Array of blocks to check.
+	 * @return {number} Maximum nesting level.
 	 */
-	const transformBlocks = ( blocks ) => {
-		blocks.forEach( ( block ) => {
-			// First, recursively transform children and update them before working on parent
+	const getBlockNestingLevel = ( blocks = null ) => {
+		const blocksToCheck = blocks || select( 'core/block-editor' ).getBlocks();
+		let maxLevel = 0;
+
+		blocksToCheck.forEach( ( block ) => {
 			if ( block.innerBlocks.length > 0 ) {
-				transformBlock( block );
-				block.innerBlocks = select( 'core/block-editor' ).getBlock( block.clientId )?.innerBlocks || [];
-				transformBlocks( block.innerBlocks );
-				
-			} else {
-				transformBlock( block );
+				const innerLevel = 1 + getBlockNestingLevel( block.innerBlocks );
+				maxLevel = Math.max( maxLevel, innerLevel );
 			}
 		} );
+
+		return maxLevel;
+	};
+	/**
+	 * Recursively get all blocks.
+	 *
+	 * @param {Array} blocks Array of blocks to transform.
+	 * @return {Promise} Promise that resolves when all blocks are transformed.
+	 */
+	const transformBlocks = async ( blocks ) => {
+		const transformPromises = blocks.map( async ( block ) => {
+			// First, recursively transform children and update them before working on parent.
+			if ( block.innerBlocks.length > 0 ) {
+				await transformBlock( block );
+				await transformBlocks( block.innerBlocks );
+			} else {
+				await transformBlock( block );
+			}
+		} );
+
+		await Promise.all( transformPromises );
 		return blocks;
 	};
 
 	/**
 	 * Transform a block.
 	 *
-	 * @param  block
+	 * @param {Object} block Block to transform.
+	 * @return {Promise} Promise that resolves when the block is transformed.
 	 */
-	const transformBlock = ( block ) => {
+	const transformBlock = async ( block ) => {
 		if ( v1Blocks.includes( block.name ) || v1VariationNames.includes( block.name ) ) {
 			// Get transform options for the block.
 			const transformOptions = getBlockTransforms( 'to', block.name );
 			if ( transformOptions ) {
-				transformOptions.forEach( ( transform ) => {
+				for ( const transform of transformOptions ) {
 					// Has transform.blocks, which is an array of blocks it can transform to.
 					if ( transform.blocks ) {
-						transform.blocks.forEach( ( transformBlockName ) => {
+						for ( const transformBlockName of transform.blocks ) {
 							if ( v2Blocks.includes( transformBlockName ) ) {
 								// Now do the transform.
 								const result = transform.transform( block.attributes, block.innerBlocks );
 								if ( result ) {
-									dispatch( 'core/block-editor' ).replaceBlocks( [ block.clientId ], result );
+									await dispatch( 'core/block-editor' ).replaceBlocks( [ block.clientId ], result );
+									return result;
 								} else {
 									console.error( 'Failed to transform', block.name, 'to', transformBlockName );
 								}
 							}
-						} );
+						}
 					}
-				} );
+				}
 			}
 		}
-	}
+		return null;
+	};
 	useCommand( {
 		name: 'dlx-gb-admin-settings',
 		label: 'Go to GenerateBlocks Settings',
@@ -229,12 +254,18 @@ const GBCommands = () => {
 				isDismissible={ true }
 				shouldCloseOnClickOutside={ false }
 				shouldCloseOnEsc={ true }
+				onRequestClose={ () => {
+					setBlockTransformConfirmation( false );
+				} }
 				title="Transform V1 Blocks to V2"
 			>
 				<p>Are you sure you want to transform all V1 blocks to V2?</p>
-				<Button variant="primary" onClick={ () => {
-					// Let's get all the blocks, and let's parse until infinity.
-					transformBlocks( select( 'core/block-editor' ).getBlocks() );
+				<Button variant="primary" onClick={ async () => {
+					const nestingLevel = getBlockNestingLevel();
+
+					for ( let i = 0; i < nestingLevel; i++ ) {
+						await transformBlocks( select( 'core/block-editor' ).getBlocks() );
+					}
 
 					setBlockTransformConfirmation( false );
 				} }>
