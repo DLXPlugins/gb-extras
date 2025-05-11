@@ -249,9 +249,9 @@ const UnGroupIcon = ( props ) => {
 			const transformsTo = blockSettings.transforms?.to || [];
 			transformsTo.push( {
 				type: 'block',
-				blocks: [ 'generateblocks/container' ],
+				blocks: [ 'generateblocks/element' ],
 				transform: ( attributes, innerBlocks ) => {
-					return wp.blocks.createBlock( 'generateblocks/container', {}, innerBlocks );
+					return wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks );
 				},
 			} );
 			blockSettings.transforms.to = transformsTo;
