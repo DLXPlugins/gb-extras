@@ -2,6 +2,34 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/blocks/utils/BlockTypes.js":
+/*!*******************************************!*\
+  !*** ./src/js/blocks/utils/BlockTypes.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   v1Blocks: () => (/* binding */ v1Blocks),
+/* harmony export */   v1VariationNames: () => (/* binding */ v1VariationNames),
+/* harmony export */   v2Blocks: () => (/* binding */ v2Blocks),
+/* harmony export */   vdVariationNames: () => (/* binding */ vdVariationNames)
+/* harmony export */ });
+/**
+ * Begin v1 legacy block modifications.
+ */
+var v1Blocks = ['generateblocks/button-container', 'generateblocks/buttons', 'generateblocks/button', 'generateblocks/headline', 'generateblocks/container', 'generateblocks/grid', 'generateblocks/image', 'generateblocks/query-loop'];
+var v1VariationNames = ['tabs', 'accordion'];
+
+/**
+ * V2 blocks that need to be labeled.
+ */
+var v2Blocks = ['generateblocks/text', 'generateblocks/element', 'generateblocks/media', 'generateblocks/shape', 'generateblocks/query', 'generateblocks/looper', 'generateblocks/query-no-results', 'generateblocks/query-page-numbers', 'generateblocks/loop-item', 'generateblocks-pro/accordion', 'generateblocks-pro/accordion-item', 'generateblocks-pro/accordion-toggle', 'generateblocks-pro/accordion-toggle-icon', 'generateblocks-pro/accordion-content', 'generateblocks-pro/tabs', 'generateblocks-pro/tabs-menu', 'generateblocks-pro/tab-menu-item', 'generateblocks-pro/tab-items', 'generateblocks-pro/tab-item', 'generateblocks/button-container'];
+var vdVariationNames = [];
+
+
+/***/ }),
+
 /***/ "@wordpress/blocks":
 /*!********************************!*\
   !*** external ["wp","blocks"] ***!
@@ -125,6 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utils_BlockTypes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/BlockTypes */ "./src/js/blocks/utils/BlockTypes.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -143,20 +172,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
 
 
-/**
- * Begin v1 legacy block modifications.
- */
-var v1Blocks = ['generateblocks/button', 'generateblocks/headline', 'generateblocks/container', 'generateblocks/grid', 'generateblocks/image', 'generateblocks/query-loop'];
-
-/**
- * V2 blocks that need to be labeled.
- */
-var v2Blocks = ['generateblocks/text', 'generateblocks/element', 'generateblocks/media', 'generateblocks/shape', 'generateblocks/query', 'generateblocks/looper', 'generateblocks/query-no-results', 'generateblocks/query-page-numbers', 'generateblocks/loop-item', 'generateblocks-pro/accordion', 'generateblocks-pro/accordion-item', 'generateblocks-pro/accordion-toggle', 'generateblocks-pro/accordion-toggle-icon', 'generateblocks-pro/accordion-content', 'generateblocks-pro/tabs', 'generateblocks-pro/tabs-menu', 'generateblocks-pro/tab-menu-item', 'generateblocks-pro/tab-items', 'generateblocks-pro/tab-item', 'generateblocks/button-container'];
-
-/**
- * V2 variations that need to be labeled.
- */
-var v2Variations = ['generateblocks/heading', 'generateblocks/button', 'generateblocks/container', 'generateblocks/grid', 'generateblocks/image', 'generateblocks/shape', 'query', 'generateblocks/accordion', 'tabs'];
 
 // Add custom category
 function addGenerateBlocksV1Category(categories) {
@@ -169,7 +184,7 @@ function addGenerateBlocksV1Category(categories) {
 
 // Modify block registration for v1 and v2 blocks.
 function modifyBlockRegistration(settings, name) {
-  if (v1Blocks.includes(name)) {
+  if (_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_4__.v1Blocks.includes(name)) {
     settings.title = settings.title + ' (v1 Legacy)';
     return _objectSpread(_objectSpread({}, settings), {}, {
       category: 'generateblocks-v1'
@@ -218,7 +233,7 @@ wp.plugins.registerPlugin('generateblocks-custom', {
         return;
       }
       allBlocks.forEach(function (block) {
-        if (block.name.includes('generateblocks') && !v1Blocks.includes(block.name)) {
+        if (block.name.includes('generateblocks') && !_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_4__.v1Blocks.includes(block.name)) {
           /**
            * Re-Register Blocks with updated v2 Title.
            */

@@ -4,6 +4,7 @@ import {
 	ToggleControl,
 	CheckboxControl,
 	SelectControl,
+	TextControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useForm, Controller, useWatch, useFormState } from 'react-hook-form';
@@ -58,13 +59,17 @@ const Interface = ( props ) => {
 	} = useForm( {
 		defaultValues: {
 			enableAdobeFonts: data.enableAdobeFonts,
-			enableDefaultHeadlineBlock: data.enableDefaultHeadlineBlock,
-			headlineBlockElement: data.headlineBlockElement,
 			saveNonce: dlxGBExtrasAdmin.saveNonce,
 			resetNonce: dlxGBExtrasAdmin.resetNonce,
 			enabledPostTypes: data.enabledPostTypes,
 			allowedGoogleFonts: data.allowedGoogleFonts,
 			enableMarkdownToHeadlineBlock: data.enableMarkdownToHeadlineBlock,
+			enableV1Transformations: data.enableV1Transformations,
+			enableV1Blocks: data.enableV1Blocks,
+			v1CategoryLabel: data.v1CategoryLabel,
+			v2CategoryLabel: data.v2CategoryLabel,
+			v1BlockSuffix: data.v1BlockSuffix,
+			v2BlockSuffix: data.v2BlockSuffix,
 		},
 	} );
 	const formValues = useWatch( { control } );
@@ -147,62 +152,118 @@ const Interface = ( props ) => {
 								<td>
 									<div className="dlx-admin__row">
 										<Controller
-											name="enableDefaultHeadlineBlock"
+											name="enableV1Transformations"
 											control={ control }
 											render={ ( { field: { onChange } } ) => (
 												<ToggleControl
-													label={ __( 'Enable Default Headline Block (Experimental)', 'gb-extras' ) }
-													checked={ getValues( 'enableDefaultHeadlineBlock' ) }
+													label={ __( 'Enable v1 Transformations Block Command', 'gb-extras' ) }
+													help={ __( 'Enable a command in the block editor to transform GenerateBlocks 1.x blocks to 2.x blocks.', 'gb-extras' ) }
+													checked={ getValues( 'enableV1Transformations' ) }
 													onChange={ ( boolValue ) => {
 														onChange( boolValue );
 													} }
-													help={ __( 'Enable the GenerateBlocks headline block to be the default block. This feature is still experimental, and does not support markdown.', 'gb-extras' ) }
 												/>
 											) }
 										/>
-										{
-											getValues( 'enableDefaultHeadlineBlock' ) && (
-												<>
+									</div>
+									<div className="dlx-admin__row">
+										<Controller
+											name="enableV1Blocks"
+											control={ control }
+											render={ ( { field: { onChange } } ) => (
+												<ToggleControl
+													label={ __( 'Enable v1 and v2 Blocks (Both Visible)', 'gb-extras' ) }
+													checked={ getValues( 'enableV1Blocks' ) }
+													help={ __( 'Enable the use of v1 blocks in the block editor. This can help with the migration from GenerateBlocks 1.x to 2.x.', 'gb-extras' ) }
+													onChange={ ( boolValue ) => {
+														onChange( boolValue );
+													} }
+												/>
+											) }
+										/>
+									</div>
+									{
+										getValues( 'enableV1Blocks' ) && (
+											<>
+												<div className="dlx-admin__row">
 													<Controller
-														name="headlineBlockElement"
+														name="v1CategoryLabel"
 														control={ control }
 														render={ ( { field: { onChange } } ) => (
-															<SelectControl
-																label={ __( 'Headline Block Element', 'gb-extras' ) }
-																value={ getValues( 'headlineBlockElement' ) }
-																onChange={ ( value ) => {
-																	onChange( value );
+															<TextControl
+																label={ __( 'v1 Category Label', 'gb-extras' ) }
+																value={ getValues( 'v1CategoryLabel' ) }
+																onChange={ ( textValue ) => {
+																	onChange( textValue );
 																} }
-																options={ [
-																	{ label: 'h1', value: 'h1' },
-																	{ label: 'h2', value: 'h2' },
-																	{ label: 'h3', value: 'h3' },
-																	{ label: 'h4', value: 'h4' },
-																	{ label: 'h5', value: 'h5' },
-																	{ label: 'h6', value: 'h6' },
-																	{ label: 'div', value: 'div' },
-																	{ label: 'p', value: 'p' },
-																] }
-																help={ __( 'Select the default headline block element.', 'gb-extras' ) }
+																help={ __( 'This label will be the category label for v1 blocks. These will be displayed towards the end of the category list.', 'gb-extras' ) }
 															/>
 														) }
 													/>
-												</>
-											)
-										}
-									</div>
+												</div>
+												<div className="dlx-admin__row">
+													<Controller
+														name="v2CategoryLabel"
+														control={ control }
+														render={ ( { field: { onChange } } ) => (
+															<TextControl
+																label={ __( 'v2 Category Label', 'gb-extras' ) }
+																value={ getValues( 'v2CategoryLabel' ) }
+																onChange={ ( textValue ) => {
+																	onChange( textValue );
+																} }
+																help={ __( 'This label will be the category label for v2 blocks. These will be displayed towards the beginning of the category list.', 'gb-extras' ) }
+															/>
+														) }
+													/>
+												</div>
+												<div className="dlx-admin__row">
+													<Controller
+														name="v1BlockSuffix"
+														control={ control }
+														render={ ( { field: { onChange } } ) => (
+															<TextControl
+																label={ __( 'v1 Block Suffix', 'gb-extras' ) }
+																value={ getValues( 'v1BlockSuffix' ) }
+																onChange={ ( textValue ) => {
+																	onChange( textValue );
+																} }
+																help={ __( 'This suffix will be added to the end of the block name for v1 blocks. Leave blank to not add a suffix.', 'gb-extras' ) }
+															/>
+														) }
+													/>
+												</div>
+												<div className="dlx-admin__row">
+													<Controller
+														name="v2BlockSuffix"
+														control={ control }
+														render={ ( { field: { onChange } } ) => (
+															<TextControl
+																label={ __( 'v2 Block Suffix', 'gb-extras' ) }
+																value={ getValues( 'v2BlockSuffix' ) }
+																onChange={ ( textValue ) => {
+																	onChange( textValue );
+																} }
+																help={ __( 'This suffix will be added to the end of the block name for v2 blocks. Leave blank to not add a suffix.', 'gb-extras' ) }
+															/>
+														) }
+													/>
+												</div>
+											</>
+										)
+									}
 									<div className="dlx-admin__row">
 										<Controller
 											name="enableMarkdownToHeadlineBlock"
 											control={ control }
 											render={ ( { field: { onChange } } ) => (
 												<ToggleControl
-													label={ __( 'Enable Markdown to Headline Block', 'gb-extras' ) }
+													label={ __( 'Enable Markdown to Text Block', 'gb-extras' ) }
 													checked={ getValues( 'enableMarkdownToHeadlineBlock' ) }
 													onChange={ ( boolValue ) => {
 														onChange( boolValue );
 													} }
-													help={ __( 'By default, the markdown syntax for headings creates Core heading blocks. By enabling this, the markdown will now be converted to the Headline block.', 'gb-extras' ) }
+													help={ __( 'By default, the markdown syntax for headings creates Core heading blocks. By enabling this, the markdown will now be converted to the Text block.', 'gb-extras' ) }
 												/>
 											) }
 										/>

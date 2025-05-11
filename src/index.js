@@ -242,7 +242,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '#',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h1' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h1' } );
 					},
 					priority: 1,
 				} );
@@ -250,7 +250,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '##',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h2' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h2' } );
 					},
 					priority: 1,
 				} );
@@ -258,7 +258,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '###',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h3' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h3' } );
 					},
 					priority: 1,
 				} );
@@ -266,7 +266,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '####',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h4' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h4' } );
 					},
 					priority: 1,
 				} );
@@ -274,7 +274,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '#####',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h5' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h5' } );
 					},
 					priority: 1,
 				} );
@@ -282,7 +282,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '######',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h6' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h6' } );
 					},
 					priority: 1,
 				} );
@@ -291,111 +291,5 @@ const UnGroupIcon = ( props ) => {
 			}
 			return blockSettings;
 		} );
-	}
-
-	// Check to see if the default block is a headline. If not, return.
-	const defaultHeadlineBlockEnabled = gbExtrasPatternInserter.defaultHeadlineBlockEnabled;
-	if ( ! defaultHeadlineBlockEnabled ) {
-		return;
-	}
-
-	// Get the default element name.
-	const defaultHeadlineElement = gbExtrasPatternInserter.defaultHeadlineBlockElement;
-
-	registerPlugin( 'dlx-gb-extras-default-headline', {
-		render: () => {
-			useEffect( () => {
-				setDefaultBlockName( 'generateblocks/headline' );
-			}, [] );
-		},
-	} );
-
-	/**
-	 * Watch for block changes and set the default block to headline.
-	 */
-	const watchForBlockChanges = () => {
-		// Try to find if the paragraph needs to be converted to a headline.
-		const currentBlock = wp.data.select( 'core/block-editor' ).getSelectedBlock();
-
-		// If no block is selected, no need to go further.
-		if ( null === currentBlock || 'undefined' === typeof currentBlock ) {
-			return;
-		}
-
-		// Store history vars.
-		const parentClientId = wp.data.select( 'core/block-editor' ).getBlockRootClientId( currentBlock.clientId );
-		const currentBlockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( currentBlock.clientId );
-
-		if ( null !== previousSelectedBlock && null !== previousSelectedBlockIndex ) {
-			// If previous selected block is a headline,  current block is a paragraph, and they both have the same parent client ID and index, then we're in a transform and should return.
-			if ( previousSelectedBlock.name !== 'core/paragraph' && currentBlock.name === 'core/paragraph' && parentClientId === previousParentClientId && currentBlockIndex === previousSelectedBlockIndex ) {
-				return;
-			}
-		}
-
-		// Check if previous block is a headline block. If so, current block should be headline too and not a paragraph.
-		if ( currentBlockIndex > 0 ) {
-			const adjacentBlockClientId = wp.data.select( 'core/block-editor' ).getAdjacentBlockClientId( currentBlock.clientId, -1 );
-			if ( null !== adjacentBlockClientId ) {
-				const adjacentBlock = wp.data.select( 'core/block-editor' ).getBlock( adjacentBlockClientId );
-				const currentBlockContent = currentBlock.attributes.content;
-				const currentBlockContentLength = currentBlockContent?.length || null;
-
-				// In WP 6.4, the content attribute is a string, but in 6.5, it's a richtext object.
-				// If length is null, then it's a richtext object.
-				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || ( null === currentBlockContentLength && isEmpty( currentBlock.attributes.content ) ) ) ) {
-					// If previous block is a headline, replace current block with a headline.
-					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
-						wp.blocks.createBlock( 'generateblocks/headline', {
-							uniqueId: '',
-							content: currentBlock.attributes.content,
-							element: defaultHeadlineElement,
-						} ),
-					] );
-				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || ( null === currentBlockContentLength && isEmpty( currentBlock.attributes.content ) ) ) ) {
-					// If previous block is a paragraph, convert current block to headline.
-					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
-						wp.blocks.createBlock( 'generateblocks/headline', {
-							uniqueId: '',
-							content: currentBlock.attributes.content,
-							element: defaultHeadlineElement,
-						} ),
-					] );
-				}
-			}
-		}
-
-		// Story history to detect transforms.
-		previousParentClientId = parentClientId;
-		previousSelectedBlockIndex = currentBlockIndex;
-		previousSelectedBlock = currentBlock;
-	};
-
-	// Run the block change watcher. Debounce to run every 150ms.
-	wp.data.subscribe( debounce( watchForBlockChanges, 150 ) );
-
-	/**
-	 * Change default headline element to paragraph.
-	 */
-	addAction( 'generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function( props ) {
-		if ( props.attributes.uniqueId === '' ) {
-			props.attributes.element = defaultHeadlineElement;
-
-			// Max iterations.
-			const maxIterations = 50;
-			let currentIteration = 0;
-
-			const intervalId = setInterval( function() {
-				if ( currentIteration > maxIterations ) {
-					clearInterval( intervalId );
-				}
-				if ( 'undefined' !== typeof props.headlineRef && props.headlineRef.current !== null ) {
-					const headline = props.headlineRef.current;
-					headline.querySelector( '.block-editor-rich-text__editable' ).focus();
-					clearInterval( intervalId );
-				}
-				currentIteration++;
-			}, 200 );
-		}
-	} );
+	}	
 }( window.wp ) );
