@@ -29,6 +29,8 @@ const UnGroupIcon = ( props ) => {
 ( function( wp ) {
 	/**
 	 * Add a toolbar option to wrap selected blocks in a container.
+	 * 
+	 * Updated for v2 blocks.
 	 */
 	registerPlugin( 'dlx-gb-extras-wrap-container', {
 		render: () => {
@@ -82,6 +84,8 @@ const UnGroupIcon = ( props ) => {
 	const uniqueIds = [];
 	/**
 	 * Generate New Unique IDs for selected blocks.
+	 * 
+	 * For v1 blocks.
 	 */
 	registerPlugin( 'dlx-gb-extras-generate-unique-ids', {
 		render: () => {
@@ -142,7 +146,7 @@ const UnGroupIcon = ( props ) => {
 			const { name } = selectedBlock;
 
 			// If name contains `generateblocks`, proceed.
-			if ( ! v1Blocks.includes( name ) ) {
+			if ( ! v1Blocks.includes( name ) && ! v2Blocks.includes( name ) ) {
 				return null;
 			}
 
@@ -161,6 +165,8 @@ const UnGroupIcon = ( props ) => {
 
 	/**
 	 * Register a plugin that unwraps (flattens) a container block.
+	 *
+	 * Updated to use the v2 blocks.
 	 */
 	registerPlugin( 'dlx-gb-extras-unwrap-container', {
 		render: () => {
@@ -205,6 +211,8 @@ const UnGroupIcon = ( props ) => {
 
 	/**
 	 * Allow transform from group block.
+	 *
+	 * Updated for v2 blocks.
 	 */
 	wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/group', ( blockSettings ) => {
 		if ( blockSettings.name === 'core/group' ) {
@@ -222,7 +230,9 @@ const UnGroupIcon = ( props ) => {
 	} );
 
 	/**
-	 * Allow markdown to transform to the headline block.
+	 * Allow markdown to transform to the headline (text) block.
+	 *
+	 * Updated for v2 blocks.
 	 */
 	if ( gbExtrasPatternInserter.enableMarkdownToHeadlineBlock ) {
 		wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/markdown', ( blockSettings ) => {
@@ -232,7 +242,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '#',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h1' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h1' } );
 					},
 					priority: 1,
 				} );
@@ -240,7 +250,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '##',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h2' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h2' } );
 					},
 					priority: 1,
 				} );
@@ -248,7 +258,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '###',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h3' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h3' } );
 					},
 					priority: 1,
 				} );
@@ -256,7 +266,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '####',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h4' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h4' } );
 					},
 					priority: 1,
 				} );
@@ -264,7 +274,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '#####',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h5' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h5' } );
 					},
 					priority: 1,
 				} );
@@ -272,7 +282,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '######',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h6' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, element: 'h6' } );
 					},
 					priority: 1,
 				} );
