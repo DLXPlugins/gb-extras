@@ -24,21 +24,26 @@ const OutlineIcon = ( props ) => {
 		<svg
 			viewBox="0 0 14 14"
 			xmlns="http://www.w3.org/2000/svg"
-			width={14}
-			height={14}
+			width={ 14 }
+			height={ 14 }
 			fill="none"
 			{ ...props }
-  >
-    <clipPath id="a">
-      <path d="M0 0h14v14H0z" fill="currentColor" />
-    </clipPath>
-    <g fill="currentColor" fillRule="evenodd" clipPath="url(#a)" clipRule="evenodd">
-      <path d="M7 5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 7 5z" />
-      <path d="M5 7a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 5 7zM11 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 11 7zM0 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 7z" />
-      <path d="M1.5 1a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5zM0 1.5A1.5 1.5 0 0 1 1.5 0h11A1.5 1.5 0 0 1 14 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 0 12.5z" />
-      <path d="M7 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 0zM7 11a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 11z" />
-    </g>
-  </svg>
+		>
+			<clipPath id="a">
+				<path d="M0 0h14v14H0z" fill="currentColor" />
+			</clipPath>
+			<g
+				fill="currentColor"
+				fillRule="evenodd"
+				clipPath="url(#a)"
+				clipRule="evenodd"
+			>
+				<path d="M7 5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 7 5z" />
+				<path d="M5 7a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 5 7zM11 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 11 7zM0 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 7z" />
+				<path d="M1.5 1a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5zM0 1.5A1.5 1.5 0 0 1 1.5 0h11A1.5 1.5 0 0 1 14 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 0 12.5z" />
+				<path d="M7 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 0zM7 11a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 11z" />
+			</g>
+		</svg>
 	);
 };
 
@@ -66,11 +71,15 @@ const addOutlineClasses = createHigherOrderComponent( ( BlockListBlock ) => {
 
 		// Add classes based on block type.
 		if ( name === 'generateblocks/container' ) {
-			props.className = `${ props.className || '' } dlx-gb-outline dlx-gb-outline-container`.trim();
+			props.className = `${
+				props.className || ''
+			} dlx-gb-outline dlx-gb-outline-container`.trim();
 		}
 
 		if ( name === 'generateblocks/element' ) {
-			props.className = `${ props.className || '' } dlx-gb-outline dlx-gb-outline-element`.trim();
+			props.className = `${
+				props.className || ''
+			} dlx-gb-outline dlx-gb-outline-element`.trim();
 		}
 
 		// Add grid class if display is grid.
@@ -95,6 +104,8 @@ const GBCommands = () => {
 	const [ groupsLoading, setGroupsLoading ] = useState( false );
 	const [ blockTransformConfirmation, setBlockTransformConfirmation ] =
 		useState( false );
+
+	const [ transforming, setTransforming ] = useState( false );
 
 	// Update global state when local state changes.
 	useEffect( () => {
@@ -280,18 +291,15 @@ const GBCommands = () => {
 					}
 					setShowContainerOutlines( true );
 				} );
-				
 			}
 			close();
 		},
 		context: 'block-editor',
 	} );
-	console.log( gbExtrasPatternInserter );
-	console.log( gbExtrasPatternInserter.enableV1Transformations );
 	useCommand( {
 		name: 'dlx-transform-v1-blocks-to-v2',
-		label: 'GenerateBlocks: Transform V1 Blocks to V2 (Experimental)',
-		searchLabel: 'Transform GenerateBlocks V1 Blocks to V2 (Experimental)',
+		label: 'GenerateBlocks: Convert v1 Blocks to v2 (Experimental)',
+		searchLabel: 'Transform/convert all GB GenerateBlocks V1 Blocks to V2 (Experimental)',
 		icon: replace,
 		callback: () => {
 			setBlockTransformConfirmation( true );
@@ -309,31 +317,39 @@ const GBCommands = () => {
 				onRequestClose={ () => {
 					setBlockTransformConfirmation( false );
 				} }
-				title="Transform V1 Blocks to V2"
+				title="Transform v1 Blocks to v2"
 			>
-				<p>Are you sure you want to transform all V1 blocks to V2?</p>
-				<Button
-					variant="primary"
-					onClick={ async() => {
-						const nestingLevel = getBlockNestingLevel();
+				<p>{ __( 'Please back up your blocks before transforming. There is no undo for this operation.', 'dlx-gb-extras' ) }</p>
+				<p>{ __( 'This will convert all v1 blocks to v2 blocks.', 'dlx-gb-extras' ) }</p>
+				<div style={ { display: 'flex', gap: '10px' } }>
+					<Button
+						variant="primary"
+						isDestructive={ true }
+						onClick={ async() => {
+							const nestingLevel = getBlockNestingLevel();
+							setTransforming( true );
+							for ( let i = 0; i < nestingLevel; i++ ) {
+								await transformBlocks( select( 'core/block-editor' ).getBlocks() );
+							}
 
-						for ( let i = 0; i < nestingLevel; i++ ) {
-							await transformBlocks( select( 'core/block-editor' ).getBlocks() );
-						}
-
-						setBlockTransformConfirmation( false );
-					} }
-				>
-					{ __( 'Transform', 'dlx-gb-extras' ) }
-				</Button>
-				<Button
-					variant="secondary"
-					onClick={ () => {
-						setBlockTransformConfirmation( false );
-					} }
-				>
-					{ __( 'Cancel', 'dlx-gb-extras' ) }
-				</Button>
+							setBlockTransformConfirmation( false );
+							setTransforming( false );
+						} }
+						help={ __( 'Please back up your blocks before transforming. There is no undo for this operation.', 'dlx-gb-extras' )}
+						disabled={ transforming }
+						icon={ transforming ? <Spinner /> : null }
+					>
+						{ transforming ? __( 'Transforming...', 'dlx-gb-extras' ) : __( 'Transform', 'dlx-gb-extras' ) }
+					</Button>
+					<Button
+						variant="secondary"
+						onClick={ () => {
+							setBlockTransformConfirmation( false );
+						} }
+					>
+						{ __( 'Cancel', 'dlx-gb-extras' ) }
+					</Button>
+				</div>
 			</Modal>
 		);
 	}

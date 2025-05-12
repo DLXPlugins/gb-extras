@@ -5208,6 +5208,10 @@ var GBCommands = function GBCommands() {
     _useState8 = _slicedToArray(_useState7, 2),
     blockTransformConfirmation = _useState8[0],
     setBlockTransformConfirmation = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState0 = _slicedToArray(_useState9, 2),
+    transforming = _useState0[0],
+    setTransforming = _useState0[1];
 
   // Update global state when local state changes.
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -5504,12 +5508,10 @@ var GBCommands = function GBCommands() {
     },
     context: 'block-editor'
   });
-  console.log(gbExtrasPatternInserter);
-  console.log(gbExtrasPatternInserter.enableV1Transformations);
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-transform-v1-blocks-to-v2',
-    label: 'GenerateBlocks: Transform V1 Blocks to V2 (Experimental)',
-    searchLabel: 'Transform GenerateBlocks V1 Blocks to V2 (Experimental)',
+    label: 'GenerateBlocks: Convert v1 Blocks to v2 (Experimental)',
+    searchLabel: 'Transform/convert all GB GenerateBlocks V1 Blocks to V2 (Experimental)',
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
     callback: function callback() {
       setBlockTransformConfirmation(true);
@@ -5524,41 +5526,52 @@ var GBCommands = function GBCommands() {
       onRequestClose: function onRequestClose() {
         setBlockTransformConfirmation(false);
       },
-      title: "Transform V1 Blocks to V2"
-    }, /*#__PURE__*/React.createElement("p", null, "Are you sure you want to transform all V1 blocks to V2?"), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__.Button, {
+      title: "Transform v1 Blocks to v2"
+    }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Please back up your blocks before transforming. There is no undo for this operation.', 'dlx-gb-extras')), /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('This will convert all v1 blocks to v2 blocks.', 'dlx-gb-extras')), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__.Button, {
       variant: "primary",
+      isDestructive: true,
       onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         var nestingLevel, i;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               nestingLevel = _getBlockNestingLevel();
+              setTransforming(true);
               i = 0;
-            case 2:
+            case 3:
               if (!(i < nestingLevel)) {
-                _context4.next = 8;
+                _context4.next = 9;
                 break;
               }
-              _context4.next = 5;
+              _context4.next = 6;
               return _transformBlocks((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core/block-editor').getBlocks());
-            case 5:
+            case 6:
               i++;
-              _context4.next = 2;
+              _context4.next = 3;
               break;
-            case 8:
-              setBlockTransformConfirmation(false);
             case 9:
+              setBlockTransformConfirmation(false);
+              setTransforming(false);
+            case 11:
             case "end":
               return _context4.stop();
           }
         }, _callee4);
-      }))
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Transform', 'dlx-gb-extras')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__.Button, {
+      })),
+      help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Please back up your blocks before transforming. There is no undo for this operation.', 'dlx-gb-extras'),
+      disabled: transforming,
+      icon: transforming ? /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__.Spinner, null) : null
+    }, transforming ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Transforming...', 'dlx-gb-extras') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Transform', 'dlx-gb-extras')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__.Button, {
       variant: "secondary",
       onClick: function onClick() {
         setBlockTransformConfirmation(false);
       }
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Cancel', 'dlx-gb-extras')));
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_8__.__)('Cancel', 'dlx-gb-extras'))));
   }
   return /*#__PURE__*/React.createElement(React.Fragment, null, isModalOpen && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_7__.Modal, {
     isDismissible: true,
