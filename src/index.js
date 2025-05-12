@@ -6,12 +6,12 @@ import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
 import { useSelect, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import { debounce } from '@wordpress/compose';
-import uniqueId from 'lodash.uniqueid';
 import './js/blocks/pattern-importer/index.js';
 import './js/blocks/commands/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
-
+import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
+import { replaceUniqueIds } from './js/blocks/utils/ReplaceUniqueIds.js';
 let previousSelectedBlock = null;
 let previousParentClientId = null;
 let previousSelectedBlockIndex = null;
@@ -28,13 +28,14 @@ const UnGroupIcon = ( props ) => {
 ( function( wp ) {
 	/**
 	 * Add a toolbar option to wrap selected blocks in a container.
+	 * 
+	 * Updated for v2 blocks.
 	 */
 	registerPlugin( 'dlx-gb-extras-wrap-container', {
 		render: () => {
 			const [ clientIds, setClientIds ] = useState( [] );
 
 			// Get the selected block clientIds.
-
 			const { selectedBlocks, getMultiSelectedBlockClientIds } = useSelect( ( select ) => {
 				return {
 					selectedBlocks: select( 'core/block-editor' ).getMultiSelectedBlocks(),
@@ -67,7 +68,7 @@ const UnGroupIcon = ( props ) => {
 							replaceBlocks(
 								getMultiSelectedBlockClientIds(),
 								wp.blocks.createBlock(
-									'generateblocks/container', {}, innerBlocks
+									'generateblocks/element', {}, innerBlocks
 								)
 							);
 						} }
@@ -82,55 +83,18 @@ const UnGroupIcon = ( props ) => {
 	const uniqueIds = [];
 	/**
 	 * Generate New Unique IDs for selected blocks.
+	 * 
+	 * For v1 blocks.
 	 */
 	registerPlugin( 'dlx-gb-extras-generate-unique-ids', {
 		render: () => {
-			const selectedBlock = useSelect( ( select ) => {
-				return select( 'core/block-editor' ).getSelectedBlock();
+			const { selectedBlock } = useSelect( ( select ) => {
+				return {
+					selectedBlock: select( 'core/block-editor' ).getSelectedBlock(),
+				}
 			}, [] );
 
-			/**
-			 * Return and generate a new unique ID.
-			 *
-			 * @param {string} clientId The client ID of the block.
-			 *
-			 * @return {string} The uniqueId.
-			 */
-			const generateUniqueId = ( clientId ) => {
-				// Get the substr of current client ID for prefix.
-				const prefix = clientId.substring( 2, 9 ).replace( '-', '' );
-				const newUniqueId = uniqueId( prefix );
-
-				// Make sure it isn't in the array already. Recursive much?
-				if ( uniqueIds.includes( newUniqueId ) ) {
-					return generateUniqueId();
-				}
-				return newUniqueId;
-			};
-
-			/**
-			 * Replace uniqueId attribute with new uniqueId.
-			 *
-			 * @param {Object} block The block object.
-			 */
-			const replaceUniqueId = ( block ) => {
-				const blockClientId = block.clientId;
-				const blockAttributes = block.attributes;
-
-				// If block has a `uniqueId` attribute, generate a new one.
-				if ( 'undefined' !== typeof blockAttributes.uniqueId ) {
-					const newUniqueId = generateUniqueId( blockClientId );
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( blockClientId, { uniqueId: newUniqueId } );
-				}
-
-				// Now check if block has innerBlocks.
-				if ( 'undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0 ) {
-					block.innerBlocks.forEach( ( innerBlock ) => {
-						replaceUniqueId( innerBlock );
-					} );
-				}
-			};
-
+			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
 			/**
 			 * Return early if no block is selected.
 			 */
@@ -142,7 +106,7 @@ const UnGroupIcon = ( props ) => {
 			const { name } = selectedBlock;
 
 			// If name contains `generateblocks`, proceed.
-			if ( name.indexOf( 'generateblocks' ) === -1 ) {
+			if ( ! v1Blocks.includes( name ) && ! v2Blocks.includes( name ) ) {
 				return null;
 			}
 
@@ -152,7 +116,8 @@ const UnGroupIcon = ( props ) => {
 					icon={ <ReplaceIcon /> }
 					label="Generate New Unique IDs"
 					onClick={ () => {
-						replaceUniqueId( selectedBlock ); // This gets the selected block and all innerBlocks.
+						const newBlock = replaceUniqueIds( selectedBlock ); // This gets the selected block and all innerBlocks.
+						replaceBlocks( selectedBlock.clientId, newBlock );
 					} }
 				/>
 			);
@@ -161,6 +126,8 @@ const UnGroupIcon = ( props ) => {
 
 	/**
 	 * Register a plugin that unwraps (flattens) a container block.
+	 *
+	 * Updated to use the v2 blocks.
 	 */
 	registerPlugin( 'dlx-gb-extras-unwrap-container', {
 		render: () => {
@@ -174,7 +141,7 @@ const UnGroupIcon = ( props ) => {
 			}
 
 			// If block is not a container, return.
-			if ( selectedBlock.name !== 'generateblocks/container' ) {
+			if ( selectedBlock.name !== 'generateblocks/container' && selectedBlock.name !== 'generateblocks/element' ) {
 				return null;
 			}
 
@@ -204,54 +171,18 @@ const UnGroupIcon = ( props ) => {
 	} );
 
 	/**
-	 * Register a plugin that unwraps (flattens) a group block.
-	 */
-	registerPlugin( 'dlx-gb-extras-unwrap-group', {
-		render: () => {
-			const selectedBlock = useSelect( ( select ) => {
-				return select( 'core/block-editor' ).getSelectedBlock();
-			}, [] );
-
-			// If no block is selected, return.
-			if ( null === selectedBlock ) {
-				return null;
-			}
-
-			// If block is not a container, return.
-			if ( selectedBlock.name !== 'core/graoup' ) {
-				return null;
-			}
-
-			// If block has no innerBlocks, return.
-			if ( selectedBlock.innerBlocks.length === 0 ) {
-				return null;
-			}
-
-			// If more than one block is selected, add toolbar option to unwrap container.
-			return (
-				<PluginBlockSettingsMenuItem
-					icon={ <UnGroupIcon /> }
-					label="Ungroup Blocks"
-					onClick={ () => {
-						const innerBlocks = selectedBlock.innerBlocks;
-						wp.data.dispatch( 'core/block-editor' ).replaceBlocks( selectedBlock.clientId, innerBlocks );
-					} }
-				/>
-			);
-		},
-	} );
-
-	/**
 	 * Allow transform from group block.
+	 *
+	 * Updated for v2 blocks.
 	 */
 	wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/group', ( blockSettings ) => {
 		if ( blockSettings.name === 'core/group' ) {
 			const transformsTo = blockSettings.transforms?.to || [];
 			transformsTo.push( {
 				type: 'block',
-				blocks: [ 'generateblocks/container' ],
+				blocks: [ 'generateblocks/element' ],
 				transform: ( attributes, innerBlocks ) => {
-					return wp.blocks.createBlock( 'generateblocks/container', {}, innerBlocks );
+					return wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks );
 				},
 			} );
 			blockSettings.transforms.to = transformsTo;
@@ -260,17 +191,19 @@ const UnGroupIcon = ( props ) => {
 	} );
 
 	/**
-	 * Allow markdown to transform to the headline block.
+	 * Allow markdown to transform to the headline (text) block.
+	 *
+	 * Updated for v2 blocks.
 	 */
 	if ( gbExtrasPatternInserter.enableMarkdownToHeadlineBlock ) {
 		wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/markdown', ( blockSettings ) => {
-			if ( blockSettings.name === 'core/paragraph' || blockSettings.name === 'generateblocks/headline' ) {
+			if ( blockSettings.name === 'core/paragraph' || blockSettings.name === 'generateblocks/text' ) {
 				const transformFrom = blockSettings.transforms?.from || [];
 				transformFrom.push( {
 					type: 'prefix',
 					prefix: '#',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h1' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h1' } );
 					},
 					priority: 1,
 				} );
@@ -278,7 +211,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '##',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h2' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h2' } );
 					},
 					priority: 1,
 				} );
@@ -286,7 +219,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '###',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h3' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h3' } );
 					},
 					priority: 1,
 				} );
@@ -294,7 +227,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '####',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h4' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h4' } );
 					},
 					priority: 1,
 				} );
@@ -302,7 +235,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '#####',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h5' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h5' } );
 					},
 					priority: 1,
 				} );
@@ -310,7 +243,7 @@ const UnGroupIcon = ( props ) => {
 					type: 'prefix',
 					prefix: '######',
 					transform: ( content ) => {
-						return wp.blocks.createBlock( 'generateblocks/headline', { content, element: 'h6' } );
+						return wp.blocks.createBlock( 'generateblocks/text', { content, tagName: 'h6' } );
 					},
 					priority: 1,
 				} );
@@ -319,111 +252,5 @@ const UnGroupIcon = ( props ) => {
 			}
 			return blockSettings;
 		} );
-	}
-
-	// Check to see if the default block is a headline. If not, return.
-	const defaultHeadlineBlockEnabled = gbExtrasPatternInserter.defaultHeadlineBlockEnabled;
-	if ( ! defaultHeadlineBlockEnabled ) {
-		return;
-	}
-
-	// Get the default element name.
-	const defaultHeadlineElement = gbExtrasPatternInserter.defaultHeadlineBlockElement;
-
-	registerPlugin( 'dlx-gb-extras-default-headline', {
-		render: () => {
-			useEffect( () => {
-				setDefaultBlockName( 'generateblocks/headline' );
-			}, [] );
-		},
-	} );
-
-	/**
-	 * Watch for block changes and set the default block to headline.
-	 */
-	const watchForBlockChanges = () => {
-		// Try to find if the paragraph needs to be converted to a headline.
-		const currentBlock = wp.data.select( 'core/block-editor' ).getSelectedBlock();
-
-		// If no block is selected, no need to go further.
-		if ( null === currentBlock || 'undefined' === typeof currentBlock ) {
-			return;
-		}
-
-		// Store history vars.
-		const parentClientId = wp.data.select( 'core/block-editor' ).getBlockRootClientId( currentBlock.clientId );
-		const currentBlockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( currentBlock.clientId );
-
-		if ( null !== previousSelectedBlock && null !== previousSelectedBlockIndex ) {
-			// If previous selected block is a headline,  current block is a paragraph, and they both have the same parent client ID and index, then we're in a transform and should return.
-			if ( previousSelectedBlock.name !== 'core/paragraph' && currentBlock.name === 'core/paragraph' && parentClientId === previousParentClientId && currentBlockIndex === previousSelectedBlockIndex ) {
-				return;
-			}
-		}
-
-		// Check if previous block is a headline block. If so, current block should be headline too and not a paragraph.
-		if ( currentBlockIndex > 0 ) {
-			const adjacentBlockClientId = wp.data.select( 'core/block-editor' ).getAdjacentBlockClientId( currentBlock.clientId, -1 );
-			if ( null !== adjacentBlockClientId ) {
-				const adjacentBlock = wp.data.select( 'core/block-editor' ).getBlock( adjacentBlockClientId );
-				const currentBlockContent = currentBlock.attributes.content;
-				const currentBlockContentLength = currentBlockContent?.length || null;
-
-				// In WP 6.4, the content attribute is a string, but in 6.5, it's a richtext object.
-				// If length is null, then it's a richtext object.
-				if ( null !== adjacentBlock && adjacentBlock.name === 'generateblocks/headline' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || ( null === currentBlockContentLength && isEmpty( currentBlock.attributes.content ) ) ) ) {
-					// If previous block is a headline, replace current block with a headline.
-					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
-						wp.blocks.createBlock( 'generateblocks/headline', {
-							uniqueId: '',
-							content: currentBlock.attributes.content,
-							element: defaultHeadlineElement,
-						} ),
-					] );
-				} else if ( null !== adjacentBlock && adjacentBlock.name === 'core/paragraph' && currentBlock.name === 'core/paragraph' && ( '' === currentBlock.attributes.content || ( null === currentBlockContentLength && isEmpty( currentBlock.attributes.content ) ) ) ) {
-					// If previous block is a paragraph, convert current block to headline.
-					wp.data.dispatch( 'core/block-editor' ).replaceBlocks( currentBlock.clientId, [
-						wp.blocks.createBlock( 'generateblocks/headline', {
-							uniqueId: '',
-							content: currentBlock.attributes.content,
-							element: defaultHeadlineElement,
-						} ),
-					] );
-				}
-			}
-		}
-
-		// Story history to detect transforms.
-		previousParentClientId = parentClientId;
-		previousSelectedBlockIndex = currentBlockIndex;
-		previousSelectedBlock = currentBlock;
-	};
-
-	// Run the block change watcher. Debounce to run every 150ms.
-	wp.data.subscribe( debounce( watchForBlockChanges, 150 ) );
-
-	/**
-	 * Change default headline element to paragraph.
-	 */
-	addAction( 'generateblocks.editor.renderBlock', 'generateblocks/editor/renderBlock', function( props ) {
-		if ( props.attributes.uniqueId === '' ) {
-			props.attributes.element = defaultHeadlineElement;
-
-			// Max iterations.
-			const maxIterations = 50;
-			let currentIteration = 0;
-
-			const intervalId = setInterval( function() {
-				if ( currentIteration > maxIterations ) {
-					clearInterval( intervalId );
-				}
-				if ( 'undefined' !== typeof props.headlineRef && props.headlineRef.current !== null ) {
-					const headline = props.headlineRef.current;
-					headline.querySelector( '.block-editor-rich-text__editable' ).focus();
-					clearInterval( intervalId );
-				}
-				currentIteration++;
-			}, 200 );
-		}
-	} );
+	}	
 }( window.wp ) );

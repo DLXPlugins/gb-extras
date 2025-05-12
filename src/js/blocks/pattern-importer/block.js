@@ -30,7 +30,7 @@ import {
 
 import { useInstanceId } from '@wordpress/compose';
 import SendCommand from '../utils/SendCommand';
-
+import { replaceUniqueIds, generateUniqueId } from '../utils/ReplaceUniqueIds';
 // Image RegEx.
 const imageUrlRegex = /(http(?:s?):)([\/|.|@|\w|\s|-])*\.(?:jpg|gif|png|jpeg|webp|avif)/gi;
 const uniqueIdRegex = /\"uniqueId\"\:\"([^"]+)\"/gi;
@@ -40,10 +40,6 @@ const uniqueIds = [];
 
 // For storing the number of images imported.
 let imageCount = 0;
-
-const escapeRegExp = ( content ) => {
-	return content.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
 
 const PatternImporter = ( props ) => {
 	// Shortcuts.
@@ -76,18 +72,22 @@ const PatternImporter = ( props ) => {
 		 *
 		 * @param {string} pattern The pattern.
 		 */
-		const importPattern = ( pattern ) => {
-			pattern = replaceUniqueIds( pattern );
-
-			// Convert pattern to blocks.
+		const importPattern = async( pattern ) => {
 			try {
 				const patternBlocks = parse( pattern );
 
-				replaceBlock( clientId, patternBlocks );
+				const newPatternBlocks = [];
+
+				for ( let i = 0; i < patternBlocks.length; i++ ) {
+					newPatternBlocks.push( replaceUniqueIds( patternBlocks[ i ] ) );
+				}
+
+				await replaceBlock( clientId, newPatternBlocks );
 
 				// Insert block in place of this one.
 				//replaceInnerBlocks( clientId, patternBlocks );
 			} catch ( error ) {
+				console.error( error );
 			}
 		};
 
@@ -155,44 +155,6 @@ const PatternImporter = ( props ) => {
 		} else {
 			importPattern( localPatternText );
 		}
-	};
-
-	/**
-	 * Return and generate a new unique ID.
-	 *
-	 * @param {string} blockPatternText The block pattern text.
-	 *
-	 * @return {string} The blockPatternText.
-	 */
-	const replaceUniqueIds = ( blockPatternText ) => {
-		const pwUniqueIdMatches = [ ...blockPatternText.matchAll( uniqueIdRegex ) ];
-
-		if ( pwUniqueIdMatches.length ) {
-			// Loop through matches, generate unique ID, and replace.
-			pwUniqueIdMatches.forEach( ( match ) => {
-				const newUniqueId = generateUniqueId();
-				uniqueIds.push( newUniqueId );
-				blockPatternText.replace( match[ 1 ], `"uniqueId":"${ newUniqueId }"` );
-			} );
-		}
-		return blockPatternText;
-	};
-
-	/**
-	 * Return and generate a new unique ID.
-	 *
-	 * @return {string} The uniqueId.
-	 */
-	const generateUniqueId = () => {
-		// Get the substr of current client ID for prefix.
-		const prefix = clientId.substring( 2, 9 ).replace( '-', '' );
-		const newUniqueId = uniqueId( prefix );
-
-		// Make sure it isn't in the array already. Recursive much?
-		if ( uniqueIds.includes( newUniqueId ) ) {
-			return generateUniqueId();
-		}
-		return newUniqueId;
 	};
 
 	const block = (

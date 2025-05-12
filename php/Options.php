@@ -102,9 +102,7 @@ class Options {
 
 		$defaults = array(
 			'enableAdobeFonts'              => true,
-			'enableDefaultHeadlineBlock'    => false,
 			'enableMarkdownToHeadlineBlock' => false,
-			'headlineBlockElement'          => 'h2',
 			'licenseKey'                    => '',
 			'priceId'                       => '1',
 			'enabledPostTypes'              => array(
@@ -112,6 +110,12 @@ class Options {
 				'page' => true,
 			),
 			'allowedGoogleFonts'            => array(),
+			'enableV1Transformations'       => false,
+			'enableV1Blocks'                => false,
+			'v1CategoryLabel'               => 'GenerateBlocks v1',
+			'v2CategoryLabel'               => 'GenerateBlocks v2',
+			'v1BlockSuffix'                 => '(v1)',
+			'v2BlockSuffix'                 => '(v2)',
 		);
 		return $defaults;
 	}

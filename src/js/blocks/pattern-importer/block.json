@@ -5,7 +5,7 @@
 	"name": "dlxplugins/gbhx-pattern-inserter",
 	"category": "generateblocks",
 	"icon": "",
-	"description": "Paste in a pattern and it will be inserted for you.",
+	"description": "Paste in a pattern and it will be inserted for you, remote images downloaded, and unique IDs re-generated.",
 	"keywords": ["generateblocks", "pattern", "inserter"],
 	"version": "1.0.0",
 	"textdomain": "gb-extras",

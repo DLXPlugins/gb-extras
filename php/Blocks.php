@@ -25,7 +25,47 @@ class Blocks {
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_adobe_fonts' ), 10, 1 );
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_blocksy_adobe_fonts' ), 10, 1 );
 		add_filter( 'generateblocks_do_content', array( $self, 'add_post_type_content' ), 10, 2 );
+
+		// Add any block categories needed.
+		add_filter( 'block_categories_all', array( $self, 'add_block_categories' ), 500, 1 ); // High priority so others can add their categories first.
 		return $self;
+	}
+
+	/**
+	 * Add any block categories needed.
+	 *
+	 * @param array $categories List of categories.
+	 */
+	public function add_block_categories( $categories ) {
+		$block_labels_enabled = true; // @TODO: Make this dynamic.
+		if ( ! $block_labels_enabled ) {
+			return $categories;
+		}
+
+		$options = Options::get_options();
+		$v1_label = $options['v1CategoryLabel'] ?? __( 'GenerateBlocks v1 (Legacy Blocks)', 'gb-extras' );
+		$v2_label = $options['v2CategoryLabel'] ?? __( 'GenerateBlocks v2 (New Blocks)', 'gb-extras' );
+
+		// Now add the GenerateBlocks category.
+		$generateblocks_category = array(
+			'slug'  => 'generateblocks-v1',
+			'title' => esc_html( $v1_label ),
+		);
+		// Find the index of the `generateblocks` category.
+		$generateblocks_index = array_search( 'generateblocks', array_column( $categories, 'slug' ), true );
+		if ( false !== $generateblocks_index ) {
+			// Rename category to `GenerateBlocks v2 (New Blocks)` and remove from array.
+			$gb_v2_category = $categories[ $generateblocks_index ];
+			unset( $categories[ $generateblocks_index ] );
+			$gb_v2_category['title'] = esc_html( $v2_label );
+
+			// Add V2 blocks to the beginning.
+			array_unshift( $categories, $gb_v2_category );
+
+			// Add V1 blocks to the end.
+			$categories[] = $generateblocks_category;
+		}
+		return $categories;
 	}
 
 	/**
@@ -311,13 +351,16 @@ class Blocks {
 
 		// Enqueue block assets.
 		add_action( 'enqueue_block_assets', array( $this, 'register_block_styles' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_scripts' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'register_block_editor_scripts' ) );
 	}
 
 	/**
 	 * Register the block editor styles.
 	 */
 	public function register_block_styles() {
+		if ( ! is_admin() ) {
+			return;
+		}
 		wp_register_style(
 			'gb-extras-block-editor-styles',
 			false
@@ -325,7 +368,9 @@ class Blocks {
 		wp_enqueue_style( 'gb-extras-block-editor-styles' );
 		wp_add_inline_style(
 			'gb-extras-block-editor-styles',
-			'.dlx-gb-outline { outline: 2px solid #949494; }'
+			'.dlx-gb-outline { outline: 3px solid #949494; }
+			.dlx-gb-outline-container { outline: 3px solid #00a32a; }
+			.dlx-gb-outline-element { outline: 3px solid #007cba; }'
 		);
 	}
 
@@ -333,6 +378,9 @@ class Blocks {
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
+		if ( ! is_admin() ) {
+			return;
+		}
 		$options = Options::get_options();
 
 		wp_register_style(
@@ -345,7 +393,7 @@ class Blocks {
 
 		$deps = require_once Functions::get_plugin_dir( 'build/index.asset.php' );
 
-		wp_register_script(
+		wp_enqueue_script(
 			'gb-extras-pattern-inserter-block',
 			Functions::get_plugin_url( 'build/index.js' ),
 			$deps['dependencies'],
@@ -357,13 +405,30 @@ class Blocks {
 			'gb-extras-pattern-inserter-block',
 			'gbExtrasPatternInserter',
 			array(
-				'restUrl'                     => rest_url( 'dlxplugins/gb-extras/v1' ),
-				'restNonce'                   => wp_create_nonce( 'wp_rest' ),
-				'allowedGoogleFonts'          => $options['allowedGoogleFonts'] ?? array(),
-				'defaultHeadlineBlockEnabled' => (bool) $options['enableDefaultHeadlineBlock'] ?? false,
-				'defaultHeadlineBlockElement' => $options['headlineBlockElement'] ?? '',
-				'enableMarkdownToHeadlineBlock' => (bool) $options['enableMarkdownToHeadlineBlock'] ?? false,
+				'restUrl'                       => rest_url( 'dlxplugins/gb-extras/v1' ),
+				'restNonce'                     => wp_create_nonce( 'wp_rest' ),
+				'allowedGoogleFonts'            => $options['allowedGoogleFonts'] ?? array(),
+				'enableMarkdownToHeadlineBlock' => ( ( $options['enableMarkdownToHeadlineBlock'] ?? false ) ? 'true' : 'false' ),
+				'enableV1Transformations'       => ( ( $options['enableV1Transformations'] ?? false ) ? 'true' : 'false' ),
+				'enableV1Blocks'                => ( ( $options['enableV1Blocks'] ?? false ) ? 'true' : 'false' ),
+				'v1CategoryLabel'               => esc_html( $options['v1CategoryLabel'] ?? esc_html__( 'GenerateBlocks v1', 'gb-extras' ) ),
+				'v2CategoryLabel'               => esc_html( $options['v2CategoryLabel'] ?? esc_html__( 'GenerateBlocks v2', 'gb-extras' ) ),
+				'v1BlockSuffix'                 => esc_html( $options['v1BlockSuffix'] ?? esc_html__( '(v1)', 'gb-extras' ) ),
+				'v2BlockSuffix'                 => esc_html( $options['v2BlockSuffix'] ?? esc_html__( '(v2)', 'gb-extras' ) ),
 			)
 		);
+
+		// Enqueue the block labels script.
+		$block_labels_enabled = true; // @TODO: Make this dynamic.
+		if ( $block_labels_enabled ) {
+			$deps = require_once Functions::get_plugin_dir( 'build/gb-extras-block-labels.asset.php' );
+			wp_enqueue_script(
+				'gb-extras-block-labels',
+				Functions::get_plugin_url( 'build/gb-extras-block-labels.js' ),
+				$deps['dependencies'],
+				$deps['version'],
+				true
+			);
+		}
 	}
 }

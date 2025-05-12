@@ -11,6 +11,10 @@ module.exports = ( env ) => {
 				...defaultConfig.module,
 				rules: [ ...defaultConfig.module.rules ],
 			},
+			entry: {
+				'index': './src/index.js',
+				'gb-extras-block-labels': './src/js/blocks/components/GBBlockLabels/index.js',
+			},
 			mode: env.mode,
 			devtool: 'source-map',
 		},
