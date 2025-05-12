@@ -3,6 +3,7 @@ import { addFilter, removeFilter } from '@wordpress/hooks';
 import { useSelect, select } from '@wordpress/data';
 import { registerBlockType, unregisterBlockType } from '@wordpress/blocks';
 import { getBlockVariations, unregisterBlockVariation, registerBlockVariation } from '@wordpress/blocks';
+import { escHtml, escapeAttribute } from '@wordpress/escape-html';
 import { v1Blocks } from '../../utils/BlockTypes';
 
 // Add custom category
@@ -20,7 +21,7 @@ function addGenerateBlocksV1Category(categories) {
 // Modify block registration for v1 and v2 blocks.
 function modifyBlockRegistration(settings, name) {
 	if (v1Blocks.includes(name)) {
-		settings.title = settings.title + ' (v1 Legacy)';
+		settings.title = settings.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v1BlockSuffix );
 		return {
 			...settings,
 			category: 'generateblocks-v1',
@@ -68,7 +69,7 @@ wp.domReady(() => {
 				unregisterBlockVariation(blockName, variationName);
 
 				// Change title of variation.
-				variation.title = variation.title + ' (v1 Legacy)';
+				variation.title = variation.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v1BlockSuffix );
 
 				registerBlockVariation(blockName, variation);
 			}
@@ -96,7 +97,7 @@ wp.plugins.registerPlugin('generateblocks-custom', {
 					// Re-register with updated title
 					registerBlockType(block.name, {
 						...block,
-						title: block.title + ' (v2 Pro)',
+						title: block.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v2BlockSuffix ),
 					});
 
 					// Get all variations of the v2 Blocks and upadate the title.
@@ -107,7 +108,7 @@ wp.plugins.registerPlugin('generateblocks-custom', {
 						unregisterBlockVariation(block.name, variation.name);
 
 						// Change title of variation.
-						variation.title = variation.title + ' (v2 Pro)';
+						variation.title = variation.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v2BlockSuffix );
 
 						registerBlockVariation(block.name, variation);
 					});

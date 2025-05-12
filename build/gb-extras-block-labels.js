@@ -60,6 +60,16 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
+/***/ "@wordpress/escape-html":
+/*!************************************!*\
+  !*** external ["wp","escapeHtml"] ***!
+  \************************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["escapeHtml"];
+
+/***/ }),
+
 /***/ "@wordpress/hooks":
 /*!*******************************!*\
   !*** external ["wp","hooks"] ***!
@@ -153,7 +163,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils_BlockTypes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/BlockTypes */ "./src/js/blocks/utils/BlockTypes.js");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/escape-html */ "@wordpress/escape-html");
+/* harmony import */ var _wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils_BlockTypes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/BlockTypes */ "./src/js/blocks/utils/BlockTypes.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -173,6 +185,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
 
 
+
 // Add custom category
 function addGenerateBlocksV1Category(categories) {
   return [].concat(_toConsumableArray(categories), [{
@@ -184,8 +197,8 @@ function addGenerateBlocksV1Category(categories) {
 
 // Modify block registration for v1 and v2 blocks.
 function modifyBlockRegistration(settings, name) {
-  if (_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_4__.v1Blocks.includes(name)) {
-    settings.title = settings.title + ' (v1 Legacy)';
+  if (_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_5__.v1Blocks.includes(name)) {
+    settings.title = settings.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v1BlockSuffix);
     return _objectSpread(_objectSpread({}, settings), {}, {
       category: 'generateblocks-v1'
     });
@@ -214,7 +227,7 @@ wp.domReady(function () {
         (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockVariation)(blockName, variationName);
 
         // Change title of variation.
-        variation.title = variation.title + ' (v1 Legacy)';
+        variation.title = variation.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v1BlockSuffix);
         (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockVariation)(blockName, variation);
       }
     });
@@ -233,14 +246,14 @@ wp.plugins.registerPlugin('generateblocks-custom', {
         return;
       }
       allBlocks.forEach(function (block) {
-        if (block.name.includes('generateblocks') && !_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_4__.v1Blocks.includes(block.name)) {
+        if (block.name.includes('generateblocks') && !_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_5__.v1Blocks.includes(block.name)) {
           /**
            * Re-Register Blocks with updated v2 Title.
            */
           (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockType)(block.name);
           // Re-register with updated title
           (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockType)(block.name, _objectSpread(_objectSpread({}, block), {}, {
-            title: block.title + ' (v2 Pro)'
+            title: block.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v2BlockSuffix)
           }));
 
           // Get all variations of the v2 Blocks and upadate the title.
@@ -250,7 +263,7 @@ wp.plugins.registerPlugin('generateblocks-custom', {
             (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockVariation)(block.name, variation.name);
 
             // Change title of variation.
-            variation.title = variation.title + ' (v2 Pro)';
+            variation.title = variation.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v2BlockSuffix);
             (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockVariation)(block.name, variation);
           });
         }

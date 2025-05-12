@@ -42,10 +42,14 @@ class Blocks {
 			return $categories;
 		}
 
+		$options = Options::get_options();
+		$v1_label = $options['v1CategoryLabel'] ?? __( 'GenerateBlocks v1 (Legacy Blocks)', 'gb-extras' );
+		$v2_label = $options['v2CategoryLabel'] ?? __( 'GenerateBlocks v2 (New Blocks)', 'gb-extras' );
+
 		// Now add the GenerateBlocks category.
 		$generateblocks_category = array(
 			'slug'  => 'generateblocks-v1',
-			'title' => __( 'GenerateBlocks v1 (Legacy Blocks)', 'bl-www-block-assist' ),
+			'title' => esc_html( $v1_label ),
 		);
 		// Find the index of the `generateblocks` category.
 		$generateblocks_index = array_search( 'generateblocks', array_column( $categories, 'slug' ), true );
@@ -53,7 +57,7 @@ class Blocks {
 			// Rename category to `GenerateBlocks v2 (New Blocks)` and remove from array.
 			$gb_v2_category = $categories[ $generateblocks_index ];
 			unset( $categories[ $generateblocks_index ] );
-			$gb_v2_category['title'] = __( 'GenerateBlocks v2 (New Blocks)', 'bl-www-block-assist' );
+			$gb_v2_category['title'] = esc_html( $v2_label );
 
 			// Add V2 blocks to the beginning.
 			array_unshift( $categories, $gb_v2_category );
