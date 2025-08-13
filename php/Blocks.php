@@ -42,7 +42,7 @@ class Blocks {
 			return $categories;
 		}
 
-		$options = Options::get_options();
+		$options  = Options::get_options();
 		$v1_label = $options['v1CategoryLabel'] ?? __( 'GenerateBlocks v1 (Legacy Blocks)', 'gb-extras' );
 		$v2_label = $options['v2CategoryLabel'] ?? __( 'GenerateBlocks v2 (New Blocks)', 'gb-extras' );
 
@@ -146,21 +146,39 @@ class Blocks {
 			return $fonts;
 		}
 
-		// Get blocksy adoobe fonts.
+		// Get blocksy adobe fonts.
 		$options       = get_option( 'blocksy_ext_adobe_typekit_settings', array() );
 		$font_families = $options['fonts'] ?? array();
+		$project_id    = $options['project_id'] ?? '';
+		if ( ! empty( $project_id ) ) {
+			// Add fonts to list.
+			if ( ! empty( $font_families ) ) {
+				$fonts_group = array();
+				foreach ( $font_families as $font_family ) {
+					$fonts_group[] = array(
+						'value' => $font_family['slug'],
+						'label' => $font_family['name'] . 'asdflkj',
+					);
+				}
+				$fonts[] = array(
+					'label'   => __( 'Adobe Fonts', 'gb-extras' ),
+					'options' => $fonts_group,
+				);
+			}
+		}
 
-		// Add fonts to list.
-		if ( ! empty( $font_families ) ) {
+		// Get blocksy google fonts.
+		$google_fonts = get_option( 'blocksy_ext_local_google_fonts_settings', array() );
+		if ( $google_fonts && isset( $google_fonts['fonts'] ) ) {
 			$fonts_group = array();
-			foreach ( $font_families as $font_family ) {
+			foreach ( $google_fonts['fonts'] as $font_family ) {
 				$fonts_group[] = array(
-					'value' => $font_family['slug'],
+					'value' => $font_family['name'],
 					'label' => $font_family['name'],
 				);
 			}
 			$fonts[] = array(
-				'label'   => __( 'Adobe Fonts', 'gb-extras' ),
+				'label'   => __( 'Google Fonts', 'gb-extras' ),
 				'options' => $fonts_group,
 			);
 		}
