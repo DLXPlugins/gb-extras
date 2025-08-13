@@ -6086,12 +6086,17 @@ var _replaceUniqueIds = function replaceUniqueIds(block) {
   // If block has a `uniqueId` attribute, generate a new one.
   if ('undefined' !== typeof blockAttributes.uniqueId) {
     var newUniqueId = _generateUniqueId(blockClientId);
-    block.attributes.uniqueId = newUniqueId;
+    if (_BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v1Blocks.includes(blockName) || _BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v2Blocks.includes(blockName)) {
+      block.attributes.uniqueId = newUniqueId;
+    }
   }
   if (!_BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v1Blocks.includes(blockName) && !_BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v2Blocks.includes(blockName)) {
     if ('undefined' !== typeof block.innerBlocks && block.innerBlocks.length > 0) {
       block.innerBlocks = block.innerBlocks.map(function (innerBlock) {
-        return _replaceUniqueIds(innerBlock);
+        if (_BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v1Blocks.includes(innerBlock.name) || _BlockTypes__WEBPACK_IMPORTED_MODULE_0__.v2Blocks.includes(innerBlock.name)) {
+          return _replaceUniqueIds(innerBlock);
+        }
+        return innerBlock;
       });
     }
     return block;

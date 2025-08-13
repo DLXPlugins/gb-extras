@@ -22,7 +22,9 @@ const replaceUniqueIds = ( block ) => {
 	// If block has a `uniqueId` attribute, generate a new one.
 	if ( 'undefined' !== typeof blockAttributes.uniqueId ) {
 		const newUniqueId = generateUniqueId( blockClientId );
-		block.attributes.uniqueId = newUniqueId;
+		if ( v1Blocks.includes( blockName ) || v2Blocks.includes( blockName ) ) {
+			block.attributes.uniqueId = newUniqueId;
+		}
 	}
 
 	if ( ! v1Blocks.includes( blockName ) && ! v2Blocks.includes( blockName ) ) {
@@ -31,7 +33,10 @@ const replaceUniqueIds = ( block ) => {
 			block.innerBlocks.length > 0
 		) {
 			block.innerBlocks = block.innerBlocks.map( ( innerBlock ) => {
-				return replaceUniqueIds( innerBlock );
+				if ( v1Blocks.includes( innerBlock.name ) || v2Blocks.includes( innerBlock.name ) ) {
+					return replaceUniqueIds( innerBlock );
+				}
+				return innerBlock;
 			} );
 		}
 		return block;
