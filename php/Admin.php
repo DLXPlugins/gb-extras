@@ -368,7 +368,7 @@ class Admin {
 		$current_tab = Functions::get_admin_tab();
 		if ( null === $current_tab || 'settings' === $current_tab ) {
 			// Enqueue main scripts.
-			$deps = require_once Functions::get_plugin_dir( 'dist/gb-extras-admin.asset.php' );
+			$deps = require Functions::get_plugin_dir( 'dist/gb-extras-admin.asset.php' );
 			wp_enqueue_script(
 				'dlx-gb-extras-admin',
 				Functions::get_plugin_url( 'dist/gb-extras-admin.js' ),
@@ -404,7 +404,7 @@ class Admin {
 				)
 			);
 		} elseif ( 'license' === $current_tab ) {
-			$deps = require_once Functions::get_plugin_dir( 'dist/gb-extras-admin-license.asset.php' );
+			$deps = require Functions::get_plugin_dir( 'dist/gb-extras-admin-license.asset.php' );
 			wp_enqueue_script(
 				'dlx-gb-extras-admin-license',
 				Functions::get_plugin_url( 'dist/gb-extras-admin-license.js' ),

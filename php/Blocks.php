@@ -341,13 +341,17 @@ class Blocks {
 	 * Init action callback.
 	 */
 	public function init() {
-
-		register_block_type(
-			Functions::get_plugin_dir( 'build/js/blocks/pattern-importer/block.json' ),
-			array(
-				'render_callback' => '__return_empty_string',
-			)
-		);
+		if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
+			wp_register_block_types_from_metadata_collection( Functions::get_plugin_dir( 'build' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
+		} else {
+			if ( function_exists( 'wp_register_block_metadata_collection' ) ) {
+				wp_register_block_metadata_collection( Functions::get_plugin_dir( 'build' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
+			}
+			$manifest_data = require Functions::get_plugin_dir( 'build/blocks-manifest.php' );
+			foreach ( array_keys( $manifest_data ) as $block_type ) {
+				register_block_type( __DIR__ . "/build/js/blocks/{$block_type}" );
+			}
+		}
 
 		// Enqueue block assets.
 		add_action( 'enqueue_block_assets', array( $this, 'register_block_styles' ) );
@@ -391,7 +395,7 @@ class Blocks {
 			'all'
 		);
 
-		$deps = require_once Functions::get_plugin_dir( 'build/index.asset.php' );
+		$deps = require Functions::get_plugin_dir( 'build/index.asset.php' );
 
 		wp_enqueue_script(
 			'gb-extras-pattern-inserter-block',
@@ -421,7 +425,7 @@ class Blocks {
 		// Enqueue the block labels script.
 		$block_labels_enabled = true; // @TODO: Make this dynamic.
 		if ( $block_labels_enabled ) {
-			$deps = require_once Functions::get_plugin_dir( 'build/gb-extras-block-labels.asset.php' );
+			$deps = require Functions::get_plugin_dir( 'build/gb-extras-block-labels.asset.php' );
 			wp_enqueue_script(
 				'gb-extras-block-labels',
 				Functions::get_plugin_url( 'build/gb-extras-block-labels.js' ),

@@ -171,6 +171,47 @@ const UnGroupIcon = ( props ) => {
 	} );
 
 	/**
+	 * Register a plugin that changes a shape to a link.
+	 *
+	 * Updated to use the v2 blocks.
+	 */
+	registerPlugin( 'dlx-gb-extras-unwrap-container', {
+		render: () => {
+			const selectedBlock = useSelect( ( select ) => {
+				return select( 'core/block-editor' ).getSelectedBlock();
+			}, [] );
+
+			// If no block is selected, return.
+			if ( null === selectedBlock ) {
+				return null;
+			}
+
+			// If block is not a shape, return.
+			if ( selectedBlock.name !== 'generateblocks/shape' ) {
+				return null;
+			}
+
+			// If more than one block is selected, add toolbar option to unwrap container.
+			return (
+				<PluginBlockSettingsMenuItem
+					icon={ <UnGroupIcon /> }
+					label="Convert Shape to Link"
+					onClick={ () => {
+						const newBlock = wp.blocks.createBlock( 'generateblocks/text', {
+							icon: selectedBlock.attributes.html,
+							iconLocation: 'before',
+							iconOnly: true,
+							tagName: 'a',
+							...selectedBlock.attributes,
+						} );
+						wp.data.dispatch( 'core/block-editor' ).replaceBlocks( selectedBlock.clientId, newBlock );
+					} }
+				/>
+			);
+		},
+	} );
+
+	/**
 	 * Allow transform from group block.
 	 *
 	 * Updated for v2 blocks.
@@ -185,6 +226,38 @@ const UnGroupIcon = ( props ) => {
 					return wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks );
 				},
 			} );
+			blockSettings.transforms.to = transformsTo;
+		}
+		return blockSettings;
+	} );
+
+	/**
+	 * Allow transform from group block.
+	 *
+	 * Updated for v2 blocks.
+	 */
+	wp.hooks.addFilter( 'blocks.registerBlockType', 'generateblocks/transform/shape', ( blockSettings ) => {
+		if ( blockSettings.name === 'generateblocks/shape' ) {
+			const transformsTo = blockSettings.transforms?.to || [];
+			transformsTo.push( {
+				type: 'block',
+				blocks: [ 'generateblocks/text' ],
+				transform: ( attributes, innerBlocks ) => {
+					const newAttributes = {
+						...attributes,
+						icon: attributes.html,
+						iconLocation: 'before',
+						tagName: 'div',
+					};
+					return wp.blocks.createBlock( 'generateblocks/text', newAttributes, innerBlocks );
+				},
+			} );
+			if ( ! blockSettings.hasOwnProperty( 'transforms' ) ) {
+				blockSettings.transforms = {};
+			}
+			if ( ! blockSettings.transforms.hasOwnProperty( 'to' ) ) {
+				blockSettings.transforms.to = [];
+			}
 			blockSettings.transforms.to = transformsTo;
 		}
 		return blockSettings;

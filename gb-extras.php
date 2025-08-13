@@ -3,7 +3,7 @@
  * Plugin Name:       GB Extras
  * Plugin URI:        https://dlxplugins.com/plugins/gb-extras/
  * Description:       A collection of enhancements for the GenerateBlocks plugins.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Requires at least: 5.9
  * Requires PHP:      7.2
  * Author:            DLX Plugins
@@ -19,7 +19,7 @@
 
 namespace DLXPlugins\GBExtras;
 
-define( 'GB_EXTRAS_VERSION', '2.0.0' );
+define( 'GB_EXTRAS_VERSION', '2.0.1' );
 define( 'GB_EXTRAS_FILE', __FILE__ );
 define( 'GB_EXTRAS_PRODUCT_ID', 37604 );
 
@@ -60,10 +60,15 @@ class GBExtras {
 	 * Class initializer.
 	 */
 	public function plugins_loaded() {
-		load_plugin_textdomain(
-			'gb-extras',
-			false,
-			basename( __DIR__ ) . '/languages'
+		add_action(
+			'init',
+			function () {
+				load_plugin_textdomain(
+					'gb-extras',
+					false,
+					basename( __DIR__ ) . '/languages'
+				);
+			}
 		);
 
 		Blocks::run();
