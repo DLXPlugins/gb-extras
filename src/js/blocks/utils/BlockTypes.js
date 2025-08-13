@@ -40,6 +40,14 @@ const v2Blocks = [
 	'generateblocks-pro/tab-items',
 	'generateblocks-pro/tab-item',
 	'generateblocks/button-container',
+	'generateblocks-pro/navigation',
+	'generateblocks-pro/menu-container',
+	'generateblocks-pro/menu-toggle',
+	'generateblocks-pro/classic-menu',
+	'generateblocks-pro/classic-menu-item',
+	'generateblocks-pro/classic-sub-menu',
+	'generateblocks-pro/site-header',
+
 ];
 
 const vdVariationNames = [
