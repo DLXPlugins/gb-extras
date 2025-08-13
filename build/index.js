@@ -6468,11 +6468,45 @@ var UnGroupIcon = function UnGroupIcon(props) {
   }));
 };
 
+/**
+ * Link SVG Icon.
+ *
+ * @param {Object} props - The props object.
+ * @return {JSX.Element} The LinkIcon component.
+ */
+var LinkIcon = function LinkIcon(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "24",
+    height: "24",
+    viewBox: "0 0 32 32"
+  }, props), /*#__PURE__*/React.createElement("path", {
+    d: "M26.606 5.394a7.51 7.51 0 0 0-10.606 0l-.707.707a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.707-.707a3.5 3.5 0 0 1 4.95 4.95l-3.536 3.535a3.522 3.522 0 0 1-4.712.217l-.768-.641a1 1 0 0 0-1.408.127l-1.282 1.535a1 1 0 0 0 .127 1.409l.767.64a7.458 7.458 0 0 0 10.105-.459L26.607 16a7.5 7.5 0 0 0 0-10.606z",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M15.293 23.071a1 1 0 0 0-1.414 0l-.707.707a3.5 3.5 0 0 1-4.95-4.95l3.536-3.535a3.52 3.52 0 0 1 4.712-.217l.768.641a1 1 0 0 0 1.408-.127l1.282-1.535a1 1 0 0 0-.127-1.409l-.767-.64a7.458 7.458 0 0 0-10.105.459L5.393 16A7.5 7.5 0 0 0 16 26.606l.707-.707a1 1 0 0 0 0-1.414z",
+    fill: "currentColor"
+  }));
+};
+var ClearIcon = function ClearIcon(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "24",
+    height: "24",
+    fill: "none",
+    viewBox: "0 0 97 97"
+  }, props), /*#__PURE__*/React.createElement("g", {
+    fill: "currentColor"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M66.145 13.156a8.694 8.694 0 1 1 15.43 8.015l-8.928 17.143a8.645 8.645 0 0 1-1.312 1.868c2.44 3.612 3.196 8.258 1.65 12.655a358.309 358.309 0 0 1-1.11 3.115.798.798 0 0 1-1.122.435l-28.81-15.056a.806.806 0 0 1-.222-1.254c.717-.795 1.415-1.592 2.085-2.376 3.152-3.689 7.822-5.775 12.538-5.62.054-.11.11-.22.17-.329zM37.719 44.991a.807.807 0 0 0-.923.126c-1.773 1.648-3.543 3.087-5.193 4.11-5.574 3.458-10.182 4.705-13.044 5.147a4.922 4.922 0 0 0-3.694 2.733c-.69 1.46-.639 3.372.705 4.853 1.48 1.63 3.672 3.789 6.834 6.386a.8.8 0 0 0 .665.165c2.212-.445 4.515-.865 6.525-1.915.584-.306 1.46-.85 2.558-1.793 1.094-.938 2.758-.837 3.718.225a2.52 2.52 0 0 1-.243 3.621c-1.388 1.19-2.596 1.965-3.553 2.466-.783.409-1.603.749-2.44 1.04-.636.22-.785 1.076-.233 1.461 1.593 1.11 3.33 2.269 5.223 3.473a83.238 83.238 0 0 0 2.86 1.738c.266.155.6.141.85-.039a34.027 34.027 0 0 0 3.464-2.826c2.146-2.013 3.997-4.23 5.494-6.782.73-1.24 2.332-1.678 3.58-.975s1.67 2.278.94 3.52c-1.752 2.986-3.92 5.6-6.435 7.959-.435.408-.908.83-1.417 1.26-.45.38-.37 1.105.164 1.354a75.51 75.51 0 0 0 7.707 3.113c2.674.904 5.533-.13 7.067-2.428 1.94-2.905 5.348-8.385 8.273-15.053.76-1.73 1.532-3.616 2.289-5.55a.798.798 0 0 0-.374-.997zM22.974 37.907a3.767 3.767 0 1 0 0-7.533 3.767 3.767 0 0 0 0 7.533zM12.72 49.485a3.767 3.767 0 1 0 0-7.533 3.767 3.767 0 0 0 0 7.533z",
+    fill: "currentColor"
+  })));
+};
 // Run on load.
 (function (wp) {
   /**
    * Add a toolbar option to wrap selected blocks in a container.
-   * 
+   *
    * Updated for v2 blocks.
    */
   (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-wrap-container', {
@@ -6524,7 +6558,7 @@ var UnGroupIcon = function UnGroupIcon(props) {
   var uniqueIds = [];
   /**
    * Generate New Unique IDs for selected blocks.
-   * 
+   *
    * For v1 blocks.
    */
   (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-generate-unique-ids', {
@@ -6565,12 +6599,54 @@ var UnGroupIcon = function UnGroupIcon(props) {
   });
 
   /**
+   * Clear block styles for v2 blocks.
+   */
+  (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-clear-block-styles', {
+    render: function render() {
+      var _useSelect3 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
+          return {
+            selectedBlock: select('core/block-editor').getSelectedBlock()
+          };
+        }, []),
+        selectedBlock = _useSelect3.selectedBlock;
+      var _useDispatch3 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.store)('core/block-editor'),
+        replaceBlocks = _useDispatch3.replaceBlocks;
+      /**
+       * Return early if no block is selected.
+       */
+      if (null === selectedBlock) {
+        return null;
+      }
+
+      // Get the block name.
+      var name = selectedBlock.name;
+
+      // If name contains `generateblocks`, proceed.
+      if (!_js_blocks_utils_BlockTypes_js__WEBPACK_IMPORTED_MODULE_12__.v2Blocks.includes(name)) {
+        return null;
+      }
+
+      // If more than one block is selected, add toolbar option to replace the Unique ID.
+      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
+        icon: /*#__PURE__*/React.createElement(ClearIcon, null),
+        label: "Clear Block Styles",
+        onClick: function onClick() {
+          selectedBlock.attributes.styles = {};
+          selectedBlock.attributes.css = '';
+          replaceBlocks(selectedBlock.clientId, selectedBlock);
+        }
+      });
+    }
+  });
+
+  /**
    * Register a plugin that unwraps (flattens) a container block.
    *
    * Updated to use the v2 blocks.
    */
   (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-unwrap-container', {
     render: function render() {
+      var _selectedBlock$attrib;
       var selectedBlock = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
         return select('core/block-editor').getSelectedBlock();
       }, []);
@@ -6589,6 +6665,10 @@ var UnGroupIcon = function UnGroupIcon(props) {
       if (selectedBlock.innerBlocks.length === 0) {
         return null;
       }
+      var unwrapLabel = 'Unwrap Container';
+      if ('grid' === ((_selectedBlock$attrib = selectedBlock.attributes) === null || _selectedBlock$attrib === void 0 || (_selectedBlock$attrib = _selectedBlock$attrib.styles) === null || _selectedBlock$attrib === void 0 ? void 0 : _selectedBlock$attrib.display)) {
+        unwrapLabel = 'Unwrap Grid';
+      }
 
       // Get the first child block.
       var firstChildBlock = selectedBlock.innerBlocks[0] || null;
@@ -6596,7 +6676,7 @@ var UnGroupIcon = function UnGroupIcon(props) {
       // If more than one block is selected, add toolbar option to unwrap container.
       return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
         icon: /*#__PURE__*/React.createElement(UnGroupIcon, null),
-        label: "Unwrap Container",
+        label: unwrapLabel,
         onClick: function onClick() {
           var innerBlocks = selectedBlock.innerBlocks;
           wp.data.dispatch('core/block-editor').replaceBlocks(selectedBlock.clientId, innerBlocks);
@@ -6613,7 +6693,7 @@ var UnGroupIcon = function UnGroupIcon(props) {
    *
    * Updated to use the v2 blocks.
    */
-  (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-unwrap-container', {
+  (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_6__.registerPlugin)('dlx-gb-extras-convert-shape-to-link', {
     render: function render() {
       var selectedBlock = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
         return select('core/block-editor').getSelectedBlock();
@@ -6631,8 +6711,8 @@ var UnGroupIcon = function UnGroupIcon(props) {
 
       // If more than one block is selected, add toolbar option to unwrap container.
       return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
-        icon: /*#__PURE__*/React.createElement(UnGroupIcon, null),
-        label: "Convert Shape to Link",
+        icon: /*#__PURE__*/React.createElement(LinkIcon, null),
+        label: "Transform Shape to Link",
         onClick: function onClick() {
           var newBlock = wp.blocks.createBlock('generateblocks/text', _objectSpread({
             icon: selectedBlock.attributes.html,
