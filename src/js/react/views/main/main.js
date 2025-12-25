@@ -70,6 +70,10 @@ const Interface = ( props ) => {
 			v2CategoryLabel: data.v2CategoryLabel,
 			v1BlockSuffix: data.v1BlockSuffix,
 			v2BlockSuffix: data.v2BlockSuffix,
+			adminMenuBar: data.adminMenuBar || {
+				enabled: true,
+				replaceWithFullMenu: false,
+			},
 		},
 	} );
 	const formValues = useWatch( { control } );
@@ -318,6 +322,55 @@ const Interface = ( props ) => {
 											} )
 										}
 									</div>
+								</td>
+							</tr>
+							{
+								dlxGBExtrasAdmin.isProActive && (
+									<>
+									</>
+								)
+							}
+							<tr>
+								<th scope="row">
+									{ __( 'Admin Menu Bar', 'gb-extras' ) }
+								</th>
+								<td>
+									<div className="dlx-admin__row">
+										<Controller
+											name="adminMenuBar.enabled"
+											control={ control }
+											render={ ( { field: { onChange, value } } ) => (
+												<ToggleControl
+													label={ __( 'Enable GenerateBlocks Admin Bar Menu', 'gb-extras' ) }
+													checked={ value ?? true }
+													onChange={ ( boolValue ) => {
+														onChange( boolValue );
+														// If disabling the main menu, also disable replace with full menu.
+														if ( ! boolValue ) {
+															setValue( 'adminMenuBar.replaceWithFullMenu', false );
+														}
+													} }
+													help={ __( 'When disabled, all GenerateBlocks admin bar menu items will be hidden from the top toolbar.', 'gb-extras' ) }
+												/>
+											) }
+										/>
+									</div>
+									{ getValues( 'adminMenuBar.enabled' ) && (
+										<div className="dlx-admin__row">
+											<Controller
+												name="adminMenuBar.replaceWithFullMenu"
+												control={ control }
+												render={ ( { field: { onChange, value } } ) => (
+													<ToggleControl
+														label={ __( 'Replace Overlay Panels with Full GenerateBlocks Menu', 'gb-extras' ) }
+														checked={ value ?? false }
+														onChange={ onChange }
+														help={ __( 'When enabled, replaces the Overlay Panels menu with a full GenerateBlocks menu containing Settings, Local Patterns, Global Styles, Overlay Panels, Conditions, Asset Library, and GB Extras.', 'gb-extras' ) }
+													/>
+												) }
+											/>
+										</div>
+									) }
 								</td>
 							</tr>
 						</tbody>

@@ -401,6 +401,7 @@ class Admin {
 					'previewNonce' => wp_create_nonce( 'dlx-gb-extras-admin-preview' ),
 					'ajaxurl'      => admin_url( 'admin-ajax.php' ),
 					'postTypes'    => $post_types,
+					'isProActive'  => Functions::is_generateblocks_pro_active(),
 				)
 			);
 		} elseif ( 'license' === $current_tab ) {

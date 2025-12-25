@@ -655,6 +655,9 @@ html {
 		line-height: 1.3;
 		margin-left: 8px;
 	}
+	svg.components-checkbox-control__checked {
+		transform: unset;
+	}
 }
 
 button.dlx-gbhacks__btn-danger  {

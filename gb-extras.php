@@ -76,6 +76,9 @@ class GBExtras {
 		$admin = new Admin();
 		$admin->run();
 
+		$admin_bar = new Admin_Bar();
+		$admin_bar->run();
+
 		/**
 		 * When GBExtras can be extended.
 		 *

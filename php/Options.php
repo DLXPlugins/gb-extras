@@ -48,6 +48,18 @@ class Options {
 				case 'enabled':
 					$option = filter_var( $options[ $key ], FILTER_VALIDATE_BOOLEAN );
 					break;
+				case 'adminMenuBar':
+					if ( is_array( $option ) ) {
+						// Sanitize enabled flag.
+						if ( isset( $option['enabled'] ) ) {
+							$option['enabled'] = filter_var( $option['enabled'], FILTER_VALIDATE_BOOLEAN );
+						}
+						// Sanitize replace with full menu flag.
+						if ( isset( $option['replaceWithFullMenu'] ) ) {
+							$option['replaceWithFullMenu'] = filter_var( $option['replaceWithFullMenu'], FILTER_VALIDATE_BOOLEAN );
+						}
+					}
+					break;
 				default:
 					if ( is_array( $option ) ) {
 						$option = Functions::sanitize_array_recursive( $option );
@@ -116,6 +128,10 @@ class Options {
 			'v2CategoryLabel'               => 'GenerateBlocks v2',
 			'v1BlockSuffix'                 => '(v1)',
 			'v2BlockSuffix'                 => '(v2)',
+			'adminMenuBar'                  => array(
+				'enabled'             => true,
+				'replaceWithFullMenu' => false,
+			),
 		);
 		return $defaults;
 	}
