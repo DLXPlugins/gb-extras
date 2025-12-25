@@ -538,7 +538,7 @@ class Blocks {
 	 * Add hidden div for frontend command palette.
 	 */
 	public function frontend_commands_footer() {
-		if ( ! is_user_logged_in() ) {
+		if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 		echo '<div id="gb-extras-commands-frontend" style="display: none; visibility: hidden; position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden;"></div>';
