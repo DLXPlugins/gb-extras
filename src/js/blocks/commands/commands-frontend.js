@@ -3,7 +3,6 @@
  */
 import { createRoot } from 'react-dom/client';
 import { registerPlugin } from '@wordpress/plugins';
-import { useToggleContainerOutlinesCommand } from './components/commands/ToggleContainerOutlines';
 /**
  * Commands frontend component.
  *
@@ -12,7 +11,6 @@ import { useToggleContainerOutlinesCommand } from './components/commands/ToggleC
 const CommandsFrontend = () => {
 	// Frontend-specific commands will go here.
 	// Currently placeholder for future use.
-	useToggleContainerOutlinesCommand();
 	return null;
 };
 
