@@ -4,7 +4,7 @@ return array(
 	'pattern-importer' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'title' => 'Pattern Inserter',
-		'apiVersion' => 2,
+		'apiVersion' => 3,
 		'name' => 'dlxplugins/gbhx-pattern-inserter',
 		'category' => 'generateblocks',
 		'icon' => '',

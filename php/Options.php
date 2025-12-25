@@ -46,6 +46,7 @@ class Options {
 		foreach ( $options as $key => &$option ) {
 			switch ( $key ) {
 				case 'enabled':
+				case 'enableFrontendCommandPalette':
 					$option = filter_var( $options[ $key ], FILTER_VALIDATE_BOOLEAN );
 					break;
 				case 'adminMenuBar':
@@ -132,6 +133,7 @@ class Options {
 				'enabled'             => true,
 				'replaceWithFullMenu' => false,
 			),
+			'enableFrontendCommandPalette'  => false,
 		);
 		return $defaults;
 	}
