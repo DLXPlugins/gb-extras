@@ -74,6 +74,7 @@ const Interface = ( props ) => {
 				enabled: true,
 				replaceWithFullMenu: false,
 			},
+			enableFrontendCommandPalette: data.enableFrontendCommandPalette || false,
 		},
 	} );
 	const formValues = useWatch( { control } );
@@ -179,6 +180,22 @@ const Interface = ( props ) => {
 													label={ __( 'Enable v1 and v2 Blocks (Both Visible)', 'gb-extras' ) }
 													checked={ getValues( 'enableV1Blocks' ) }
 													help={ __( 'Enable the use of v1 blocks in the block editor. This can help with the migration from GenerateBlocks 1.x to 2.x.', 'gb-extras' ) }
+													onChange={ ( boolValue ) => {
+														onChange( boolValue );
+													} }
+												/>
+											) }
+										/>
+									</div>
+									<div className="dlx-admin__row">
+										<Controller
+											name="enableFrontendCommandPalette"
+											control={ control }
+											render={ ( { field: { onChange } } ) => (
+												<ToggleControl
+													label={ __( 'Enable Frontend Command Palette', 'gb-extras' ) }
+													checked={ getValues( 'enableFrontendCommandPalette' ) }
+													help={ __( 'Enable the WordPress command palette (Ctrl/Cmd+K) on the frontend for logged-in administrators. Note: This requires WordPress 6.9+ and may have limitations. Search for GenerateBlocks for shortcuts.', 'gb-extras' ) }
 													onChange={ ( boolValue ) => {
 														onChange( boolValue );
 													} }

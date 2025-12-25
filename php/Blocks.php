@@ -559,6 +559,13 @@ class Blocks {
 			return;
 		}
 
+		// Check if frontend command palette is enabled.
+		$options                         = Options::get_options();
+		$enable_frontend_command_palette = (bool) $options['enableFrontendCommandPalette'];
+		if ( ! $enable_frontend_command_palette ) {
+			return;
+		}
+
 		// Enqueue WordPress command palette assets (WordPress 6.9+).
 		// Only call if not already enqueued (check if wp-commands script is already queued).
 		if ( function_exists( 'wp_enqueue_command_palette_assets' ) && ! wp_script_is( 'wp-commands', 'enqueued' ) ) {
