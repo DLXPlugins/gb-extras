@@ -14,11 +14,20 @@ import { __ } from '@wordpress/i18n';
  * @param {boolean}  props.isLoading - Boolean indicating loading state.
  * @param {string}   props.message   - Message to display.
  * @param {boolean}  props.error     - Boolean indicating error state.
+ * @param {boolean}  props.warning   - Boolean indicating warning state.
  * @return {JSX.Element|null} The RefreshCSSFilesModal component.
  */
-const RefreshCSSFilesModal = ( { isOpen, onClose, isLoading, message, error } ) => {
+const RefreshCSSFilesModal = ( { isOpen, onClose, isLoading, message, error, warning } ) => {
 	if ( ! isOpen ) {
 		return null;
+	}
+
+	// Determine message color.
+	let messageColor = '#00a32a'; // Success color.
+	if ( error ) {
+		messageColor = '#d63638'; // Error color.
+	} else if ( warning ) {
+		messageColor = '#dba617'; // Warning color.
 	}
 
 	return (
@@ -37,7 +46,7 @@ const RefreshCSSFilesModal = ( { isOpen, onClose, isLoading, message, error } ) 
 				</div>
 			) }
 			{ ! isLoading && message && (
-				<p style={ { color: error ? '#d63638' : '#00a32a' } }>
+				<p style={ { color: messageColor } }>
 					{ message }
 				</p>
 			) }
@@ -46,4 +55,3 @@ const RefreshCSSFilesModal = ( { isOpen, onClose, isLoading, message, error } ) 
 };
 
 export default RefreshCSSFilesModal;
-

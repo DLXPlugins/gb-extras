@@ -14,4 +14,3 @@ const GBIcon = ( props ) => {
 };
 
 export default GBIcon;
-

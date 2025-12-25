@@ -5,9 +5,9 @@
 import { useState } from 'react';
 import { useCommand } from '@wordpress/commands';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
 import RefreshCSSFilesModal from '../modals/RefreshCSSFilesModal';
 import GBIcon from '../icons/GBIcon';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Hook to register the Refresh CSS Files command.
@@ -19,6 +19,7 @@ export function useRefreshCSSFilesCommand() {
 	const [ isLoading, setIsLoading ] = useState( false );
 	const [ message, setMessage ] = useState( '' );
 	const [ error, setError ] = useState( false );
+	const [ warning, setWarning ] = useState( false );
 
 	useCommand( {
 		name: 'dlx-gb-extras-refresh-css-files',
@@ -29,6 +30,7 @@ export function useRefreshCSSFilesCommand() {
 			setIsOpen( true );
 			setIsLoading( true );
 			setError( false );
+			setWarning( false );
 			setMessage( '' );
 
 			apiFetch( {
@@ -49,8 +51,14 @@ export function useRefreshCSSFilesCommand() {
 				} )
 				.catch( ( err ) => {
 					setIsLoading( false );
-					setError( true );
-					setMessage( err.message || __( 'An error occurred while regenerating CSS files.', 'dlx-gb-extras' ) );
+					// Check if it's a permission error.
+					if ( err.code === 'rest_forbidden' || err.status === 401 || err.status === 403 ) {
+						setError( true );
+						setMessage( __( 'You do not have permission to refresh CSS files.', 'dlx-gb-extras' ) );
+					} else {
+						setError( true );
+						setMessage( err.message || __( 'An error occurred while regenerating CSS files.', 'dlx-gb-extras' ) );
+					}
 				} );
 		},
 		context: 'admin', // Works in both admin and block editor.
@@ -63,7 +71,7 @@ export function useRefreshCSSFilesCommand() {
 			isLoading={ isLoading }
 			message={ message }
 			error={ error }
+			warning={ warning }
 		/>
 	);
 }
-

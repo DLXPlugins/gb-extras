@@ -22,11 +22,9 @@ registerPlugin( 'dlxgb-commands-admin', {
 } );
 
 // Works in the admin area (non-block editor).
-
 // Attach to admin footer div.
 const rootElement = document.getElementById( 'gb-extras-commands-admin' );
 if ( rootElement ) {
 	const root = createRoot( rootElement );
 	root.render( <CommandsAdmin /> );
 }
-
