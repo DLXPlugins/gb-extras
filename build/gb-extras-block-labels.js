@@ -191,7 +191,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
 
 
-
 // Add custom category
 function addGenerateBlocksV1Category(categories) {
   return [].concat(_toConsumableArray(categories), [{
@@ -204,7 +203,6 @@ function addGenerateBlocksV1Category(categories) {
 // Modify block registration for v1 and v2 blocks.
 function modifyBlockRegistration(settings, name) {
   if (_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_5__.v1Blocks.includes(name) && gbExtrasPatternInserter.enableV1Blocks) {
-    settings.title = settings.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v1BlockSuffix);
     return _objectSpread(_objectSpread({}, settings), {}, {
       category: 'generateblocks-v1'
     });
@@ -218,33 +216,6 @@ function modifyBlockRegistration(settings, name) {
 if ('true' === gbExtrasPatternInserter.enableV1Blocks) {
   (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.removeFilter)('blocks.registerBlockType', 'generateblocks/disableBlocks');
 }
-wp.domReady(function () {
-  if ('true' !== gbExtrasPatternInserter.enableV1Blocks) {
-    return;
-  }
-
-  // Get GB 1.0 variations of the container block.
-  var blockName = 'generateblocks/container';
-  var variationNames = ['tabs', 'accordion'];
-
-  // Get all variations of the block
-  var variations = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.getBlockVariations)(blockName);
-  if (typeof variations !== 'undefined') {
-    variationNames.forEach(function (variationName) {
-      // Find the specific variation
-      var variation = variations.find(function (v) {
-        return v.name === variationName;
-      });
-      if (typeof variation !== 'undefined') {
-        (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockVariation)(blockName, variationName);
-
-        // Change title of variation.
-        variation.title = variation.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v1BlockSuffix);
-        (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockVariation)(blockName, variation);
-      }
-    });
-  }
-});
 
 // Register a plugin to get all blocks.
 wp.plugins.registerPlugin('generateblocks-custom', {
@@ -261,26 +232,72 @@ wp.plugins.registerPlugin('generateblocks-custom', {
         return;
       }
       allBlocks.forEach(function (block) {
-        if (block.name.includes('generateblocks') && !_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_5__.v1Blocks.includes(block.name)) {
-          /**
-           * Re-Register Blocks with updated v2 Title.
-           */
-          (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockType)(block.name);
-          // Re-register with updated title
-          (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockType)(block.name, _objectSpread(_objectSpread({}, block), {}, {
-            title: block.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v2BlockSuffix)
-          }));
+        if (block.name.includes('generateblocks')) {
+          if (_utils_BlockTypes__WEBPACK_IMPORTED_MODULE_5__.v1Blocks.includes(block.name)) {
+            /**
+             * Re-Register v1 Blocks with updated Title and __experimentalLabel.
+             */
+            (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockType)(block.name);
+            // Get the original __experimentalLabel function if it exists.
+            var originalLabel = block.__experimentalLabel;
+            var v1Suffix = (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v1BlockSuffix);
 
-          // Get all variations of the v2 Blocks and upadate the title.
-          var variations = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.getBlockVariations)(block.name);
-          variations.forEach(function (variation) {
-            // Find the specific variation
-            (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockVariation)(block.name, variation.name);
+            // Remove suffix from title if it already exists (from filter hook).
+            var originalTitle = block.title;
+            if (originalTitle.endsWith(' ' + v1Suffix)) {
+              originalTitle = originalTitle.slice(0, -(' ' + v1Suffix).length);
+            }
 
-            // Change title of variation.
-            variation.title = variation.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v2BlockSuffix);
-            (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockVariation)(block.name, variation);
-          });
+            // Re-register with updated title and override __experimentalLabel.
+            (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockType)(block.name, _objectSpread(_objectSpread({}, block), {}, {
+              title: originalTitle + ' ' + v1Suffix,
+              category: 'generateblocks-v1',
+              __experimentalLabel: originalLabel ? function (attrs, context) {
+                var _attrs$metadata;
+                var customName = (attrs === null || attrs === void 0 || (_attrs$metadata = attrs.metadata) === null || _attrs$metadata === void 0 ? void 0 : _attrs$metadata.name) || '';
+                if ('list-view' === (context === null || context === void 0 ? void 0 : context.context) && customName) {
+                  // For custom names, don't add suffix if already present.
+                  return customName;
+                }
+                return originalLabel(attrs, context) + ' ' + v1Suffix;
+              } : undefined
+            }));
+
+            // Get all variations of the v1 Blocks and update the title.
+            var variations = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.getBlockVariations)(block.name);
+            if (variations) {
+              variations.forEach(function (variation) {
+                // Find the specific variation.
+                (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockVariation)(block.name, variation.name);
+
+                // Change title of variation.
+                variation.title = variation.title + ' ' + v1Suffix;
+                (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockVariation)(block.name, variation);
+              });
+            }
+          } else {
+            /**
+             * Re-Register v2 Blocks with updated Title.
+             */
+            (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockType)(block.name);
+            // Re-register with updated title.
+            (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockType)(block.name, _objectSpread(_objectSpread({}, block), {}, {
+              title: block.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v2BlockSuffix)
+            }));
+
+            // Get all variations of the v2 Blocks and update the title.
+            var _variations = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.getBlockVariations)(block.name);
+            if (_variations) {
+              _variations.forEach(function (variation) {
+                // Find the specific variation.
+                (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.unregisterBlockVariation)(block.name, variation.name);
+
+                // Change title of variation.
+                variation.title = variation.title + ' ' + (0,_wordpress_escape_html__WEBPACK_IMPORTED_MODULE_4__.escapeAttribute)(gbExtrasPatternInserter.v2BlockSuffix);
+                (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.registerBlockVariation)(block.name, variation);
+              });
+            }
+          }
         }
       });
 

@@ -18,7 +18,6 @@ import { transformBlocks } from '../../utils/blockTransforms';
 export function useTransformV1ToV2Command() {
 	const [ blockTransformConfirmation, setBlockTransformConfirmation ] = useState( false );
 	const [ transforming, setTransforming ] = useState( false );
-
 	useCommand( {
 		name: 'dlx-transform-v1-blocks-to-v2',
 		label: 'GenerateBlocks: Convert v1 Blocks to v2 (Experimental)',
