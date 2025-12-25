@@ -2,7 +2,7 @@
  * Admin-wide commands registration.
  */
 
-import { createRoot } from 'react';
+import { createRoot } from 'react-dom/client';
 import { registerPlugin } from '@wordpress/plugins';
 
 /**

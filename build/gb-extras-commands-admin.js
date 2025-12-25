@@ -2,6 +2,39 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/react-dom/client.js"
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var m = __webpack_require__(/*! react-dom */ "react-dom");
+if (false) // removed by dead control flow
+{} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ },
+
 /***/ "@wordpress/plugins"
 /*!*********************************!*\
   !*** external ["wp","plugins"] ***!
@@ -12,13 +45,13 @@ module.exports = window["wp"]["plugins"];
 
 /***/ },
 
-/***/ "react"
-/*!************************!*\
-  !*** external "React" ***!
-  \************************/
+/***/ "react-dom"
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
 (module) {
 
-module.exports = window["React"];
+module.exports = window["ReactDOM"];
 
 /***/ }
 
@@ -103,8 +136,7 @@ var __webpack_exports__ = {};
   !*** ./src/js/blocks/commands/commands-admin.js ***!
   \**************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_1__);
 /**
@@ -141,7 +173,7 @@ var CommandsAdmin = function CommandsAdmin() {
 // Attach to admin footer div.
 var rootElement = document.getElementById('gb-extras-commands-admin');
 if (rootElement) {
-  var root = (0,react__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement);
+  var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement);
   root.render(/*#__PURE__*/React.createElement(CommandsAdmin, null));
 }
 })();

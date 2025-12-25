@@ -9,9 +9,8 @@ import { debounce } from '@wordpress/compose';
 import './js/blocks/pattern-importer/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
-import { v1Blocks, v2Blocks, v1VariationNames } from './js/blocks/utils/BlockTypes.js';
+import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
 import { replaceUniqueIds } from './js/blocks/utils/ReplaceUniqueIds.js';
-import { transformBlock } from './js/blocks/commands/utils/blockTransforms.js';
 
 const UnGroupIcon = ( props ) => {
 	return (
