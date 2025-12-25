@@ -7,14 +7,10 @@ import { useSelect, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import { debounce } from '@wordpress/compose';
 import './js/blocks/pattern-importer/index.js';
-import './js/blocks/commands/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
 import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
 import { replaceUniqueIds } from './js/blocks/utils/ReplaceUniqueIds.js';
-const previousSelectedBlock = null;
-const previousParentClientId = null;
-const previousSelectedBlockIndex = null;
 
 const UnGroupIcon = ( props ) => {
 	return (
@@ -91,11 +87,13 @@ const ClearIcon = ( props ) => {
 			const [ clientIds, setClientIds ] = useState( [] );
 
 			// Get the selected block clientIds.
-			const { selectedBlocks, getMultiSelectedBlockClientIds } = useSelect(
+			const { selectedBlocks, selectedBlock, selectedBlockCount, getMultiSelectedBlockClientIds } = useSelect(
 				( select ) => {
 					return {
 						selectedBlocks:
 							select( 'core/block-editor' ).getMultiSelectedBlocks(),
+						selectedBlock: select( 'core/block-editor' ).getSelectedBlock(),
+						selectedBlockCount: select( 'core/block-editor' ).getSelectedBlockCount(),
 						getMultiSelectedBlockClientIds:
 							select( 'core/block-editor' ).getMultiSelectedBlockClientIds,
 					};
@@ -103,38 +101,46 @@ const ClearIcon = ( props ) => {
 				[]
 			);
 
-			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
+			const { replaceBlocks, replaceBlock } = useDispatch( store )( 'core/block-editor' );
 
 			useEffect( () => {
-				setClientIds( selectedBlocks );
-			}, [ selectedBlocks ] );
+				if ( selectedBlockCount > 1 ) {
+					setClientIds( selectedBlocks );
+				} else if ( selectedBlockCount === 1 ) {
+					setClientIds( [ selectedBlock.clientId ] );
+				}
+			}, [ selectedBlocks, selectedBlock, selectedBlockCount ] );
 
 			// If no blocks are selected, return.
 			if ( clientIds.length === 0 ) {
 				return null;
 			}
 
-			// If more than one block is selected, add toolbar option to wrap container.
-			if ( clientIds.length > 1 ) {
+			// If a block is selected, add toolbar option to wrap container.
+			if ( clientIds.length > 0 ) {
 				return (
 					<PluginBlockSettingsMenuItem
 						icon={ <ContainerLogo /> }
 						label="Wrap in Container"
 						onClick={ () => {
-							const innerBlocks = [];
-							clientIds.forEach( ( clientId ) => {
-								innerBlocks.push( cloneBlock( clientId ) );
-							} );
-							replaceBlocks(
-								getMultiSelectedBlockClientIds(),
-								wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks )
-							);
+							if ( selectedBlockCount > 1 ) {
+								const innerBlocks = [];
+								clientIds.forEach( ( clientId ) => {
+									innerBlocks.push( cloneBlock( clientId ) );
+								} );
+								replaceBlocks(
+									getMultiSelectedBlockClientIds(),
+									wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks )
+								);
+							} else {
+								replaceBlock( selectedBlock.clientId, wp.blocks.createBlock( 'generateblocks/element', {}, [ cloneBlock( selectedBlock ) ] ) );
+							}
 						} }
 					/>
-				);
+				)
 			}
 			return null;
-		},
+		}
 	} );
 
 	// Unique ID storing.
@@ -193,7 +199,7 @@ const ClearIcon = ( props ) => {
 				};
 			}, [] );
 
-			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
+			const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 			/**
 			 * Return early if no block is selected.
 			 */
@@ -215,9 +221,7 @@ const ClearIcon = ( props ) => {
 					icon={ <ClearIcon /> }
 					label="Clear Block Styles"
 					onClick={ () => {
-						selectedBlock.attributes.styles = {};
-						selectedBlock.attributes.css = '';
-						replaceBlocks( selectedBlock.clientId, selectedBlock );
+						updateBlockAttributes( selectedBlock.clientId, { styles: {} } );
 					} }
 				/>
 			);
@@ -354,7 +358,7 @@ const ClearIcon = ( props ) => {
 	);
 
 	/**
-	 * Allow transform from group block.
+	 * Allow transform from the Shape to Text block.
 	 *
 	 * Updated for v2 blocks.
 	 */

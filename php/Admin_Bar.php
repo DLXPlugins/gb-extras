@@ -130,6 +130,14 @@ class Admin_Bar {
 
 		// Add Pro items (redundant check but kept for safety - we're already in Pro context).
 		if ( Functions::is_generateblocks_pro_active() ) {
+			// Get GenerateBlocks settings to check if features are enabled.
+			// Defaults: enable_overlay_panels and enable_block_conditions both default to true.
+			$gb_options = get_option( 'generateblocks', array() );
+
+			// Check if overlay panels and conditions are enabled (default to true if not set).
+			$overlay_panels_enabled = isset( $gb_options['enable_overlay_panels'] ) ? (bool) $gb_options['enable_overlay_panels'] : true;
+			$conditions_enabled     = isset( $gb_options['enable_block_conditions'] ) ? (bool) $gb_options['enable_block_conditions'] : true;
+
 			// Add Local Patterns.
 			$admin_bar->add_node(
 				array(
@@ -150,25 +158,29 @@ class Admin_Bar {
 				)
 			);
 
-			// Add Overlay Panels.
-			$admin_bar->add_node(
-				array(
-					'parent' => 'generateblocks-menu',
-					'id'     => 'generateblocks-overlay-panels',
-					'title'  => __( 'Overlay Panels', 'gb-extras' ),
-					'href'   => admin_url( 'admin.php?page=generateblocks-overlay-panels' ),
-				)
-			);
+			// Add Overlay Panels only if enabled in GenerateBlocks settings.
+			if ( $overlay_panels_enabled ) {
+				$admin_bar->add_node(
+					array(
+						'parent' => 'generateblocks-menu',
+						'id'     => 'generateblocks-overlay-panels',
+						'title'  => __( 'Overlay Panels', 'gb-extras' ),
+						'href'   => admin_url( 'admin.php?page=generateblocks-overlay-panels' ),
+					)
+				);
+			}
 
-			// Add Conditions.
-			$admin_bar->add_node(
-				array(
-					'parent' => 'generateblocks-menu',
-					'id'     => 'generateblocks-conditions',
-					'title'  => __( 'Conditions', 'gb-extras' ),
-					'href'   => admin_url( 'admin.php?page=generateblocks-conditions' ),
-				)
-			);
+			// Add Conditions only if enabled in GenerateBlocks settings.
+			if ( $conditions_enabled ) {
+				$admin_bar->add_node(
+					array(
+						'parent' => 'generateblocks-menu',
+						'id'     => 'generateblocks-conditions',
+						'title'  => __( 'Conditions', 'gb-extras' ),
+						'href'   => admin_url( 'admin.php?page=generateblocks-conditions' ),
+					)
+				);
+			}
 
 			// Add Asset Library.
 			$admin_bar->add_node(
