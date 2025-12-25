@@ -6,6 +6,7 @@ import { registerPlugin } from '@wordpress/plugins';
 import { useToggleContainerOutlinesCommand } from './components/commands/ToggleContainerOutlines';
 import { useTransformV1ToV2Command } from './components/commands/TransformV1ToV2';
 import { useTransformHeadingToGBTextCommand } from './components/commands/TransformHeadingToGBText';
+import { useTransformParagraphToGBTextCommand } from './components/commands/TransformParagraphToGBText';
 
 /**
  * Commands block editor component.
@@ -16,12 +17,14 @@ const CommandsBlockEditor = () => {
 	useToggleContainerOutlinesCommand();
 	const transformModal = useTransformV1ToV2Command();
 	const headingTransformModal = useTransformHeadingToGBTextCommand();
+	const paragraphTransformModal = useTransformParagraphToGBTextCommand();
 
-	// Return both modals (they handle their own visibility).
+	// Return all modals (they handle their own visibility).
 	return (
 		<>
 			{ transformModal }
 			{ headingTransformModal }
+			{ paragraphTransformModal }
 		</>
 	);
 };

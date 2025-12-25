@@ -5,8 +5,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useCommand } from '@wordpress/commands';
 import { select } from '@wordpress/data';
-import OutlineIcon from '../icons/OutlineIcon';
 import { setGlobalShowContainerOutlines, getEditorDocument } from '../../utils/outlineClasses';
+import GBIcon from '../icons/GBIcon';
 
 /**
  * Hook to register the Toggle Container Outlines command.
@@ -121,8 +121,8 @@ export function useToggleContainerOutlinesCommand() {
 
 	useCommand( {
 		name: 'dlx-gb-extras-toggle-container-outlines',
-		label: 'Toggle GenerateBlocks Container/Element Outlines',
-		icon: <OutlineIcon width="16" height="16" />,
+		label: 'GenerateBlocks: Toggle Container/Element Outlines',
+		icon: <GBIcon width="16" height="16" />,
 		callback: ( { close } ) => {
 			setShowContainerOutlines( ( prev ) => ! prev );
 			close();

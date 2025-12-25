@@ -1,22 +1,22 @@
 /**
- * Modal for confirming heading block transformation.
+ * Modal for confirming paragraph block transformation.
  */
 
 import { Modal, Button, Spinner } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
- * TransformHeadingModal component.
+ * TransformParagraphModal component.
  *
  * @param {Object}   props              - Component props.
  * @param {boolean}  props.isOpen       - Boolean to control modal visibility.
  * @param {Function} props.onClose      - Callback when modal is closed.
  * @param {Function} props.onConfirm    - Callback when transformation is confirmed.
  * @param {boolean}  props.transforming - Boolean indicating transformation in progress.
- * @param {number}   props.headingCount - Number of heading blocks to transform.
- * @return {JSX.Element|null} The TransformHeadingModal component.
+ * @param {number}   props.paragraphCount - Number of paragraph blocks to transform.
+ * @return {JSX.Element|null} The TransformParagraphModal component.
  */
-const TransformHeadingModal = ( { isOpen, onClose, onConfirm, transforming, headingCount = 0 } ) => {
+const TransformParagraphModal = ( { isOpen, onClose, onConfirm, transforming, paragraphCount = 0 } ) => {
 	if ( ! isOpen ) {
 		return null;
 	}
@@ -27,22 +27,22 @@ const TransformHeadingModal = ( { isOpen, onClose, onConfirm, transforming, head
 			shouldCloseOnClickOutside={ false }
 			shouldCloseOnEsc={ true }
 			onRequestClose={ onClose }
-			title={ __( 'Convert Headings to GenerateBlocks Text Blocks', 'dlx-gb-extras' ) }
+			title={ __( 'Convert Paragraphs to GenerateBlocks Text Blocks', 'dlx-gb-extras' ) }
 		>
 			<p>
 				{ __(
-					'This will convert all core/heading blocks to GenerateBlocks v2 text blocks.',
+					'This will convert all core/paragraph blocks to GenerateBlocks v2 text blocks with element set to paragraph.',
 					'dlx-gb-extras'
 				) }
 			</p>
-			{ headingCount > 0 && (
+			{ paragraphCount > 0 && (
 				<>
 					<p>
 						{ __( 'Found ', 'dlx-gb-extras' ) }
-						<strong>{ headingCount }</strong>
-						{ headingCount === 1
-							? __( ' heading block to convert.', 'dlx-gb-extras' )
-							: __( ' heading blocks to convert.', 'dlx-gb-extras' ) }
+						<strong>{ paragraphCount }</strong>
+						{ paragraphCount === 1
+							? __( ' paragraph block to convert.', 'dlx-gb-extras' )
+							: __( ' paragraph blocks to convert.', 'dlx-gb-extras' ) }
 					</p>
 					<p>
 						<strong>
@@ -52,9 +52,9 @@ const TransformHeadingModal = ( { isOpen, onClose, onConfirm, transforming, head
 				</>
 			) }
 			{
-				headingCount === 0 && (
+				paragraphCount === 0 && (
 					<p>
-						{ __( 'No heading blocks found to convert.', 'dlx-gb-extras' ) }
+						{ __( 'No paragraph blocks found to convert.', 'dlx-gb-extras' ) }
 					</p>
 				)
 			}
@@ -63,10 +63,10 @@ const TransformHeadingModal = ( { isOpen, onClose, onConfirm, transforming, head
 					variant="primary"
 					isDestructive={ true }
 					onClick={ onConfirm }
-					disabled={ transforming || headingCount === 0 }
+					disabled={ transforming || paragraphCount === 0 }
 					icon={ transforming ? <Spinner /> : null }
 				>
-					{ transforming ? __( 'Converting…', 'dlx-gb-extras' ) : __( 'Convert Headings', 'dlx-gb-extras' ) }
+					{ transforming ? __( 'Converting…', 'dlx-gb-extras' ) : __( 'Convert Paragraphs', 'dlx-gb-extras' ) }
 				</Button>
 				<Button
 					variant="secondary"
@@ -80,5 +80,5 @@ const TransformHeadingModal = ( { isOpen, onClose, onConfirm, transforming, head
 	);
 };
 
-export default TransformHeadingModal;
+export default TransformParagraphModal;
 

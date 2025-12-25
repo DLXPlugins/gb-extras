@@ -51,8 +51,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_commands__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _icons_OutlineIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icons/OutlineIcon */ "./src/js/blocks/commands/components/icons/OutlineIcon.js");
-/* harmony import */ var _utils_outlineClasses__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/outlineClasses */ "./src/js/blocks/commands/utils/outlineClasses.js");
+/* harmony import */ var _utils_outlineClasses__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/outlineClasses */ "./src/js/blocks/commands/utils/outlineClasses.js");
+/* harmony import */ var _icons_GBIcon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icons/GBIcon */ "./src/js/blocks/commands/components/icons/GBIcon.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -83,12 +83,12 @@ function useToggleContainerOutlinesCommand() {
 
   // Update global state when local state changes.
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_4__.setGlobalShowContainerOutlines)(showContainerOutlines);
+    (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_3__.setGlobalShowContainerOutlines)(showContainerOutlines);
   }, [showContainerOutlines]);
 
   // Set up MutationObserver to maintain outline classes.
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var editorDoc = (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_4__.getEditorDocument)();
+    var editorDoc = (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_3__.getEditorDocument)();
 
     // Function to remove outline data attributes from all blocks.
     var removeOutlineAttributes = function removeOutlineAttributes() {
@@ -177,8 +177,8 @@ function useToggleContainerOutlinesCommand() {
   }, [showContainerOutlines]);
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-extras-toggle-container-outlines',
-    label: 'Toggle GenerateBlocks Container/Element Outlines',
-    icon: /*#__PURE__*/React.createElement(_icons_OutlineIcon__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: 'GenerateBlocks: Toggle Container/Element Outlines',
+    icon: /*#__PURE__*/React.createElement(_icons_GBIcon__WEBPACK_IMPORTED_MODULE_4__["default"], {
       width: "16",
       height: "16"
     }),
@@ -195,10 +195,10 @@ function useToggleContainerOutlinesCommand() {
 
 /***/ },
 
-/***/ "./src/js/blocks/commands/components/icons/OutlineIcon.js"
-/*!****************************************************************!*\
-  !*** ./src/js/blocks/commands/components/icons/OutlineIcon.js ***!
-  \****************************************************************/
+/***/ "./src/js/blocks/commands/components/icons/GBIcon.js"
+/*!***********************************************************!*\
+  !*** ./src/js/blocks/commands/components/icons/GBIcon.js ***!
+  \***********************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -207,39 +207,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
- * Outline icon component for outline toggle command.
+ * GenerateBlocks icon component for GB-related commands.
  *
  * @param {Object} props - Component props.
- * @return {JSX.Element} The OutlineIcon component.
+ * @return {JSX.Element} The GBIcon component.
  */
-var OutlineIcon = function OutlineIcon(props) {
+var GBIcon = function GBIcon(props) {
   return /*#__PURE__*/React.createElement("svg", _extends({
-    viewBox: "0 0 14 14",
-    xmlns: "http://www.w3.org/2000/svg",
-    width: 14,
-    height: 14,
-    fill: "none"
-  }, props), /*#__PURE__*/React.createElement("clipPath", {
-    id: "a"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M0 0h14v14H0z",
-    fill: "currentColor"
-  })), /*#__PURE__*/React.createElement("g", {
-    fill: "currentColor",
-    fillRule: "evenodd",
-    clipPath: "url(#a)",
-    clipRule: "evenodd"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M7 5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 7 5z"
+    viewBox: "0 0 50 60.12",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, props), /*#__PURE__*/React.createElement("path", {
+    d: "M6.686 31.622V18.918a.077.077 0 0 1 .05-.072l6.5-2.313 6.5-2.313 9.682-3.445L39.1 7.33a.067.067 0 0 0 .036-.028.074.074 0 0 0 .014-.044V.076a.077.077 0 0 0-.032-.062.076.076 0 0 0-.069-.009l-13 4.625-13 4.625-6.5 2.313-6.5 2.313a.067.067 0 0 0-.036.028.097.097 0 0 0-.013.046V52.067c0 .026.013.048.032.062s.044.018.069.009l3.267-1.163 3.267-1.163c.015-.005.028-.015.036-.028s.014-.028.014-.044V37.999l.001-6.377c-.001 0 0 0 0 0z"
   }), /*#__PURE__*/React.createElement("path", {
-    d: "M5 7a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 5 7zM11 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 11 7zM0 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 0 7z"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M1.5 1a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-.5-.5zM0 1.5A1.5 1.5 0 0 1 1.5 0h11A1.5 1.5 0 0 1 14 1.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 0 12.5z"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M7 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 0zM7 11a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 7 11z"
-  })));
+    d: "m23.949 29.976 13-4.625 13-4.625c.015-.005.028-.015.036-.028s.015-.028.015-.044V8.056a.077.077 0 0 0-.032-.062.076.076 0 0 0-.069-.009l-13 4.625-13 4.625-6.5 2.313-6.5 2.313a.067.067 0 0 0-.036.028.074.074 0 0 0-.014.044V60.045c0 .026.013.048.032.062a.076.076 0 0 0 .069.009l6.475-2.304 6.475-2.304 6.525-2.322 6.525-2.322 6.5-2.313 6.5-2.313c.015-.005.028-.015.036-.028s.014-.025.014-.041V27.193a.077.077 0 0 0-.032-.062.076.076 0 0 0-.069-.009l-6.45 2.295L37 31.711a.067.067 0 0 0-.036.028.074.074 0 0 0-.014.044v6.272a.077.077 0 0 1-.05.072l-6.45 2.295L24 42.715a.075.075 0 0 1-.101-.071V30.046c0-.016.005-.031.014-.044a.08.08 0 0 1 .036-.026z"
+  }));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OutlineIcon);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GBIcon);
 
 /***/ },
 

@@ -4,10 +4,10 @@
 
 import { useState, useEffect } from 'react';
 import { useCommand } from '@wordpress/commands';
-import { heading } from '@wordpress/icons';
 import { select } from '@wordpress/data';
 import TransformHeadingModal from '../modals/TransformHeadingModal';
 import { getAllHeadingBlocks, transformAllHeadingBlocks } from '../../utils/headingTransforms';
+import GBIcon from '../icons/GBIcon';
 
 /**
  * Hook to register the Transform Heading to GB Text command.
@@ -32,7 +32,7 @@ export function useTransformHeadingToGBTextCommand() {
 		name: 'dlx-transform-headings-to-gb-text',
 		label: 'GenerateBlocks: Convert Headings to Text Blocks',
 		searchLabel: 'Convert/transform all core heading blocks to GenerateBlocks v2 text blocks',
-		icon: heading,
+		icon: <GBIcon width="16" height="16" />,
 		callback: () => {
 			setHeadingTransformConfirmation( true );
 		},

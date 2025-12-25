@@ -4,11 +4,11 @@
 
 import { useState } from 'react';
 import { useCommand } from '@wordpress/commands';
-import { replace } from '@wordpress/icons';
 import { select } from '@wordpress/data';
 import TransformV1ToV2Modal from '../modals/TransformV1ToV2Modal';
 import { getBlockNestingLevel } from '../../utils/blockNesting';
 import { transformBlocks } from '../../utils/blockTransforms';
+import GBIcon from '../icons/GBIcon';
 
 /**
  * Hook to register the Transform V1 to V2 command.
@@ -22,7 +22,7 @@ export function useTransformV1ToV2Command() {
 		name: 'dlx-transform-v1-blocks-to-v2',
 		label: 'GenerateBlocks: Convert v1 Blocks to v2 (Experimental)',
 		searchLabel: 'Transform/convert all GB GenerateBlocks V1 Blocks to V2 (Experimental)',
-		icon: replace,
+		icon: <GBIcon width="16" height="16" />,
 		callback: () => {
 			setBlockTransformConfirmation( true );
 		},
