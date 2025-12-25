@@ -1,9 +1,14 @@
 import { useEffect, useRef } from '@wordpress/element';
 import { addFilter, removeFilter } from '@wordpress/hooks';
-import { useSelect, select } from '@wordpress/data';
-import { registerBlockType, unregisterBlockType } from '@wordpress/blocks';
-import { getBlockVariations, unregisterBlockVariation, registerBlockVariation } from '@wordpress/blocks';
-import { escHtml, escapeAttribute } from '@wordpress/escape-html';
+import { useSelect } from '@wordpress/data';
+import {
+	registerBlockType,
+	unregisterBlockType,
+	getBlockVariations,
+	unregisterBlockVariation,
+	registerBlockVariation,
+} from '@wordpress/blocks';
+import { escapeAttribute } from '@wordpress/escape-html';
 import { v1Blocks } from '../../utils/BlockTypes';
 
 // Add custom category
@@ -21,7 +26,6 @@ function addGenerateBlocksV1Category( categories ) {
 // Modify block registration for v1 and v2 blocks.
 function modifyBlockRegistration( settings, name ) {
 	if ( v1Blocks.includes( name ) && gbExtrasPatternInserter.enableV1Blocks ) {
-		settings.title = settings.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v1BlockSuffix );
 		return {
 			...settings,
 			category: 'generateblocks-v1',
@@ -47,38 +51,6 @@ if ( 'true' === gbExtrasPatternInserter.enableV1Blocks ) {
 	removeFilter( 'blocks.registerBlockType', 'generateblocks/disableBlocks' );
 }
 
-wp.domReady( () => {
-	if ( 'true' !== gbExtrasPatternInserter.enableV1Blocks ) {
-		return;
-	}
-
-	// Get GB 1.0 variations of the container block.
-	const blockName = 'generateblocks/container';
-	const variationNames = [
-		'tabs',
-		'accordion',
-	];
-
-	// Get all variations of the block
-	const variations = getBlockVariations( blockName );
-
-	if ( typeof variations !== 'undefined' ) {
-		variationNames.forEach( ( variationName ) => {
-			// Find the specific variation
-			const variation = variations.find( ( v ) => v.name === variationName );
-
-			if ( typeof variation !== 'undefined' ) {
-				unregisterBlockVariation( blockName, variationName );
-
-				// Change title of variation.
-				variation.title = variation.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v1BlockSuffix );
-
-				registerBlockVariation( blockName, variation );
-			}
-		} );
-	}
-} );
-
 // Register a plugin to get all blocks.
 wp.plugins.registerPlugin( 'generateblocks-custom', {
 	render: () => {
@@ -95,29 +67,79 @@ wp.plugins.registerPlugin( 'generateblocks-custom', {
 			}
 
 			allBlocks.forEach( ( block ) => {
-				if ( block.name.includes( 'generateblocks' ) && ! v1Blocks.includes( block.name ) ) {
-					/**
-					 * Re-Register Blocks with updated v2 Title.
-					 */
-					unregisterBlockType( block.name );
-					// Re-register with updated title
-					registerBlockType( block.name, {
-						...block,
-						title: block.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v2BlockSuffix ),
-					} );
+				if ( block.name.includes( 'generateblocks' ) ) {
+					if ( v1Blocks.includes( block.name ) ) {
+						/**
+						 * Re-Register v1 Blocks with updated Title and __experimentalLabel.
+						 */
+						unregisterBlockType( block.name );
+						// Get the original __experimentalLabel function if it exists.
+						const originalLabel = block.__experimentalLabel;
+						const v1Suffix = escapeAttribute( gbExtrasPatternInserter.v1BlockSuffix );
 
-					// Get all variations of the v2 Blocks and upadate the title.
-					const variations = getBlockVariations( block.name );
+						// Remove suffix from title if it already exists (from filter hook).
+						let originalTitle = block.title;
+						if ( originalTitle.endsWith( ' ' + v1Suffix ) ) {
+							originalTitle = originalTitle.slice( 0, -( ' ' + v1Suffix ).length );
+						}
 
-					variations.forEach( ( variation ) => {
-						// Find the specific variation
-						unregisterBlockVariation( block.name, variation.name );
+						// Re-register with updated title and override __experimentalLabel.
+						registerBlockType( block.name, {
+							...block,
+							title: originalTitle + ' ' + v1Suffix,
+							category: 'generateblocks-v1',
+							__experimentalLabel: originalLabel
+								? ( attrs, context ) => {
+									const customName = attrs?.metadata?.name || '';
+									if ( 'list-view' === context?.context && customName ) {
+										// For custom names, don't add suffix if already present.
+										return customName;
+									}
+									return originalLabel( attrs, context ) + ' ' + v1Suffix;
+								}
+								: undefined,
+						} );
 
-						// Change title of variation.
-						variation.title = variation.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v2BlockSuffix );
+						// Get all variations of the v1 Blocks and update the title.
+						const variations = getBlockVariations( block.name );
 
-						registerBlockVariation( block.name, variation );
-					} );
+						if ( variations ) {
+							variations.forEach( ( variation ) => {
+								// Find the specific variation.
+								unregisterBlockVariation( block.name, variation.name );
+
+								// Change title of variation.
+								variation.title = variation.title + ' ' + v1Suffix;
+
+								registerBlockVariation( block.name, variation );
+							} );
+						}
+					} else {
+						/**
+						 * Re-Register v2 Blocks with updated Title.
+						 */
+						unregisterBlockType( block.name );
+						// Re-register with updated title.
+						registerBlockType( block.name, {
+							...block,
+							title: block.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v2BlockSuffix ),
+						} );
+
+						// Get all variations of the v2 Blocks and update the title.
+						const variations = getBlockVariations( block.name );
+
+						if ( variations ) {
+							variations.forEach( ( variation ) => {
+								// Find the specific variation.
+								unregisterBlockVariation( block.name, variation.name );
+
+								// Change title of variation.
+								variation.title = variation.title + ' ' + escapeAttribute( gbExtrasPatternInserter.v2BlockSuffix );
+
+								registerBlockVariation( block.name, variation );
+							} );
+						}
+					}
 				}
 			} );
 
