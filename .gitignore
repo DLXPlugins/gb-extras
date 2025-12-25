@@ -106,3 +106,7 @@ dist
 alerts-dlx.zip
 
 gb-extras.zip
+
+.npmrc
+
+package-lock.json
