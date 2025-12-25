@@ -6153,8 +6153,8 @@ var ClearIcon = function ClearIcon(props) {
           };
         }, []),
         selectedBlock = _useSelect3.selectedBlock;
-      var _useDispatch3 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.store)('core/block-editor'),
-        replaceBlocks = _useDispatch3.replaceBlocks;
+      var _useDispatch3 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)('core/block-editor'),
+        updateBlockAttributes = _useDispatch3.updateBlockAttributes;
       /**
        * Return early if no block is selected.
        */
@@ -6175,9 +6175,9 @@ var ClearIcon = function ClearIcon(props) {
         icon: /*#__PURE__*/React.createElement(ClearIcon, null),
         label: "Clear Block Styles",
         onClick: function onClick() {
-          selectedBlock.attributes.styles = {};
-          selectedBlock.attributes.css = '';
-          replaceBlocks(selectedBlock.clientId, selectedBlock);
+          updateBlockAttributes(selectedBlock.clientId, {
+            styles: {}
+          });
         }
       });
     }

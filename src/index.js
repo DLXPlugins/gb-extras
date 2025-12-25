@@ -192,7 +192,7 @@ const ClearIcon = ( props ) => {
 				};
 			}, [] );
 
-			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
+			const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 			/**
 			 * Return early if no block is selected.
 			 */
@@ -214,9 +214,7 @@ const ClearIcon = ( props ) => {
 					icon={ <ClearIcon /> }
 					label="Clear Block Styles"
 					onClick={ () => {
-						selectedBlock.attributes.styles = {};
-						selectedBlock.attributes.css = '';
-						replaceBlocks( selectedBlock.clientId, selectedBlock );
+						updateBlockAttributes( selectedBlock.clientId, { styles: {} } );
 					} }
 				/>
 			);
