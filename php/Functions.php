@@ -330,5 +330,14 @@ class Functions {
 		}
 		return $highest_priority;
 	}
+
+	/**
+	 * Check if GenerateBlocks Pro is active.
+	 *
+	 * @return bool True if Pro is active, false otherwise.
+	 */
+	public static function is_generateblocks_pro_active() {
+		return defined( 'GENERATEBLOCKS_PRO_VERSION' );
+	}
 }
 
