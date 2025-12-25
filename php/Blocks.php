@@ -379,6 +379,8 @@ class Blocks {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_commands' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_commands' ) );
 		add_action( 'admin_footer', array( $this, 'admin_commands_footer' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_commands' ) );
+		add_action( 'wp_footer', array( $this, 'frontend_commands_footer' ) );
 	}
 
 	/**
@@ -530,5 +532,56 @@ class Blocks {
 			return;
 		}
 		echo '<div id="gb-extras-commands-admin" style="display: none; visibility: hidden; position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden;"></div>';
+	}
+
+	/**
+	 * Add hidden div for frontend command palette.
+	 */
+	public function frontend_commands_footer() {
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+		echo '<div id="gb-extras-commands-frontend" style="display: none; visibility: hidden; position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden;"></div>';
+	}
+
+	/**
+	 * Enqueue frontend commands (optional).
+	 *
+	 * Note: WordPress doesn't officially support command palette on frontend,
+	 * but we can manually enqueue assets and initialize it.
+	 */
+	public function enqueue_frontend_commands() {
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Enqueue WordPress command palette assets (WordPress 6.9+).
+		// Only call if not already enqueued (check if wp-commands script is already queued).
+		if ( function_exists( 'wp_enqueue_command_palette_assets' ) && ! wp_script_is( 'wp-commands', 'enqueued' ) ) {
+			wp_enqueue_command_palette_assets();
+		}
+
+		// Enqueue our frontend commands script.
+		$deps = require Functions::get_plugin_dir( 'build/gb-extras-commands-frontend.asset.php' );
+		wp_enqueue_script(
+			'gb-extras-commands-frontend',
+			Functions::get_plugin_url( 'build/gb-extras-commands-frontend.js' ),
+			$deps['dependencies'],
+			$deps['version'],
+			true
+		);
+
+		// Needed to clear up some potential conflicts with other plugins.
+		wp_add_inline_style(
+			'wp-commands',
+			'.commands-command-menu__container .has-icon:not(.components-button) {
+				width: inherit;
+				height: inherit;
+			}'
+		);
 	}
 }
