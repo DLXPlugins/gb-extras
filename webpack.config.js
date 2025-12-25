@@ -16,7 +16,6 @@ module.exports = ( env ) => {
 				'gb-extras-block-labels': './src/js/blocks/components/GBBlockLabels/index.js',
 				'gb-extras-commands-block-editor': './src/js/blocks/commands/commands-block-editor.js',
 				'gb-extras-commands-admin': './src/js/blocks/commands/commands-admin.js',
-				'gb-extras-commands-frontend': './src/js/blocks/commands/commands-frontend.js',
 			},
 			mode: env.mode,
 			devtool: 'source-map',
