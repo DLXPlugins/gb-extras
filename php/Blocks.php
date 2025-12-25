@@ -396,9 +396,32 @@ class Blocks {
 		wp_enqueue_style( 'gb-extras-block-editor-styles' );
 		wp_add_inline_style(
 			'gb-extras-block-editor-styles',
-			'.dlx-gb-outline { outline: 3px solid #949494; }
-			.dlx-gb-outline-container { outline: 3px solid #00a32a; }
-			.dlx-gb-outline-element { outline: 3px solid #007cba; }'
+			'[data-container-type] {
+				position: relative;
+			}
+			[data-container-type]::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				pointer-events: none;
+				z-index: 9999;
+				border: 3px solid #949494;
+			}
+			[data-container-type="container"]::after {
+				border-color: #00a32a;
+				z-index: 20;
+			}
+			[data-container-type="element"]::after {
+				border-color: #007cba;
+				z-index: 20;
+			}
+			[data-container-type="grid"]::after {
+				border-color: #333333;
+				z-index: 30;
+			}'
 		);
 	}
 

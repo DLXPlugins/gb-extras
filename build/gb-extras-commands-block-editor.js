@@ -67,23 +67,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 /**
- * Recursively get all block client IDs from blocks.
- *
- * @param {Array} blocks - Array of blocks.
- * @return {Array} Array of client IDs.
- */
-function getAllBlockClientIds(blocks) {
-  var clientIds = [];
-  blocks.forEach(function (block) {
-    clientIds.push(block.clientId);
-    if (block.innerBlocks && block.innerBlocks.length > 0) {
-      clientIds = clientIds.concat(getAllBlockClientIds(block.innerBlocks));
-    }
-  });
-  return clientIds;
-}
-
-/**
  * Hook to register the Toggle Container Outlines command.
  *
  * @return {void}
@@ -93,10 +76,101 @@ function useToggleContainerOutlinesCommand() {
     _useState2 = _slicedToArray(_useState, 2),
     showContainerOutlines = _useState2[0],
     setShowContainerOutlines = _useState2[1];
+  var observerRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
 
   // Update global state when local state changes.
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_4__.setGlobalShowContainerOutlines)(showContainerOutlines);
+  }, [showContainerOutlines]);
+
+  // Set up MutationObserver to maintain outline classes.
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var editorDoc = (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_4__.getEditorDocument)();
+
+    // Function to remove outline data attributes from all blocks.
+    var removeOutlineAttributes = function removeOutlineAttributes() {
+      var blocks = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.select)('core/block-editor').getBlocks();
+      var _processBlock = function processBlock(block) {
+        var blockElement = editorDoc.querySelector("[data-block=\"".concat(block.clientId, "\"]"));
+        if (!blockElement) {
+          return;
+        }
+
+        // Remove outline data attribute.
+        blockElement.removeAttribute('data-container-type');
+
+        // Process inner blocks.
+        if (block.innerBlocks) {
+          block.innerBlocks.forEach(_processBlock);
+        }
+      };
+      blocks.forEach(_processBlock);
+    };
+    if (!showContainerOutlines) {
+      // Remove all outline data attributes when disabled.
+      removeOutlineAttributes();
+
+      // Clean up observer when outlines are disabled.
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      return;
+    }
+
+    // Function to add outline data attributes to blocks.
+    var addOutlineAttributes = function addOutlineAttributes() {
+      var blocks = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.select)('core/block-editor').getBlocks();
+      var _processBlock2 = function processBlock(block) {
+        var blockElement = editorDoc.querySelector("[data-block=\"".concat(block.clientId, "\"]"));
+        if (!blockElement) {
+          return;
+        }
+        var isContainer = blockElement.getAttribute('data-type') === 'generateblocks/container';
+        var isElement = blockElement.getAttribute('data-type') === 'generateblocks/element';
+        var isGrid = blockElement.getAttribute('data-title') === 'Grid';
+        if (isGrid) {
+          blockElement.setAttribute('data-container-type', 'grid');
+        } else if (isContainer) {
+          blockElement.setAttribute('data-container-type', 'container');
+        } else if (isElement) {
+          blockElement.setAttribute('data-container-type', 'element');
+        }
+
+        // Process inner blocks.
+        if (block.innerBlocks) {
+          block.innerBlocks.forEach(_processBlock2);
+        }
+      };
+      blocks.forEach(_processBlock2);
+    };
+
+    // Initial add.
+    addOutlineAttributes();
+
+    // Set up MutationObserver to re-add data attributes when blocks are added/changed.
+    var observer = new MutationObserver(function () {
+      // Reapply attributes when DOM changes (debounced).
+      setTimeout(addOutlineAttributes, 10);
+    });
+
+    // Observe the editor container for DOM changes.
+    var editorContainer = editorDoc.querySelector('.block-editor-writing-flow') || editorDoc.body;
+    if (editorContainer) {
+      observer.observe(editorContainer, {
+        childList: true,
+        subtree: true
+      });
+      observerRef.current = observer;
+    }
+
+    // Cleanup.
+    return function () {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+    };
   }, [showContainerOutlines]);
   (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
     name: 'dlx-gb-extras-toggle-container-outlines',
@@ -107,54 +181,9 @@ function useToggleContainerOutlinesCommand() {
     }),
     callback: function callback(_ref) {
       var close = _ref.close;
-      var editorDoc = (0,_utils_outlineClasses__WEBPACK_IMPORTED_MODULE_4__.getEditorDocument)();
-      var blocks = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.select)('core/block-editor').getBlocks();
-      var allClientIds = getAllBlockClientIds(blocks);
-      var newState = !showContainerOutlines;
-
-      // Loop through all block client IDs and find their DOM elements.
-      allClientIds.forEach(function (clientId) {
-        var blockElement = editorDoc.querySelector("[data-block=\"".concat(clientId, "\"]"));
-        if (!blockElement) {
-          return;
-        }
-
-        // Check if this is a container or element block.
-        var isContainer = blockElement.querySelector('[data-type="generateblocks/container"]');
-        var isElement = blockElement.querySelector('[data-type="generateblocks/element"]');
-        var isGrid = blockElement.querySelector('[data-title="Grid"]');
-
-        // Find the actual container/element wrapper.
-        var targetElement = null;
-        if (isContainer || isElement || isGrid) {
-          targetElement = blockElement;
-        }
-        if (!targetElement) {
-          return;
-        }
-        if (newState) {
-          // Add outline classes.
-          targetElement.classList.add('dlx-gb-outline');
-          if (isContainer) {
-            targetElement.classList.add('dlx-gb-outline-container');
-          }
-          if (isElement) {
-            targetElement.classList.add('dlx-gb-outline-element');
-          }
-          if (isGrid) {
-            targetElement.classList.add('dlx-gb-outline-grid');
-          }
-
-          // Check for grid display.
-        } else {
-          // Remove outline classes.
-          targetElement.classList.remove('dlx-gb-outline');
-          targetElement.classList.remove('dlx-gb-outline-container');
-          targetElement.classList.remove('dlx-gb-outline-element');
-          targetElement.classList.remove('dlx-gb-outline-grid');
-        }
+      setShowContainerOutlines(function (prev) {
+        return !prev;
       });
-      setShowContainerOutlines(newState);
       close();
     },
     context: 'block-editor'
