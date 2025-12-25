@@ -2,6 +2,36 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@wordpress/icons/build-module/library/heading.js"
+/*!***********************************************************************!*\
+  !*** ./node_modules/@wordpress/icons/build-module/library/heading.js ***!
+  \***********************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "@wordpress/primitives");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
+
+/**
+ * WordPress dependencies
+ */
+
+const heading = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__.Path, {
+  d: "M6 5V18.5911L12 13.8473L18 18.5911V5H6Z"
+}));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (heading);
+//# sourceMappingURL=heading.js.map
+
+/***/ },
+
 /***/ "./node_modules/@wordpress/icons/build-module/library/replace.js"
 /*!***********************************************************************!*\
   !*** ./node_modules/@wordpress/icons/build-module/library/replace.js ***!
@@ -192,6 +222,127 @@ function useToggleContainerOutlinesCommand() {
 
 /***/ },
 
+/***/ "./src/js/blocks/commands/components/commands/TransformHeadingToGBText.js"
+/*!********************************************************************************!*\
+  !*** ./src/js/blocks/commands/components/commands/TransformHeadingToGBText.js ***!
+  \********************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useTransformHeadingToGBTextCommand: () => (/* binding */ useTransformHeadingToGBTextCommand)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_commands__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/commands */ "@wordpress/commands");
+/* harmony import */ var _wordpress_commands__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/heading.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _modals_TransformHeadingModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../modals/TransformHeadingModal */ "./src/js/blocks/commands/components/modals/TransformHeadingModal.js");
+/* harmony import */ var _utils_headingTransforms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/headingTransforms */ "./src/js/blocks/commands/utils/headingTransforms.js");
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+/**
+ * Command to transform core/heading blocks to GenerateBlocks v2 text blocks.
+ */
+
+
+
+
+
+
+
+
+/**
+ * Hook to register the Transform Heading to GB Text command.
+ *
+ * @return {JSX.Element|null} The TransformHeadingToGBText component.
+ */
+function useTransformHeadingToGBTextCommand() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    headingTransformConfirmation = _useState2[0],
+    setHeadingTransformConfirmation = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    transforming = _useState4[0],
+    setTransforming = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState6 = _slicedToArray(_useState5, 2),
+    headingCount = _useState6[0],
+    setHeadingCount = _useState6[1];
+
+  // Update heading count when modal opens.
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (headingTransformConfirmation) {
+      var blocks = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.select)('core/block-editor').getBlocks();
+      var headings = (0,_utils_headingTransforms__WEBPACK_IMPORTED_MODULE_5__.getAllHeadingBlocks)(blocks);
+      setHeadingCount(headings.length);
+    }
+  }, [headingTransformConfirmation]);
+  (0,_wordpress_commands__WEBPACK_IMPORTED_MODULE_1__.useCommand)({
+    name: 'dlx-transform-headings-to-gb-text',
+    label: 'GenerateBlocks: Convert Headings to Text Blocks',
+    searchLabel: 'Convert/transform all core heading blocks to GenerateBlocks v2 text blocks',
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_2__["default"],
+    callback: function callback() {
+      setHeadingTransformConfirmation(true);
+    }
+  });
+  var handleConfirm = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            setTransforming(true);
+            _context.p = 1;
+            _context.n = 2;
+            return (0,_utils_headingTransforms__WEBPACK_IMPORTED_MODULE_5__.transformAllHeadingBlocks)();
+          case 2:
+            _context.n = 4;
+            break;
+          case 3:
+            _context.p = 3;
+            _t = _context.v;
+            // eslint-disable-next-line no-console
+            console.error('Error transforming heading blocks:', _t);
+          case 4:
+            _context.p = 4;
+            setHeadingTransformConfirmation(false);
+            setTransforming(false);
+            return _context.f(4);
+          case 5:
+            return _context.a(2);
+        }
+      }, _callee, null, [[1, 3, 4, 5]]);
+    }));
+    return function handleConfirm() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+  return /*#__PURE__*/React.createElement(_modals_TransformHeadingModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    isOpen: headingTransformConfirmation,
+    onClose: function onClose() {
+      return setHeadingTransformConfirmation(false);
+    },
+    onConfirm: handleConfirm,
+    transforming: transforming,
+    headingCount: headingCount
+  });
+}
+
+/***/ },
+
 /***/ "./src/js/blocks/commands/components/commands/TransformV1ToV2.js"
 /*!***********************************************************************!*\
   !*** ./src/js/blocks/commands/components/commands/TransformV1ToV2.js ***!
@@ -347,6 +498,76 @@ var OutlineIcon = function OutlineIcon(props) {
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OutlineIcon);
+
+/***/ },
+
+/***/ "./src/js/blocks/commands/components/modals/TransformHeadingModal.js"
+/*!***************************************************************************!*\
+  !*** ./src/js/blocks/commands/components/modals/TransformHeadingModal.js ***!
+  \***************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/**
+ * Modal for confirming heading block transformation.
+ */
+
+
+
+
+/**
+ * TransformHeadingModal component.
+ *
+ * @param {Object}   props              - Component props.
+ * @param {boolean}  props.isOpen       - Boolean to control modal visibility.
+ * @param {Function} props.onClose      - Callback when modal is closed.
+ * @param {Function} props.onConfirm    - Callback when transformation is confirmed.
+ * @param {boolean}  props.transforming - Boolean indicating transformation in progress.
+ * @param {number}   props.headingCount - Number of heading blocks to transform.
+ * @return {JSX.Element|null} The TransformHeadingModal component.
+ */
+var TransformHeadingModal = function TransformHeadingModal(_ref) {
+  var isOpen = _ref.isOpen,
+    onClose = _ref.onClose,
+    onConfirm = _ref.onConfirm,
+    transforming = _ref.transforming,
+    _ref$headingCount = _ref.headingCount,
+    headingCount = _ref$headingCount === void 0 ? 0 : _ref$headingCount;
+  if (!isOpen) {
+    return null;
+  }
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Modal, {
+    isDismissible: true,
+    shouldCloseOnClickOutside: false,
+    shouldCloseOnEsc: true,
+    onRequestClose: onClose,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Convert Headings to GenerateBlocks Text Blocks', 'dlx-gb-extras')
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('This will convert all core/heading blocks to GenerateBlocks v2 text blocks.', 'dlx-gb-extras')), headingCount > 0 && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Found ', 'dlx-gb-extras'), /*#__PURE__*/React.createElement("strong", null, headingCount), headingCount === 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(' heading block to convert.', 'dlx-gb-extras') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)(' heading blocks to convert.', 'dlx-gb-extras')), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Please back up your content before converting. There is no undo for this operation.', 'dlx-gb-extras'))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '10px',
+      marginTop: '20px'
+    }
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+    variant: "primary",
+    isDestructive: true,
+    onClick: onConfirm,
+    disabled: transforming || headingCount === 0,
+    icon: transforming ? /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Spinner, null) : null
+  }, transforming ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Converting…', 'dlx-gb-extras') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Convert Headings', 'dlx-gb-extras')), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+    variant: "secondary",
+    onClick: onClose,
+    disabled: transforming
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cancel', 'dlx-gb-extras'))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TransformHeadingModal);
 
 /***/ },
 
@@ -642,6 +863,167 @@ function _transformBlocks() {
 
 /***/ },
 
+/***/ "./src/js/blocks/commands/utils/headingTransforms.js"
+/*!***********************************************************!*\
+  !*** ./src/js/blocks/commands/utils/headingTransforms.js ***!
+  \***********************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getAllHeadingBlocks: () => (/* binding */ getAllHeadingBlocks),
+/* harmony export */   transformAllHeadingBlocks: () => (/* binding */ transformAllHeadingBlocks),
+/* harmony export */   transformHeadingBlock: () => (/* binding */ transformHeadingBlock)
+/* harmony export */ });
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+/**
+ * Utilities for transforming heading blocks.
+ */
+
+
+
+
+/**
+ * Recursively find all heading blocks in the editor.
+ *
+ * @param {Array} blocks Array of blocks to search.
+ * @return {Array} Array of heading block objects.
+ */
+function getAllHeadingBlocks(blocks) {
+  var headingBlocks = [];
+  blocks.forEach(function (block) {
+    if (block.name === 'core/heading') {
+      headingBlocks.push(block);
+    }
+    // Recursively search inner blocks.
+    if (block.innerBlocks && block.innerBlocks.length > 0) {
+      headingBlocks.push.apply(headingBlocks, _toConsumableArray(getAllHeadingBlocks(block.innerBlocks)));
+    }
+  });
+  return headingBlocks;
+}
+
+/**
+ * Transform a core/heading block to generateblocks/text.
+ *
+ * @param {Object} block The heading block to transform.
+ * @return {Promise} Promise that resolves when the block is transformed.
+ */
+function transformHeadingBlock(_x) {
+  return _transformHeadingBlock.apply(this, arguments);
+}
+
+/**
+ * Transform all heading blocks in the editor.
+ *
+ * @return {Promise} Promise that resolves when all blocks are transformed.
+ */
+function _transformHeadingBlock() {
+  _transformHeadingBlock = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(block) {
+    var _ref, _ref$level, level, _ref$content, content, align, anchor, textColor, backgroundColor, fontSize, style, tagName, newAttributes, newBlock;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          if (!(block.name !== 'core/heading')) {
+            _context.n = 1;
+            break;
+          }
+          return _context.a(2, null);
+        case 1:
+          // Get the heading block attributes.
+          _ref = block.attributes || {}, _ref$level = _ref.level, level = _ref$level === void 0 ? 2 : _ref$level, _ref$content = _ref.content, content = _ref$content === void 0 ? '' : _ref$content, align = _ref.align, anchor = _ref.anchor, textColor = _ref.textColor, backgroundColor = _ref.backgroundColor, fontSize = _ref.fontSize, style = _ref.style; // Map level to tagName (h1-h6).
+          tagName = "h".concat(level); // Create the new GenerateBlocks text block attributes.
+          // Start with essential attributes: tagName and content.
+          newAttributes = {
+            tagName: tagName,
+            content: content || ''
+          }; // Preserve alignment if set.
+          if (align) {
+            newAttributes.align = align;
+          }
+
+          // Preserve anchor if set (for linking to specific headings).
+          if (anchor) {
+            newAttributes.anchor = anchor;
+          }
+
+          // Preserve style object if it exists (contains custom CSS and other style properties).
+          // This preserves colors, spacing, typography, and other custom styles.
+          if (style && _typeof(style) === 'object') {
+            newAttributes.style = _objectSpread({}, style);
+          }
+
+          // Preserve text color slug if set (WordPress theme color support).
+          if (textColor) {
+            newAttributes.textColor = textColor;
+          }
+
+          // Preserve background color slug if set (WordPress theme color support).
+          if (backgroundColor) {
+            newAttributes.backgroundColor = backgroundColor;
+          }
+
+          // Preserve font size if set (WordPress core typography support).
+          if (fontSize) {
+            newAttributes.fontSize = fontSize;
+          }
+
+          // Create the new block.
+          newBlock = (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)('generateblocks/text', newAttributes, block.innerBlocks || []); // Replace the old block with the new one.
+          _context.n = 2;
+          return (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)('core/block-editor').replaceBlocks([block.clientId], [newBlock]);
+        case 2:
+          return _context.a(2, newBlock);
+      }
+    }, _callee);
+  }));
+  return _transformHeadingBlock.apply(this, arguments);
+}
+function transformAllHeadingBlocks() {
+  return _transformAllHeadingBlocks.apply(this, arguments);
+}
+function _transformAllHeadingBlocks() {
+  _transformAllHeadingBlocks = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+    var blocks, headingBlocks, transformPromises;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          blocks = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)('core/block-editor').getBlocks();
+          headingBlocks = getAllHeadingBlocks(blocks); // Transform all heading blocks.
+          transformPromises = headingBlocks.map(function (block) {
+            return transformHeadingBlock(block);
+          });
+          _context2.n = 1;
+          return Promise.all(transformPromises);
+        case 1:
+          return _context2.a(2, headingBlocks.length);
+      }
+    }, _callee2);
+  }));
+  return _transformAllHeadingBlocks.apply(this, arguments);
+}
+
+/***/ },
+
 /***/ "./src/js/blocks/commands/utils/outlineClasses.js"
 /*!********************************************************!*\
   !*** ./src/js/blocks/commands/utils/outlineClasses.js ***!
@@ -885,6 +1267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_commands_ToggleContainerOutlines__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/commands/ToggleContainerOutlines */ "./src/js/blocks/commands/components/commands/ToggleContainerOutlines.js");
 /* harmony import */ var _components_commands_TransformV1ToV2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/commands/TransformV1ToV2 */ "./src/js/blocks/commands/components/commands/TransformV1ToV2.js");
+/* harmony import */ var _components_commands_TransformHeadingToGBText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/commands/TransformHeadingToGBText */ "./src/js/blocks/commands/components/commands/TransformHeadingToGBText.js");
 /**
  * Block editor commands registration.
  */
@@ -893,15 +1276,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /**
  * Commands block editor component.
  *
- * @return {JSX.Element|null} The CommandsBlockEditor component.
+ * @return {JSX.Element} The CommandsBlockEditor component.
  */
 var CommandsBlockEditor = function CommandsBlockEditor() {
   (0,_components_commands_ToggleContainerOutlines__WEBPACK_IMPORTED_MODULE_1__.useToggleContainerOutlinesCommand)();
   var transformModal = (0,_components_commands_TransformV1ToV2__WEBPACK_IMPORTED_MODULE_2__.useTransformV1ToV2Command)();
-  return transformModal; // Return the modal if it's open, otherwise null.
+  var headingTransformModal = (0,_components_commands_TransformHeadingToGBText__WEBPACK_IMPORTED_MODULE_3__.useTransformHeadingToGBTextCommand)();
+
+  // Return both modals (they handle their own visibility).
+  return /*#__PURE__*/React.createElement(React.Fragment, null, transformModal, headingTransformModal);
 };
 (0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__.registerPlugin)('dlxgb-commands-block-editor', {
   render: CommandsBlockEditor
