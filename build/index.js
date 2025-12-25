@@ -6064,33 +6064,46 @@ var ClearIcon = function ClearIcon(props) {
       var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
           return {
             selectedBlocks: select('core/block-editor').getMultiSelectedBlocks(),
+            selectedBlock: select('core/block-editor').getSelectedBlock(),
+            selectedBlockCount: select('core/block-editor').getSelectedBlockCount(),
             getMultiSelectedBlockClientIds: select('core/block-editor').getMultiSelectedBlockClientIds
           };
         }, []),
         selectedBlocks = _useSelect.selectedBlocks,
+        selectedBlock = _useSelect.selectedBlock,
+        selectedBlockCount = _useSelect.selectedBlockCount,
         getMultiSelectedBlockClientIds = _useSelect.getMultiSelectedBlockClientIds;
       var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useDispatch)(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.store)('core/block-editor'),
-        replaceBlocks = _useDispatch.replaceBlocks;
+        replaceBlocks = _useDispatch.replaceBlocks,
+        replaceBlock = _useDispatch.replaceBlock;
       (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-        setClientIds(selectedBlocks);
-      }, [selectedBlocks]);
+        if (selectedBlockCount > 1) {
+          setClientIds(selectedBlocks);
+        } else if (selectedBlockCount === 1) {
+          setClientIds([selectedBlock.clientId]);
+        }
+      }, [selectedBlocks, selectedBlock, selectedBlockCount]);
 
       // If no blocks are selected, return.
       if (clientIds.length === 0) {
         return null;
       }
 
-      // If more than one block is selected, add toolbar option to wrap container.
-      if (clientIds.length > 1) {
+      // If a block is selected, add toolbar option to wrap container.
+      if (clientIds.length > 0) {
         return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_4__.PluginBlockSettingsMenuItem, {
           icon: /*#__PURE__*/React.createElement(_js_blocks_components_ContainerIcon_js__WEBPACK_IMPORTED_MODULE_9__["default"], null),
           label: "Wrap in Container",
           onClick: function onClick() {
-            var innerBlocks = [];
-            clientIds.forEach(function (clientId) {
-              innerBlocks.push((0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.cloneBlock)(clientId));
-            });
-            replaceBlocks(getMultiSelectedBlockClientIds(), wp.blocks.createBlock('generateblocks/element', {}, innerBlocks));
+            if (selectedBlockCount > 1) {
+              var innerBlocks = [];
+              clientIds.forEach(function (clientId) {
+                innerBlocks.push((0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.cloneBlock)(clientId));
+              });
+              replaceBlocks(getMultiSelectedBlockClientIds(), wp.blocks.createBlock('generateblocks/element', {}, innerBlocks));
+            } else {
+              replaceBlock(selectedBlock.clientId, wp.blocks.createBlock('generateblocks/element', {}, [(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.cloneBlock)(selectedBlock)]));
+            }
           }
         });
       }

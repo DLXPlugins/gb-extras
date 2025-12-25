@@ -90,11 +90,13 @@ const ClearIcon = ( props ) => {
 			const [ clientIds, setClientIds ] = useState( [] );
 
 			// Get the selected block clientIds.
-			const { selectedBlocks, getMultiSelectedBlockClientIds } = useSelect(
+			const { selectedBlocks, selectedBlock, selectedBlockCount, getMultiSelectedBlockClientIds } = useSelect(
 				( select ) => {
 					return {
 						selectedBlocks:
 							select( 'core/block-editor' ).getMultiSelectedBlocks(),
+						selectedBlock: select( 'core/block-editor' ).getSelectedBlock(),
+						selectedBlockCount: select( 'core/block-editor' ).getSelectedBlockCount(),
 						getMultiSelectedBlockClientIds:
 							select( 'core/block-editor' ).getMultiSelectedBlockClientIds,
 					};
@@ -102,38 +104,46 @@ const ClearIcon = ( props ) => {
 				[]
 			);
 
-			const { replaceBlocks } = useDispatch( store )( 'core/block-editor' );
+			const { replaceBlocks, replaceBlock } = useDispatch( store )( 'core/block-editor' );
 
 			useEffect( () => {
-				setClientIds( selectedBlocks );
-			}, [ selectedBlocks ] );
+				if ( selectedBlockCount > 1 ) {
+					setClientIds( selectedBlocks );
+				} else if ( selectedBlockCount === 1 ) {
+					setClientIds( [ selectedBlock.clientId ] );
+				}
+			}, [ selectedBlocks, selectedBlock, selectedBlockCount ] );
 
 			// If no blocks are selected, return.
 			if ( clientIds.length === 0 ) {
 				return null;
 			}
 
-			// If more than one block is selected, add toolbar option to wrap container.
-			if ( clientIds.length > 1 ) {
+			// If a block is selected, add toolbar option to wrap container.
+			if ( clientIds.length > 0 ) {
 				return (
 					<PluginBlockSettingsMenuItem
 						icon={ <ContainerLogo /> }
 						label="Wrap in Container"
 						onClick={ () => {
-							const innerBlocks = [];
-							clientIds.forEach( ( clientId ) => {
-								innerBlocks.push( cloneBlock( clientId ) );
-							} );
-							replaceBlocks(
-								getMultiSelectedBlockClientIds(),
-								wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks )
-							);
+							if ( selectedBlockCount > 1 ) {
+								const innerBlocks = [];
+								clientIds.forEach( ( clientId ) => {
+									innerBlocks.push( cloneBlock( clientId ) );
+								} );
+								replaceBlocks(
+									getMultiSelectedBlockClientIds(),
+									wp.blocks.createBlock( 'generateblocks/element', {}, innerBlocks )
+								);
+							} else {
+								replaceBlock( selectedBlock.clientId, wp.blocks.createBlock( 'generateblocks/element', {}, [ cloneBlock( selectedBlock ) ] ) );
+							}
 						} }
 					/>
-				);
+				)
 			}
 			return null;
-		},
+		}
 	} );
 
 	// Unique ID storing.
