@@ -11,9 +11,6 @@ import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
 import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
 import { replaceUniqueIds } from './js/blocks/utils/ReplaceUniqueIds.js';
-const previousSelectedBlock = null;
-const previousParentClientId = null;
-const previousSelectedBlockIndex = null;
 
 const UnGroupIcon = ( props ) => {
 	return (
@@ -361,7 +358,7 @@ const ClearIcon = ( props ) => {
 	);
 
 	/**
-	 * Allow transform from group block.
+	 * Allow transform from the Shape to Text block.
 	 *
 	 * Updated for v2 blocks.
 	 */

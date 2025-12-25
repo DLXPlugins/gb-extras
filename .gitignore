@@ -112,3 +112,5 @@ gb-extras.zip
 package-lock.json
 
 menus.md
+
+src/js/blocks/commands/.DS_Store

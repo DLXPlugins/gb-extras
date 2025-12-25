@@ -5997,9 +5997,6 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 
 
 
-var previousSelectedBlock = null;
-var previousParentClientId = null;
-var previousSelectedBlockIndex = null;
 var UnGroupIcon = function UnGroupIcon(props) {
   return /*#__PURE__*/React.createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
@@ -6305,7 +6302,7 @@ var ClearIcon = function ClearIcon(props) {
   });
 
   /**
-   * Allow transform from group block.
+   * Allow transform from the Shape to Text block.
    *
    * Updated for v2 blocks.
    */
