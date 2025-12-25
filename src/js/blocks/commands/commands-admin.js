@@ -4,30 +4,24 @@
 
 import { createRoot } from 'react-dom/client';
 import { registerPlugin } from '@wordpress/plugins';
+import { useRefreshCSSFilesCommand } from './components/commands/RefreshCSSFiles';
 
 /**
- * Shared function to register all commands.
+ * Commands admin component.
  *
- * @return {void}
+ * @return {JSX.Element|null} The CommandsAdmin component.
  */
-const registerCommands = () => {
-	// todo - add commands here
-	return null;
+const CommandsAdmin = () => {
+	const refreshCSSFilesModal = useRefreshCSSFilesCommand();
+	return refreshCSSFilesModal;
 };
 
 // Works in the block editor.
 registerPlugin( 'dlxgb-commands-admin', {
-	render: () => {
-		registerCommands();
-		return null;
-	},
+	render: CommandsAdmin,
 } );
 
 // Works in the admin area (non-block editor).
-const CommandsAdmin = () => {
-	registerCommands();
-	return null;
-};
 
 // Attach to admin footer div.
 const rootElement = document.getElementById( 'gb-extras-commands-admin' );

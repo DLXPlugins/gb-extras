@@ -3,15 +3,16 @@
  */
 import { createRoot } from 'react-dom/client';
 import { registerPlugin } from '@wordpress/plugins';
+import { useRefreshCSSFilesCommand } from './components/commands/RefreshCSSFiles';
+
 /**
  * Commands frontend component.
  *
- * @return {null} The CommandsFrontend component.
+ * @return {JSX.Element|null} The CommandsFrontend component.
  */
 const CommandsFrontend = () => {
-	// Frontend-specific commands will go here.
-	// Currently placeholder for future use.
-	return null;
+	const refreshCSSFilesModal = useRefreshCSSFilesCommand();
+	return refreshCSSFilesModal;
 };
 
 registerPlugin( 'dlxgb-commands-frontend', {
