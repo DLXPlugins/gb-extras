@@ -32,6 +32,7 @@ export function useTransformParagraphToGBTextCommand() {
 		name: 'dlx-transform-paragraphs-to-gb-text',
 		label: 'GenerateBlocks: Convert Paragraphs to Text Blocks',
 		searchLabel: 'Convert/transform all core paragraph blocks to GenerateBlocks v2 text blocks',
+		keywords: [ 'generateblocks', 'transform', 'convert', 'paragraph', 'text', 'block', 'core', 'p', 'bulk' ],
 		icon: <GBIcon width="16" height="16" />,
 		callback: () => {
 			setParagraphTransformConfirmation( true );

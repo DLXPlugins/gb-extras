@@ -32,6 +32,7 @@ export function useTransformHeadingToGBTextCommand() {
 		name: 'dlx-transform-headings-to-gb-text',
 		label: 'GenerateBlocks: Convert Headings to Text Blocks',
 		searchLabel: 'Convert/transform all core heading blocks to GenerateBlocks v2 text blocks',
+		keywords: [ 'generateblocks', 'transform', 'convert', 'heading', 'headline', 'text', 'block', 'core', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'bulk' ],
 		icon: <GBIcon width="16" height="16" />,
 		callback: () => {
 			setHeadingTransformConfirmation( true );

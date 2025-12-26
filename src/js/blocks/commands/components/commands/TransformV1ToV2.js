@@ -22,6 +22,7 @@ export function useTransformV1ToV2Command() {
 		name: 'dlx-transform-v1-blocks-to-v2',
 		label: 'GenerateBlocks: Convert v1 Blocks to v2 (Experimental)',
 		searchLabel: 'Transform/convert all GB GenerateBlocks V1 Blocks to V2 (Experimental)',
+		keywords: [ 'generateblocks', 'transform', 'convert', 'v1', 'v2', 'version', 'migrate', 'upgrade', 'experimental' ],
 		icon: <GBIcon width="16" height="16" />,
 		callback: () => {
 			setBlockTransformConfirmation( true );

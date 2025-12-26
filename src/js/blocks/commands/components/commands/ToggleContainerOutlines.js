@@ -122,6 +122,7 @@ export function useToggleContainerOutlinesCommand() {
 	useCommand( {
 		name: 'dlx-gb-extras-toggle-container-outlines',
 		label: 'GenerateBlocks: Toggle Container/Element Outlines',
+		keywords: [ 'generateblocks', 'outline', 'container', 'element', 'grid', 'toggle', 'show', 'hide', 'visual', 'debug' ],
 		icon: <GBIcon width="16" height="16" />,
 		callback: ( { close } ) => {
 			setShowContainerOutlines( ( prev ) => ! prev );
