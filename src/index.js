@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import { setDefaultBlockName, cloneBlock } from '@wordpress/blocks';
-import { addAction } from '@wordpress/hooks';
-import { isEmpty } from '@wordpress/rich-text';
+import { cloneBlock } from '@wordpress/blocks';
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
 import { useSelect, useDispatch, store } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
-import { debounce } from '@wordpress/compose';
 import './js/blocks/pattern-importer/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';

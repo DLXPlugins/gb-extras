@@ -19,7 +19,7 @@ module.exports = ( env ) => {
 				'gb-extras-commands-frontend': './src/js/blocks/commands/commands-frontend.js',
 			},
 			mode: env.mode,
-			devtool: 'source-map',
+			devtool: env.mode === 'development' ? 'source-map' : false,
 		},
 		{
 			entry: {
