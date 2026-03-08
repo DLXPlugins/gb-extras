@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import { cloneBlock } from '@wordpress/blocks';
 import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
-import { useSelect, useDispatch, store } from '@wordpress/data';
+import { useSelect, useDispatch, store, select } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import './js/blocks/pattern-importer/index.js';
 import ContainerLogo from './js/blocks/components/ContainerIcon.js';
 import ReplaceIcon from './js/blocks/components/ReplaceIcon.js';
 import { v1Blocks, v2Blocks } from './js/blocks/utils/BlockTypes.js';
 import { replaceUniqueIds } from './js/blocks/utils/ReplaceUniqueIds.js';
+import {
+	transformBlockSubtreeFromContext,
+	hasV1BlockInSubtree,
+} from './js/blocks/commands/utils/blockTransforms.js';
 
 const UnGroupIcon = ( props ) => {
 	return (
@@ -320,6 +324,44 @@ const ClearIcon = ( props ) => {
 						wp.data
 							.dispatch( 'core/block-editor' )
 							.replaceBlocks( selectedBlock.clientId, newBlock );
+					} }
+				/>
+			);
+		},
+	} );
+
+	/**
+	 * Convert selected block and its descendants from v1 to v2 (contextual).
+	 */
+	registerPlugin( 'dlx-gb-extras-convert-to-v2-contextual', {
+		render: () => {
+			const selectedBlock = useSelect( ( selectStore ) => {
+				return selectStore( 'core/block-editor' ).getSelectedBlock();
+			}, [] );
+			const selectedBlockCount = useSelect( ( selectStore ) => {
+				return selectStore( 'core/block-editor' ).getSelectedBlockCount();
+			}, [] );
+			const dispatch = useDispatch();
+
+			if ( selectedBlockCount !== 1 || selectedBlock === null ) {
+				return null;
+			}
+			if (
+				typeof gbExtrasPatternInserter !== 'undefined' &&
+				'false' === ( gbExtrasPatternInserter.enableV1Transformations || 'false' )
+			) {
+				return null;
+			}
+			if ( ! hasV1BlockInSubtree( selectedBlock ) ) {
+				return null;
+			}
+
+			return (
+				<PluginBlockSettingsMenuItem
+					icon={ <ReplaceIcon /> }
+					label="Convert v1 Blocks to v2"
+					onClick={ () => {
+						transformBlockSubtreeFromContext( selectedBlock, select, dispatch );
 					} }
 				/>
 			);
