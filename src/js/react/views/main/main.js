@@ -3,7 +3,6 @@ import React, { Suspense, useState } from 'react';
 import {
 	ToggleControl,
 	CheckboxControl,
-	SelectControl,
 	TextControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -316,8 +315,6 @@ const Interface = ( props ) => {
 										{
 											Object.values( dlxGBExtrasAdmin.postTypes ).map( ( postType ) => {
 												const postTypeSlug = postType.name;
-												const enabledPostTypes = getValues( 'enabledPostTypes' );
-												const checked = enabledPostTypes && enabledPostTypes[ postTypeSlug ] ? true : false;
 												return (
 													<Controller
 														key={ postTypeSlug }
@@ -367,7 +364,7 @@ const Interface = ( props ) => {
 															setValue( 'adminMenuBar.replaceWithFullMenu', false );
 														}
 													} }
-													help={ __( 'When disabled, all GenerateBlocks admin bar menu items will be hidden from the top toolbar.', 'gb-extras' ) }
+													help={ __( 'Administrators and Editors only: when disabled, all GenerateBlocks admin bar menu items are hidden from the top toolbar for those roles. Other roles keep the default menu.', 'gb-extras' ) }
 												/>
 											) }
 										/>
@@ -382,7 +379,7 @@ const Interface = ( props ) => {
 														label={ __( 'Replace Overlay Panels with Full GenerateBlocks Menu', 'gb-extras' ) }
 														checked={ value ?? false }
 														onChange={ onChange }
-														help={ __( 'When enabled, replaces the Overlay Panels menu with a full GenerateBlocks menu containing Settings, Local Patterns, Global Styles, Overlay Panels, Conditions, Asset Library, and GB Extras.', 'gb-extras' ) }
+														help={ __( 'Administrators and Editors only: when enabled, replaces the Overlay Panels menu with a full GenerateBlocks menu containing Settings, Local Patterns, Global Styles, Overlay Panels, Conditions, Asset Library, and GB Extras.', 'gb-extras' ) }
 													/>
 												) }
 											/>

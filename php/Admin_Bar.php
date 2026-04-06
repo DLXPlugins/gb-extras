@@ -30,11 +30,28 @@ class Admin_Bar {
 	}
 
 	/**
+	 * Whether the current user may receive GB Extras admin bar changes (hide menu or full menu replacement).
+	 *
+	 * @return bool True when the user is an administrator or editor.
+	 */
+	private function current_user_can_use_admin_bar_customizations() {
+		if ( is_multisite() && is_super_admin() ) {
+			return true;
+		}
+
+		return current_user_can( 'edit_others_posts' );
+	}
+
+	/**
 	 * Modify admin bar items based on options.
 	 *
 	 * @param \WP_Admin_Bar $admin_bar The admin bar object.
 	 */
 	public function modify_admin_bar_items( $admin_bar ) {
+		if ( ! $this->current_user_can_use_admin_bar_customizations() ) {
+			return;
+		}
+
 		$options                = Options::get_options();
 		$admin_menu_bar         = $options['adminMenuBar'] ?? array();
 		$enabled                = (bool) ( $admin_menu_bar['enabled'] ?? true );
