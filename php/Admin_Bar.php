@@ -39,7 +39,7 @@ class Admin_Bar {
 			return true;
 		}
 
-		return current_user_can( 'edit_others_posts' );
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
