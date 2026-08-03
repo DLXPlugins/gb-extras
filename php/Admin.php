@@ -395,74 +395,52 @@ class Admin {
 			return;
 		}
 
-		$options     = Options::get_options();
-		$current_tab = Functions::get_admin_tab();
-		if ( null === $current_tab || 'settings' === $current_tab ) {
-			// Enqueue main scripts.
-			$deps = require Functions::get_plugin_dir( 'dist/gb-extras-admin.asset.php' );
-			wp_enqueue_script(
-				'dlx-gb-extras-admin',
-				Functions::get_plugin_url( 'dist/gb-extras-admin.js' ),
-				$deps['dependencies'],
-				$deps['version'],
-				true
-			);
+		// Enqueue main scripts.
+		$deps = require Functions::get_plugin_dir( 'dist/gb-extras-admin.asset.php' );
+		wp_enqueue_script(
+			'dlx-gb-extras-admin',
+			Functions::get_plugin_url( 'dist/gb-extras-admin.js' ),
+			$deps['dependencies'],
+			$deps['version'],
+			true
+		);
 
-			// Get all show in menu post types.
-			$post_types = get_post_types(
-				array(),
-				'objects'
-			);
-			$excluded   = array( 'attachment', 'revision', 'nav_menu_item', 'gblocks_templates', 'gblocks_global_style' );
-			$included   = array(
-				'wp_template',
-				'wp_template_part',
-				'wp_block',
-			);
-			foreach ( $excluded as $exclude ) {
-				if ( isset( $post_types[ $exclude ] ) ) {
-					unset( $post_types[ $exclude ] );
-				}
+		// Get all show in menu post types.
+		$post_types = get_post_types(
+			array(),
+			'objects'
+		);
+		$excluded   = array( 'attachment', 'revision', 'nav_menu_item', 'gblocks_templates', 'gblocks_global_style' );
+		$included   = array(
+			'wp_template',
+			'wp_template_part',
+			'wp_block',
+		);
+		foreach ( $excluded as $exclude ) {
+			if ( isset( $post_types[ $exclude ] ) ) {
+				unset( $post_types[ $exclude ] );
 			}
-			// Exclude those without show_ui as true and not in the included array.
-			foreach ( $post_types as $post_type => $post_type_data ) {
-				if ( ! $post_type_data->show_ui && ! in_array( $post_type, $included, true ) ) {
-					unset( $post_types[ $post_type ] );
-				}
-			}
-
-			wp_localize_script(
-				'dlx-gb-extras-admin',
-				'dlxGBExtrasAdmin',
-				array(
-					'getNonce'     => wp_create_nonce( 'dlx-gb-extras-admin-get-options' ),
-					'saveNonce'    => wp_create_nonce( 'dlx-gb-extras-admin-save-options' ),
-					'resetNonce'   => wp_create_nonce( 'dlx-gb-extras-admin-reset-options' ),
-					'previewNonce' => wp_create_nonce( 'dlx-gb-extras-admin-preview' ),
-					'ajaxurl'      => admin_url( 'admin-ajax.php' ),
-					'postTypes'    => $post_types,
-					'isProActive'  => Functions::is_generateblocks_pro_active(),
-				)
-			);
-		} elseif ( 'license' === $current_tab ) {
-			$deps = require Functions::get_plugin_dir( 'dist/gb-extras-admin-license.asset.php' );
-			wp_enqueue_script(
-				'dlx-gb-extras-admin-license',
-				Functions::get_plugin_url( 'dist/gb-extras-admin-license.js' ),
-				$deps['dependencies'],
-				$deps['version'],
-				true
-			);
-			wp_localize_script(
-				'dlx-gb-extras-admin-license',
-				'dlxGBExtrasLicense',
-				array(
-					'getNonce'    => wp_create_nonce( 'dlx-gb-extras-admin-license-get' ),
-					'saveNonce'   => wp_create_nonce( 'dlx-gb-extras-admin-license-save' ),
-					'revokeNonce' => wp_create_nonce( 'dlx-gb-extras-admin-license-revoke' ),
-				)
-			);
 		}
+		// Exclude those without show_ui as true and not in the included array.
+		foreach ( $post_types as $post_type => $post_type_data ) {
+			if ( ! $post_type_data->show_ui && ! in_array( $post_type, $included, true ) ) {
+				unset( $post_types[ $post_type ] );
+			}
+		}
+
+		wp_localize_script(
+			'dlx-gb-extras-admin',
+			'dlxGBExtrasAdmin',
+			array(
+				'getNonce'     => wp_create_nonce( 'dlx-gb-extras-admin-get-options' ),
+				'saveNonce'    => wp_create_nonce( 'dlx-gb-extras-admin-save-options' ),
+				'resetNonce'   => wp_create_nonce( 'dlx-gb-extras-admin-reset-options' ),
+				'previewNonce' => wp_create_nonce( 'dlx-gb-extras-admin-preview' ),
+				'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+				'postTypes'    => $post_types,
+				'isProActive'  => Functions::is_generateblocks_pro_active(),
+			)
+		);
 
 		// Enqueue admin styles.
 		wp_enqueue_style(
@@ -479,43 +457,12 @@ class Admin {
 	 */
 	public function admin_page() {
 		?>
-		<div class="dlx-gb-extras-admin-wrap">
-			<?php
-			$current_tab        = Functions::get_admin_tab();
-			$settings_tab_class = array( 'nav-tab' );
-			if ( null === $current_tab || 'settings' === $current_tab ) {
-				$settings_tab_class[] = 'nav-tab-active';
-			}
-			$license_tab_class = array( 'nav-tab' );
-			if ( 'license' === $current_tab ) {
-				$license_tab_class[] = 'nav-tab-active';
-			}
-			$help_tab_class = array( 'nav-tab' );
-			if ( 'help' === $current_tab ) {
-				$help_tab_class[] = 'nav-tab-active';
-			}
-			?>
-			<main class="dlx-gb-extras-admin-body-wrapper">
-				<div class="has-admin-container-body">
-					<nav class="nav-tab-wrapper">
-						<a  class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url() ); ?>"><?php esc_html_e( 'Settings', 'gb-extras' ); ?></a>
-						<a  class="<?php echo esc_attr( implode( ' ', $license_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'license' ) ); ?>"><?php esc_html_e( 'License', 'gb-extras' ); ?></a>
-					</nav>
+		<div class="wrap gblocks-dashboard-wrap dlx-gb-extras-admin-wrap">
+			<div class="generateblocks-settings-area">
+				<div class="generateblocks-settings-main">
+					<div id="dlx-gb-extras"></div>
 				</div>
-				<div class="dlx-gb-extras-body__content">
-					<?php
-					if ( null === $current_tab || 'settings' === $current_tab ) {
-						?>
-							<div id="dlx-gb-extras"></div>
-						<?php
-					} elseif ( 'license' === $current_tab ) {
-						?>
-							<div id="dlx-gb-extras-license"></div>
-						<?php
-					}
-					?>
-				</div>
-			</main>
+			</div>
 		</div>
 		<?php
 	}
