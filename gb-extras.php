@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       GenerateBlocks Extras
  * Description:       A collection of enhancements for the GenerateBlocks plugins.
- * Version:           2.6.1
- * Requires at least: 6.5
+ * Version:           3.0.0
+ * Requires at least: 6.8
  * Requires PHP:      7.2
  * Author:            Ronald Huereca
  * License:           GPL v2 or later
@@ -17,7 +17,7 @@
 
 namespace DLXPlugins\GBExtras;
 
-define( 'GB_EXTRAS_VERSION', '2.6.1' );
+define( 'GB_EXTRAS_VERSION', '3.0.0' );
 define( 'GB_EXTRAS_FILE', __FILE__ );
 
 // Support for site-level autoloading.
