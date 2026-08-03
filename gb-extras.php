@@ -1,13 +1,11 @@
 <?php
 /**
- * Plugin Name:       GB Extras
- * Plugin URI:        https://dlxplugins.com/plugins/gb-extras/
+ * Plugin Name:       GenerateBlocks Extras
  * Description:       A collection of enhancements for the GenerateBlocks plugins.
  * Version:           2.6.1
  * Requires at least: 6.5
  * Requires PHP:      7.2
- * Author:            DLX Plugins
- * Author URI:        https://dlxplugins.com
+ * Author:            Ronald Huereca
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       gb-extras
@@ -21,7 +19,6 @@ namespace DLXPlugins\GBExtras;
 
 define( 'GB_EXTRAS_VERSION', '2.6.1' );
 define( 'GB_EXTRAS_FILE', __FILE__ );
-define( 'GB_EXTRAS_PRODUCT_ID', 37604 );
 
 // Support for site-level autoloading.
 if ( file_exists( __DIR__ . '/lib/autoload.php' ) ) {
@@ -41,9 +38,7 @@ class GBExtras {
 	private static $instance = null;
 
 	/**
-	 * Return an instance of the class
-	 *
-	 * Return an instance of the ReflectorDLX Class.
+	 * Return an instance of the class.
 	 *
 	 * @since 1.0.0
 	 *

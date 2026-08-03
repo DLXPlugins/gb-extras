@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import {
 	ToggleControl,
 	CheckboxControl,
@@ -11,10 +11,7 @@ import { __ } from '@wordpress/i18n';
 import { useForm, Controller, useWatch, useFormState } from 'react-hook-form';
 import { useAsyncResource } from 'use-async-resource';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faTriangleExclamation as TriangleExclamation,
-	faCircleCheck as CircleCheck,
-} from '@fortawesome/free-solid-svg-icons';
+import { faTriangleExclamation as TriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 // Local imports.
 import SendCommand from '../../utils/SendCommand';
@@ -46,8 +43,6 @@ const Interface = ( props ) => {
 	const { defaults } = props;
 	const response = defaults();
 	const { data } = response.data;
-
-	const [ licenseValid ] = useState( data.licenseValid );
 
 	const {
 		control,
@@ -84,53 +79,8 @@ const Interface = ( props ) => {
 		control,
 	} );
 
-	// Retrieve a prompt based on the license status.
-	const getPrompt = () => {
-		// Check to see if the license nag is disabled.
-		if ( 'valid' === licenseValid && ! getValues( 'enableLicenseAlerts' ) ) {
-			return null;
-		}
-		if ( 'valid' === licenseValid ) {
-			return (
-				<Notice
-					message={ __(
-						'Thank you for supporting this plugin. Your license key is active and you are receiving updates and support.',
-						'gb-extras'
-					) }
-					status="success"
-					politeness="assertive"
-					inline={ false }
-					icon={ () => (
-						<FontAwesomeIcon
-							icon={ CircleCheck }
-							style={ { color: 'currentColor' } }
-						/>
-					) }
-				/>
-			);
-		}
-		return (
-			<Notice
-				message={ __(
-					'Your license key is not active. Please activate your license key to receive updates and support.',
-					'gb-extras'
-				) }
-				status="warning"
-				politeness="assertive"
-				inline={ false }
-				icon={ () => (
-					<FontAwesomeIcon
-						size="1x"
-						icon={ TriangleExclamation }
-						style={ { color: 'currentColor' } }
-					/>
-				) }
-			/>
-		);
-	};
 	return (
 		<>
-			{ getPrompt() }
 			{ /* eslint-disable-next-line no-unused-vars */ }
 			<form onSubmit={ handleSubmit( ( formData ) => {} ) }>
 				<div id="dlx-gb-extras-admin-table">

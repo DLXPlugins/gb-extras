@@ -332,7 +332,7 @@ export function useNavigateToSettingsCommand() {
 
 ## PHP Enqueue Setup
 
-Based on the [WordPress 6.9 Command Palette tutorial](https://dlxplugins.com/tutorials/how-to-manage-the-admin-wide-command-palette-in-wordpress-6-9/), each command context requires different PHP enqueue hooks.
+Based on WordPress 6.9 Command Palette patterns, each command context requires different PHP enqueue hooks.
 
 **Implementation Location**: Add methods to `php/Blocks.php` class, or create a new `php/Commands.php` class if preferred.
 
@@ -586,7 +586,7 @@ registerPlugin( 'dlxgb-commands-frontend', {
 - Global state (`globalShowContainerOutlines`) will need to be managed carefully across contexts.
 - The `addOutlineClasses` HOC filter registration should remain in the block editor commands file since it's editor-specific.
 - **Critical**: Block editor commands MUST use `enqueue_block_editor_assets` hook, NOT `enqueue_block_assets`.
-- **Critical**: Admin-wide commands require both `registerPlugin` (for block editor) and `createRoot` (for admin area) as shown in the [WordPress 6.9 tutorial](https://dlxplugins.com/tutorials/how-to-manage-the-admin-wide-command-palette-in-wordpress-6-9/).
+- **Critical**: Admin-wide commands require both `registerPlugin` (for block editor) and `createRoot` (for admin area).
 - Frontend commands require `wp_enqueue_command_palette_assets()` function (WordPress 6.9+).
 - The command palette acts more as a site search when enabled on the frontend.
 

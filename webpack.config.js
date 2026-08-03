@@ -13,10 +13,14 @@ module.exports = ( env ) => {
 			},
 			entry: {
 				index: './src/index.js',
-				'gb-extras-block-labels': './src/js/blocks/components/GBBlockLabels/index.js',
-				'gb-extras-commands-block-editor': './src/js/blocks/commands/commands-block-editor.js',
-				'gb-extras-commands-admin': './src/js/blocks/commands/commands-admin.js',
-				'gb-extras-commands-frontend': './src/js/blocks/commands/commands-frontend.js',
+				'gb-extras-block-labels':
+					'./src/js/blocks/components/GBBlockLabels/index.js',
+				'gb-extras-commands-block-editor':
+					'./src/js/blocks/commands/commands-block-editor.js',
+				'gb-extras-commands-admin':
+					'./src/js/blocks/commands/commands-admin.js',
+				'gb-extras-commands-frontend':
+					'./src/js/blocks/commands/commands-frontend.js',
 			},
 			mode: env.mode,
 			devtool: env.mode === 'development' ? 'source-map' : false,
@@ -24,7 +28,6 @@ module.exports = ( env ) => {
 		{
 			entry: {
 				'gb-extras-admin': './src/js/react/views/main/index.js',
-				'gb-extras-admin-license': './src/js/react/views/license/index.js',
 				'gb-extras-admin-css': './src/scss/admin.scss',
 			},
 			resolve: {
@@ -101,7 +104,11 @@ module.exports = ( env ) => {
 					},
 				],
 			},
-			plugins: [ new RemoveEmptyScriptsPlugin(), new MiniCssExtractPlugin(), new DependencyExtractionWebpackPlugin() ],
+			plugins: [
+				new RemoveEmptyScriptsPlugin(),
+				new MiniCssExtractPlugin(),
+				new DependencyExtractionWebpackPlugin(),
+			],
 		},
 	];
 };

@@ -31,18 +31,6 @@ class Admin {
 		// For resetting the options.
 		add_action( 'wp_ajax_dlx_gb_extras_reset_options', array( $this, 'ajax_reset_options' ) );
 
-		// For getting license options.
-		add_action( 'wp_ajax_dlx_gb_extras_license_get_options', array( $this, 'ajax_license_get_options' ) );
-
-		// For revoking a license.
-		add_action( 'wp_ajax_dlx_gb_extras_revoke_license', array( $this, 'ajax_revoke_license' ) );
-
-		// For saving a license.
-		add_action( 'wp_ajax_dlx_gb_extras_save_license', array( $this, 'ajax_save_license' ) );
-
-		// For initializing EDD license.
-		add_action( 'admin_init', array( $this, 'init_license_system' ) );
-
 		// For initializing settings links on the plugins screen.
 		add_action( 'admin_init', array( $this, 'init_settings_links' ) );
 
@@ -82,142 +70,12 @@ class Admin {
 	public function plugin_settings_link( $settings ) {
 		$setting_links = array(
 			'settings' => sprintf( '<a href="%s">%s</a>', esc_url( Functions::get_settings_url() ), esc_html__( 'Settings', 'gb-extras' ) ),
-			'docs'     => sprintf( '<a href="%s">%s</a>', esc_url( 'https://docs.dlxplugins.com/v/gb-extras/' ), esc_html__( 'Docs', 'gb-extras' ) ),
-			'site'     => sprintf( '<a href="%s" style="color: #f60098;">%s</a>', esc_url( 'https://dlxplugins.com/plugins/gb-extras/' ), esc_html__( 'Plugin Home', 'gb-extras' ) ),
 		);
 		if ( ! is_array( $settings ) ) {
 			return $setting_links;
 		} else {
 			return array_merge( $setting_links, $settings );
 		}
-	}
-
-	/**
-	 * Ajax revoke license.
-	 */
-	public function ajax_revoke_license() {
-		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'dlx-gb-extras-admin-license-revoke' ) || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array() );
-		}
-
-		$form_data = filter_input( INPUT_POST, 'formData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( ! $form_data ) {
-			wp_send_json_error( array() );
-		}
-		$form_data = Functions::sanitize_array_recursive( $form_data );
-
-		// Get license.
-		$license_key    = $form_data['licenseKey'] ?? '';
-		$license_helper = new Plugin_License( $license_key );
-		$response       = $license_helper->perform_action( 'deactivate_license', $license_key, true );
-
-		// Overrride options.
-		$options = Options::get_options();
-
-		// Clear options.
-		$options['licenseValid']     = false;
-		$options['licenseActivated'] = false;
-		$options['licenseKey']       = '';
-		$options['licenseData']      = false;
-
-		Options::update_options( $options );
-		if ( $response['license_errors'] ) {
-			$license_helper->set_activated_status( false );
-			wp_send_json_error( $response );
-		}
-
-		$license_helper->set_activated_status( false );
-		$options['licenseValid']     = false;
-		$options['licenseActivated'] = false;
-		$options['licenseKey']       = '';
-		$options['licenseData']      = false;
-
-		// Update options (force).
-		Options::update_options( $options );
-
-		wp_send_json_success( $options );
-	}
-
-	/**
-	 * Save/Check a license key.
-	 */
-	public function ajax_save_license() {
-		if ( ! wp_verify_nonce( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ), 'dlx-gb-extras-admin-license-save' ) || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array() );
-		}
-
-		$form_data = filter_input( INPUT_POST, 'formData', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( ! $form_data ) {
-			wp_send_json_error( array() );
-		}
-		$form_data = Functions::sanitize_array_recursive( $form_data );
-
-		// Get license.
-		$license_key    = $form_data['licenseKey'] ?? '';
-		$license_helper = new Plugin_License( $license_key );
-		$response       = $license_helper->perform_action( 'activate_license', $license_key, true );
-
-		if ( $response['license_errors'] ) {
-			$license_helper->set_activated_status( false );
-			wp_send_json_error( $response );
-		}
-
-		// Get latest options.
-		$options                = Options::get_options( true );
-		$options['licenseKey']  = $license_key;
-		$options['licenseData'] = get_site_transient( 'dlxgbhacks_core_license_check', array() );
-		wp_send_json_success( $options );
-	}
-
-	/**
-	 * Allow for automatic updates.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function init_license_system() {
-		$options = Options::get_options();
-
-		$license_valid = $options['licenseValid'] ?? '';
-		if ( isset( $options['licenseKey'] ) && 'valid' === $license_valid ) {
-			// setup the updater.
-			$edd_updater = new Plugin_Updater(
-				'https://dlxplugins.com',
-				GB_EXTRAS_FILE,
-				array(
-					'version' => Functions::get_plugin_version(),
-					'license' => $options['licenseKey'],
-					'item_id' => GB_EXTRAS_PRODUCT_ID,
-					'author'  => 'Ronald Huereca',
-					'beta'    => true,
-					'url'     => home_url(),
-				)
-			);
-		}
-	}
-
-	/**
-	 * Get license options via Ajax.
-	 */
-	public function ajax_license_get_options() {
-		// Get nonce.
-		$nonce = sanitize_text_field( filter_input( INPUT_POST, 'nonce', FILTER_DEFAULT ) );
-
-		// Verify nonce.
-		$nonce_action = 'dlx-gb-extras-admin-license-get';
-		if ( ! wp_verify_nonce( $nonce, $nonce_action ) || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error(
-				array(
-					'message'     => __( 'Nonce or permission verification failed.', 'gb-extras' ),
-					'type'        => 'error',
-					'dismissable' => true,
-					'title'       => __( 'Error', 'gb-extras' ),
-				)
-			);
-		}
-		$options                = Options::get_options( true );
-		$options['licenseData'] = get_site_transient( 'dlxgbhacks_core_license_check', array() );
-		wp_send_json_success( $options );
 	}
 
 	/**
@@ -314,17 +172,6 @@ class Admin {
 
 		// Get defaults and reset.
 		$default_options = Options::get_defaults();
-
-		// Don't reset license.
-		$license_keys = array(
-			'licenseKey',
-			'licenseValid',
-			'licenseActivated',
-			'licenseData',
-		);
-		foreach ( $license_keys as $license_key ) {
-			$default_options[ $license_key ] = $options[ $license_key ];
-		}
 
 		Options::update_options( $default_options );
 

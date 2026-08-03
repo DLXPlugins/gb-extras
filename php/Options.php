@@ -116,8 +116,6 @@ class Options {
 		$defaults = array(
 			'enableAdobeFonts'              => true,
 			'enableMarkdownToHeadlineBlock' => false,
-			'licenseKey'                    => '',
-			'priceId'                       => '1',
 			'enabledPostTypes'              => array(
 				'post' => true,
 				'page' => true,
