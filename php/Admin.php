@@ -45,6 +45,22 @@ class Admin {
 
 		// For initializing settings links on the plugins screen.
 		add_action( 'admin_init', array( $this, 'init_settings_links' ) );
+
+		// Load GenerateBlocks settings CSS / dashboard body class on the Extras screen.
+		add_filter( 'generateblocks_dashboard_screens', array( $this, 'add_dashboard_screen' ) );
+	}
+
+	/**
+	 * Register the Extras admin screen as a GenerateBlocks dashboard page.
+	 *
+	 * This enqueues GenerateBlocks settings.css and adds the dashboard body class.
+	 *
+	 * @param array $screens Dashboard screen IDs.
+	 * @return array
+	 */
+	public function add_dashboard_screen( $screens ) {
+		$screens[] = 'generateblocks_page_dlx-gb-extras';
+		return $screens;
 	}
 
 	/**
@@ -464,19 +480,6 @@ class Admin {
 	public function admin_page() {
 		?>
 		<div class="dlx-gb-extras-admin-wrap">
-			<header class="dlx-gb-extras-admin-header">
-				<div class="dlx-gb-extras-logo-wrapper">
-					<div class="dlx-gb-extras-logo">
-						<h2 id="dlx-gb-extras-admin-header">
-							<img src="<?php echo esc_url( Functions::get_plugin_url( 'assets/img/logo.png' ) ); ?>" alt="GenerateBlocks Hacks" />
-						</h2>
-					</div>
-					<div class="header__btn-wrap">
-						<a href="<?php echo esc_url( 'https://docs.dlxplugins.com/v/gb-extras/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Docs', 'gb-extras' ); ?></a>
-						<a href="<?php echo esc_url( 'https://dlxplugins.com/support/' ); ?>" target="_blank" rel="noopener noreferrer" class="has__btn-primary"><?php esc_html_e( 'Support', 'gb-extras' ); ?></a>
-					</div>
-				</div>
-			</header>
 			<?php
 			$current_tab        = Functions::get_admin_tab();
 			$settings_tab_class = array( 'nav-tab' );
