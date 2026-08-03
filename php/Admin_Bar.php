@@ -208,6 +208,30 @@ class Admin_Bar {
 					'href'   => admin_url( 'admin.php?page=generateblocks-asset-library' ),
 				)
 			);
+
+			// Add Forms only if enabled in GenerateBlocks Pro.
+			if ( function_exists( 'generateblocks_pro_forms_enabled' ) && generateblocks_pro_forms_enabled() ) {
+				$admin_bar->add_node(
+					array(
+						'parent' => 'generateblocks-menu',
+						'id'     => 'generateblocks-forms',
+						'title'  => __( 'Forms', 'gb-extras' ),
+						'href'   => admin_url( 'admin.php?page=generateblocks-forms' ),
+					)
+				);
+			}
+
+			// Add Editor Access only if available in GenerateBlocks Pro.
+			if ( function_exists( 'generateblocks_pro_editor_access_enabled' ) && generateblocks_pro_editor_access_enabled() ) {
+				$admin_bar->add_node(
+					array(
+						'parent' => 'generateblocks-menu',
+						'id'     => 'generateblocks-editor-access',
+						'title'  => __( 'Editor Access', 'gb-extras' ),
+						'href'   => admin_url( 'admin.php?page=generateblocks-editor-access' ),
+					)
+				);
+			}
 		}
 	}
 }
