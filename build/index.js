@@ -6192,7 +6192,6 @@ module.exports = window["wp"]["data"];
 
 /***/ },
 
-<<<<<<< Updated upstream
 /***/ "@wordpress/editor"
 /*!********************************!*\
   !*** external ["wp","editor"] ***!
@@ -6201,16 +6200,6 @@ module.exports = window["wp"]["data"];
 
 "use strict";
 module.exports = window["wp"]["editor"];
-=======
-/***/ "@wordpress/edit-post"
-/*!**********************************!*\
-  !*** external ["wp","editPost"] ***!
-  \**********************************/
-(module) {
-
-"use strict";
-module.exports = window["wp"]["editPost"];
->>>>>>> Stashed changes
 
 /***/ },
 
@@ -6333,13 +6322,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-<<<<<<< Updated upstream
 /* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
 /* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__);
-=======
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/edit-post */ "@wordpress/edit-post");
-/* harmony import */ var _wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__);
->>>>>>> Stashed changes
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
@@ -6465,11 +6449,7 @@ var ClearIcon = function ClearIcon(props) {
 
       // If a block is selected, add toolbar option to wrap container.
       if (clientIds.length > 0) {
-<<<<<<< Updated upstream
         return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
-=======
-        return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
->>>>>>> Stashed changes
           icon: /*#__PURE__*/React.createElement(_js_blocks_components_ContainerIcon_js__WEBPACK_IMPORTED_MODULE_6__["default"], null),
           label: "Wrap in Container",
           onClick: function onClick() {
@@ -6522,11 +6502,7 @@ var ClearIcon = function ClearIcon(props) {
       }
 
       // If more than one block is selected, add toolbar option to replace the Unique ID.
-<<<<<<< Updated upstream
       return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
-=======
-      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
->>>>>>> Stashed changes
         icon: /*#__PURE__*/React.createElement(_js_blocks_components_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_7__["default"], null),
         label: "Generate New Unique IDs",
         onClick: function onClick() {
@@ -6566,11 +6542,7 @@ var ClearIcon = function ClearIcon(props) {
       }
 
       // If more than one block is selected, add toolbar option to replace the Unique ID.
-<<<<<<< Updated upstream
       return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
-=======
-      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
->>>>>>> Stashed changes
         icon: /*#__PURE__*/React.createElement(ClearIcon, null),
         label: "Clear Block Styles",
         onClick: function onClick() {
@@ -6617,11 +6589,7 @@ var ClearIcon = function ClearIcon(props) {
       var firstChildBlock = selectedBlock.innerBlocks[0] || null;
 
       // If more than one block is selected, add toolbar option to unwrap container.
-<<<<<<< Updated upstream
       return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
-=======
-      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
->>>>>>> Stashed changes
         icon: /*#__PURE__*/React.createElement(UnGroupIcon, null),
         label: unwrapLabel,
         onClick: function onClick() {
@@ -6657,11 +6625,7 @@ var ClearIcon = function ClearIcon(props) {
       }
 
       // If more than one block is selected, add toolbar option to unwrap container.
-<<<<<<< Updated upstream
       return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
-=======
-      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
->>>>>>> Stashed changes
         icon: /*#__PURE__*/React.createElement(LinkIcon, null),
         label: "Transform Shape to Link",
         onClick: function onClick() {
@@ -6698,11 +6662,7 @@ var ClearIcon = function ClearIcon(props) {
       if (!(0,_js_blocks_commands_utils_blockTransforms_js__WEBPACK_IMPORTED_MODULE_10__.hasV1BlockInSubtree)(selectedBlock)) {
         return null;
       }
-<<<<<<< Updated upstream
       return /*#__PURE__*/React.createElement(_wordpress_editor__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
-=======
-      return /*#__PURE__*/React.createElement(_wordpress_edit_post__WEBPACK_IMPORTED_MODULE_2__.PluginBlockSettingsMenuItem, {
->>>>>>> Stashed changes
         icon: /*#__PURE__*/React.createElement(_js_blocks_components_ReplaceIcon_js__WEBPACK_IMPORTED_MODULE_7__["default"], null),
         label: "Convert v1 Blocks to v2",
         onClick: function onClick() {

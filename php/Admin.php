@@ -379,15 +379,24 @@ class Admin {
 
 			// Get all show in menu post types.
 			$post_types = get_post_types(
-				array(
-					'show_ui' => true,
-				),
+				array(),
 				'objects'
 			);
 			$excluded   = array( 'attachment', 'revision', 'nav_menu_item', 'gblocks_templates', 'gblocks_global_style' );
+			$included   = array(
+				'wp_template',
+				'wp_template_part',
+				'wp_block',
+			);
 			foreach ( $excluded as $exclude ) {
 				if ( isset( $post_types[ $exclude ] ) ) {
 					unset( $post_types[ $exclude ] );
+				}
+			}
+			// Exclude those without show_ui as true and not in the included array.
+			foreach ( $post_types as $post_type => $post_type_data ) {
+				if ( ! $post_type_data->show_ui && ! in_array( $post_type, $included, true ) ) {
+					unset( $post_types[ $post_type ] );
 				}
 			}
 
