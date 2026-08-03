@@ -13,7 +13,7 @@ Thanks for contributing to GenerateBlocks Extras.
 
 - Follow WordPress PHP and JavaScript coding standards.
 - Use text domain `gb-extras` for user-facing strings.
-- Do not commit secrets (especially Font Awesome / `.npmrc` tokens).
+- Do not commit secrets (especially `.npmrc` tokens).
 - Do not reintroduce commercial licensing, updaters, or marketing/docs outbound links.
 - Keep PRs focused; document known debt in [AGENTS.md](AGENTS.md) rather than mixing drive-by cleanups with unrelated features.
 

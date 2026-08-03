@@ -57,7 +57,7 @@ Renaming any of these needs a migration plan (saved options, content with the pa
 
 - Reintroduce EDD / commercial license UI, updater phone-home, or product IDs.
 - Add Docs / Plugin Home / DLX marketing links on the Plugins screen or README.
-- Commit `.npmrc` or Font Awesome registry tokens (`.npmrc` is gitignored).
+- Commit `.npmrc` or other registry auth tokens (`.npmrc` is gitignored).
 - Assume `menus.md` or `2.5.md` exist — they are gitignored and not part of the repo.
 - Treat root historical plan files as source of truth; use `docs/` instead.
 
@@ -71,7 +71,6 @@ Renaming any of these needs a migration plan (saved options, content with the pa
 
 ## Known debt (document; do not drive-by “fix” in unrelated PRs)
 
-- Font Awesome Pro (`@fortawesome/pro-duotone-svg-icons`) + private registry — blocks clean public `npm install`.
 - `.gitignore` ignores `dist/` and `package-lock.json` while runtime may need built `dist/` assets.
 - Dead / incomplete: `allowedGoogleFonts` option, unused `SaveSVGToAssetLibraryModal.js`, `enableDefaultHeadlineBlock` referenced in UI without a default in `Options.php`.
 - Misnamed leftovers: `wppic_block_file_extensions` filter in `Functions.php`; occasional wrong text domains (`alerts-dlx`, `dlx-gb-extras`).

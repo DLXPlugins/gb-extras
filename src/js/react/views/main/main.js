@@ -10,8 +10,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useForm, Controller, useWatch, useFormState } from 'react-hook-form';
 import { useAsyncResource } from 'use-async-resource';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTriangleExclamation as TriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { AlertCircle } from 'lucide-react';
 
 // Local imports.
 import SendCommand from '../../utils/SendCommand';
@@ -307,8 +306,8 @@ const Interface = ( props ) => {
 											politeness="assertive"
 											inline={ true }
 											icon={ () => (
-												<FontAwesomeIcon
-													icon={ TriangleExclamation }
+												<AlertCircle
+													size={ 16 }
 													style={ { color: 'currentColor' } }
 												/>
 											) }
