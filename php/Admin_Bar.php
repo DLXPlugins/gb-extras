@@ -187,28 +187,6 @@ class Admin_Bar {
 				);
 			}
 
-			// Add Conditions only if enabled in GenerateBlocks settings.
-			if ( $conditions_enabled ) {
-				$admin_bar->add_node(
-					array(
-						'parent' => 'generateblocks-menu',
-						'id'     => 'generateblocks-conditions',
-						'title'  => __( 'Conditions', 'gb-extras' ),
-						'href'   => admin_url( 'admin.php?page=generateblocks-conditions' ),
-					)
-				);
-			}
-
-			// Add Asset Library.
-			$admin_bar->add_node(
-				array(
-					'parent' => 'generateblocks-menu',
-					'id'     => 'generateblocks-asset-library',
-					'title'  => __( 'Asset Library', 'gb-extras' ),
-					'href'   => admin_url( 'admin.php?page=generateblocks-asset-library' ),
-				)
-			);
-
 			// Add Forms only if enabled in GenerateBlocks Pro.
 			if ( function_exists( 'generateblocks_pro_forms_enabled' ) && generateblocks_pro_forms_enabled() ) {
 				$admin_bar->add_node(
@@ -217,6 +195,18 @@ class Admin_Bar {
 						'id'     => 'generateblocks-forms',
 						'title'  => __( 'Forms', 'gb-extras' ),
 						'href'   => admin_url( 'admin.php?page=generateblocks-forms' ),
+					)
+				);
+			}
+
+			// Add Conditions only if enabled in GenerateBlocks settings.
+			if ( $conditions_enabled ) {
+				$admin_bar->add_node(
+					array(
+						'parent' => 'generateblocks-menu',
+						'id'     => 'generateblocks-conditions',
+						'title'  => __( 'Conditions', 'gb-extras' ),
+						'href'   => admin_url( 'admin.php?page=generateblocks-conditions' ),
 					)
 				);
 			}
@@ -232,6 +222,16 @@ class Admin_Bar {
 					)
 				);
 			}
+
+			// Add Asset Library.
+			$admin_bar->add_node(
+				array(
+					'parent' => 'generateblocks-menu',
+					'id'     => 'generateblocks-asset-library',
+					'title'  => __( 'Asset Library', 'gb-extras' ),
+					'href'   => admin_url( 'admin.php?page=generateblocks-asset-library' ),
+				)
+			);
 		}
 	}
 }
