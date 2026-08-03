@@ -25,6 +25,7 @@ class Blocks {
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_adobe_fonts' ), 10, 1 );
 		add_filter( 'generateblocks_typography_font_family_list', array( $self, 'add_blocksy_adobe_fonts' ), 10, 1 );
 		add_filter( 'generateblocks_do_content', array( $self, 'add_post_type_content' ), 10, 2 );
+		add_action( 'save_post', array( $self, 'maybe_regenerate_styles_on_save' ), 20, 2 );
 
 		// Add any block categories needed.
 		add_filter( 'block_categories_all', array( $self, 'add_block_categories' ), 500, 1 ); // High priority so others can add their categories first.
@@ -101,6 +102,34 @@ class Blocks {
 		return $content;
 	}
 
+	/**
+	 * Clear GenerateBlocks dynamic CSS tracking when a selected post type is saved.
+	 *
+	 * @param int      $post_id Post ID.
+	 * @param \WP_Post $post    Post object.
+	 */
+	public function maybe_regenerate_styles_on_save( $post_id, $post ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+			return;
+		}
+
+		if ( empty( $post->post_type ) ) {
+			return;
+		}
+
+		$options               = Options::get_options();
+		$auto_regen_post_types = $options['autoRegenerateStylesPostTypes'] ?? array();
+
+		if ( empty( $auto_regen_post_types[ $post->post_type ] ) ) {
+			return;
+		}
+
+		update_option( 'generateblocks_dynamic_css_posts', array() );
+	}
 
 	/**
 	 * Add Adobe Fonts to the list of fonts.

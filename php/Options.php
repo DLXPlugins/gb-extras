@@ -122,6 +122,7 @@ class Options {
 				'post' => true,
 				'page' => true,
 			),
+			'autoRegenerateStylesPostTypes' => array(),
 			'allowedGoogleFonts'            => array(),
 			'enableV1Transformations'       => false,
 			'enableV1Blocks'                => false,
