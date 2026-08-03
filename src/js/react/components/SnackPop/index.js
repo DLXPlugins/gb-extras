@@ -24,17 +24,18 @@ const SnackPop = ( props ) => {
 		isPersistent: false,
 		isSuccess: false,
 		loadingMessage,
-		politeness: 'polite', /* can also be assertive */
+		politeness: 'polite' /* can also be assertive */,
 	};
 
-	const [ notificationOptions, setNotificationOptions ] = useState( snackbarDefaults );
+	const [ notificationOptions, setNotificationOptions ] =
+		useState( snackbarDefaults );
 	const [ isBusy, setIsBusy ] = useState( false );
 	const [ isModalVisible, setIsModalVisible ] = useState( false );
 	const [ isSnackbarVisible, setIsSnackbarVisible ] = useState( false );
 	const [ snackbarTimeout, setSnackbarTimeout ] = useState( null );
 
 	useEffect( () => {
-		const getPromise = async () => {
+		const getPromise = async() => {
 			const response = await ajaxOptions;
 			return response;
 		};
@@ -44,79 +45,87 @@ const SnackPop = ( props ) => {
 			setIsSnackbarVisible( true );
 			setIsBusy( true );
 
-			getPromise().then( ( response ) => {
-				const { data } = response;
-				const { success: isSuccess } = data;
-				const { data: responseData } = data;
+			getPromise()
+				.then( ( response ) => {
+					const { data } = response;
+					const { success: isSuccess } = data;
+					const { data: responseData } = data;
 
-				// Get the type of notification. (error, info, success, warning, critical, confirmation).
-				const type = responseData.type || 'info';
+					// Get the type of notification. (error, info, success, warning, critical, confirmation).
+					const type = responseData.type || 'info';
 
-				// Get the message.
-				const message = responseData.message || '';
+					// Get the message.
+					const message = responseData.message || '';
 
-				// Get the title.
-				const title = responseData.title || ''; /* title of snackbar or modal */
+					// Get the title.
+					const title =
+						responseData.title || ''; /* title of snackbar or modal */
 
-				// Get whether the notification is dismissable.
-				const isDismissable = responseData.dismissable || false; /* whether the snackbar or modal is dismissable */
+					// Get whether the notification is dismissable.
+					const isDismissable =
+						responseData.dismissable ||
+						false; /* whether the snackbar or modal is dismissable */
 
-				// Get whether the notification is persistent.
-				const isPersistent = responseData.persistent || false; /* whether the snackbar or modal is persistent */
+					// Get whether the notification is persistent.
+					const isPersistent =
+						responseData.persistent ||
+						false; /* whether the snackbar or modal is persistent */
 
-				// Get the politeness based on if successful.
-				const politeness = isSuccess ? 'polite' : 'assertive';
+					// Get the politeness based on if successful.
+					const politeness = isSuccess ? 'polite' : 'assertive';
 
-				// Set state with the notification.
-				setNotificationOptions( {
-					type,
-					message,
-					title,
-					isDismissable,
-					isBusy: false,
-					isPersistent,
-					politeness,
-				} );
+					// Set state with the notification.
+					setNotificationOptions( {
+						type,
+						message,
+						title,
+						isDismissable,
+						isBusy: false,
+						isPersistent,
+						politeness,
+					} );
 
-				if ( isSuccess ) {
-					//onSuccess( notificationOptions );
-				} else {
-					//onError( notificationOptions );
-				}
-				if ( 'critical' === type ) {
-					setIsSnackbarVisible( false );
-					setIsModalVisible( true );
-				} else {
-					clearTimeout( snackbarTimeout );
-					setSnackbarTimeout( setTimeout( () => {
+					if ( isSuccess ) {
+						//onSuccess( notificationOptions );
+					} else {
+						//onError( notificationOptions );
+					}
+					if ( 'critical' === type ) {
 						setIsSnackbarVisible( false );
-						setNotificationOptions( snackbarDefaults );
-					}, 6000 ) );
-				}
-			} ).catch( ( error ) => {
-				// Handle error
-				setNotificationOptions( {
-					type: 'critical',
-					message: error.message,
-					title: __( 'An Error Has Occurred', 'gb-extras' ),
-					isDismissable: false,
-					isBusy: false,
-					isPersistent: true,
-					politeness: 'assertive',
+						setIsModalVisible( true );
+					} else {
+						clearTimeout( snackbarTimeout );
+						setSnackbarTimeout(
+							setTimeout( () => {
+								setIsSnackbarVisible( false );
+								setNotificationOptions( snackbarDefaults );
+							}, 6000 )
+						);
+					}
+				} )
+				.catch( ( error ) => {
+					// Handle error
+					setNotificationOptions( {
+						type: 'critical',
+						message: error.message,
+						title: __( 'An Error Has Occurred', 'gb-extras' ),
+						isDismissable: false,
+						isBusy: false,
+						isPersistent: true,
+						politeness: 'assertive',
+					} );
+					//onError( notificationOptions );
+				} )
+				.then( () => {
+					// Set state to not busy.
+					setIsBusy( false );
 				} );
-				//onError( notificationOptions );
-			} ).then( () => {
-				// Set state to not busy.
-				setIsBusy( false );
-			} );
 		}
 	}, [ ajaxOptions ] );
 
 	// Bail if no promise.
 	if ( null === ajaxOptions ) {
-		return (
-			<></>
-		);
+		return <></>;
 	}
 
 	/**
@@ -141,9 +150,15 @@ const SnackPop = ( props ) => {
 		if ( notificationOptions.type === 'success' ) {
 			actions.push( {
 				label: __( 'Back to Top', 'gb-extras' ),
-				url: '#dlx-gb-extras-admin-header',
+				url: '#wpadminbar',
+				onClick: () => {
+					window.scrollTo( 0, 0 );
+					setIsSnackbarVisible( false );
+					setNotificationOptions( snackbarDefaults );
+				},
 				variant: 'link',
-				className: 'dlx-gb-extras-admin__notice-action dlx-gb-extras-admin__notice-action--to-top',
+				className:
+					'dlx-gb-extras-admin__notice-action dlx-gb-extras-admin__notice-action--to-top',
 			} );
 		}
 		return actions;
@@ -152,14 +167,12 @@ const SnackPop = ( props ) => {
 	const getSnackBar = () => {
 		return (
 			<WPSnackBar
-				className={
-					classnames(
-						`dlx-gb-extras-snackbar dlx-gb-extras-snackbar-${ notificationOptions.type }`,
-						{
-							'dlx-gb-extras-snackbar-loading': isBusy,
-						}
-					)
-				}
+				className={ classnames(
+					`dlx-gb-extras-snackbar dlx-gb-extras-snackbar-${ notificationOptions.type }`,
+					{
+						'dlx-gb-extras-snackbar-loading': isBusy,
+					}
+				) }
 				actions={ getSnackbarActions() }
 				icon={ getIcon() }
 				onDismiss={ () => setIsSnackbarVisible( false ) }
@@ -174,14 +187,12 @@ const SnackPop = ( props ) => {
 		if ( 'critical' === notificationOptions.type ) {
 			return (
 				<Modal
-					className={
-						classnames(
-							`dlx-gb-extras-modal dlx-gb-extras-modal-${ notificationOptions.type }`,
-							{
-								'dlx-gb-extras-modal-loading': isBusy,
-							}
-						)
-					}
+					className={ classnames(
+						`dlx-gb-extras-modal dlx-gb-extras-modal-${ notificationOptions.type }`,
+						{
+							'dlx-gb-extras-modal-loading': isBusy,
+						}
+					) }
 					bodyOpenClassName={ 'dlx-gb-extras-modal-body-open' }
 					title={ notificationOptions.title }
 					onRequestClose={ () => {

@@ -71,7 +71,12 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding-top: 25px;
+	background: #fff;
+	padding: 20px 16px;
+	margin-top: 16px;
+	margin-bottom: 40px;
+	border: 1px solid #e0e0e0;
+	box-sizing: border-box;
 }
 
 /* Button styles stolen from QuotesDLX */
@@ -296,8 +301,7 @@ html {
 	.components-snackbar__icon {
 		position: absolute;
 		top: 24px;
-		left: 28px;
-		left: 14px;
+		left: -4px;
 		top: auto;
 		bottom: auto;
 		line-height: 0;
