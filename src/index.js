@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { cloneBlock } from '@wordpress/blocks';
-import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
+import { PluginBlockSettingsMenuItem } from '@wordpress/editor';
 import { useSelect, useDispatch, store, select } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
 import './js/blocks/pattern-importer/index.js';
