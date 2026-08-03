@@ -135,16 +135,6 @@ class Admin_Bar {
 			)
 		);
 
-		// Add GB Extras shortcut.
-		$admin_bar->add_node(
-			array(
-				'parent' => 'generateblocks-menu',
-				'id'     => 'generateblocks-extras',
-				'title'  => __( 'Extras', 'gb-extras' ),
-				'href'   => admin_url( 'admin.php?page=dlx-gb-extras' ),
-			)
-		);
-
 		// Add Pro items (redundant check but kept for safety - we're already in Pro context).
 		if ( Functions::is_generateblocks_pro_active() ) {
 			// Get GenerateBlocks settings to check if features are enabled.
@@ -233,5 +223,15 @@ class Admin_Bar {
 				)
 			);
 		}
+
+		// Add GB Extras last.
+		$admin_bar->add_node(
+			array(
+				'parent' => 'generateblocks-menu',
+				'id'     => 'generateblocks-extras',
+				'title'  => __( 'Extras', 'gb-extras' ),
+				'href'   => admin_url( 'admin.php?page=dlx-gb-extras' ),
+			)
+		);
 	}
 }

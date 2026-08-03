@@ -17,7 +17,7 @@ class Admin {
 	 */
 	public function run() {
 		// Init the admin menu.
-		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+		add_action( 'admin_menu', array( $this, 'add_admin_menu' ), 1000 );
 
 		// Enqueue scripts for the admin page.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -381,7 +381,7 @@ class Admin {
 			'manage_options',
 			'dlx-gb-extras',
 			array( $this, 'admin_page' ),
-			4
+			99
 		);
 	}
 
